@@ -1,0 +1,15 @@
+window_sizes 1528 836 358 1164 664 120
+cleanlooks_style
+diagrams
+  active  classdiagram_ref 128002 // Class Diagram
+    1164 664 100 A4 0 0
+  usecasediagram_ref 128130 // Use_case_diagram
+    931 531 100 A4 0 0
+end
+show_stereotypes
+selected attribute_ref 139906 // type
+open
+  class_ref 129026 // confirms
+  usecaseview_ref 128002 // Use_case
+end
+end

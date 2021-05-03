@@ -1,7 +1,7 @@
-format 222
+format 224
 "conception_projet"
-  revision 1
-  modified_by 2 "angelheart"
+  revision 2
+  modified_by 2 "mel"
 
 
   
@@ -728,6 +728,17 @@ format 222
 
       attribute 133378 "confidence"
 	private explicit_type "int"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 139906 "type"
+	public explicit_type "string"
 	cpp_decl ""
 	java_decl ""
 	php_decl ""
