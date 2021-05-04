@@ -1,4 +1,4 @@
-format 222
+format 224
 
 classcanvas 128002 class_ref 128002 // User
   classdiagramsettings member_max_width 0 end
@@ -26,43 +26,43 @@ classcanvas 129026 class_ref 128770 // Permission
 end
 classcanvas 130818 class_ref 129026 // confirms
   classdiagramsettings member_max_width 0 end
-  xyzwh 408 161 2000 141 93
+  xyzwh 408 161 2000 141 95
 end
 relationcanvas 129154 relation_ref 128002 // owns
   decenter_end 732
-  from ref 128002 z 2001 label "owns" italic max_width 255 xyz 126 269 3000 to ref 128386
+  from ref 128002 z 2001 label "owns" italic max_width 255 xyz 126 269 2001 to ref 128386
   no_role_a no_role_b
   multiplicity_a_pos 93 321 3000 multiplicity_b_pos 171 243 3000
 end
 relationcanvas 129282 relation_ref 128130 // contains
-  from ref 128386 z 2001 label "contains" italic max_width 255 xyz 166.5 431 3000 to ref 129026
+  from ref 128386 z 2001 label "contains" italic max_width 255 xyz 166 431 2001 to ref 129026
   no_role_a no_role_b
   multiplicity_a_pos 240 461 3000 multiplicity_b_pos 142 409 3000
 end
 relationcanvas 129410 relation_ref 128258 // has
-  from ref 128002 z 2001 label "has" italic max_width 255 xyz 299 336 3000 to ref 129026
+  from ref 128002 z 2001 label "has" italic max_width 255 xyz 299 336 2001 to ref 129026
   no_role_a no_role_b
   multiplicity_a_pos 286 418 3000 multiplicity_b_pos 267 270 3000
 end
 relationcanvas 129666 relation_ref 128386 // declares
   decenter_begin 287
   decenter_end 319
-  from ref 128002 z 2001 label "declares" italic max_width 255 xyz 453 76 3000 to ref 128130
+  from ref 128002 z 2001 label "declares" italic max_width 255 xyz 453 76 2001 to ref 128130
   no_role_a no_role_b
   multiplicity_a_pos 579 96 3000 multiplicity_b_pos 361 94 3000
 end
 relationcanvas 129794 relation_ref 128514 // belongs_to
-  from ref 128130 z 2001 label "belongs_to" italic max_width 255 xyz 734.5 298 3000 to ref 128642
+  from ref 128130 z 2001 label "belongs_to" italic max_width 255 xyz 734 298 2001 to ref 128642
   no_role_a no_role_b
   multiplicity_a_pos 739 370 3000 multiplicity_b_pos 697 241 3000
 end
 relationcanvas 129922 relation_ref 128642 // occurs_at
-  from ref 128130 z 2001 label "occurs_at" italic max_width 255 xyz 536.5 289 3000 to ref 128770
+  from ref 128130 z 2001 label "occurs_at" italic max_width 255 xyz 536 289 2001 to ref 128770
   no_role_a no_role_b
   multiplicity_a_pos 536 351 3000 multiplicity_b_pos 603 241 3000
 end
 relationcanvas 130690 relation_ref 128898 // confirms
-  from ref 128002 z 2001 label "confirms" italic max_width 255 xyz 453 121 3000 to ref 128130
+  from ref 128002 z 2001 label "confirms" italic max_width 255 xyz 453 121 2001 to ref 128130
   no_role_a no_role_b
   multiplicity_a_pos 579 137 3000 multiplicity_b_pos 361 144 3000
 end

@@ -1,19 +1,15 @@
-window_sizes 1366 715 320 1041 565 104
-
+window_sizes 1528 836 358 1164 664 120
+cleanlooks_style
 diagrams
-  classdiagram_ref 128002 // Class Diagram
-    832 450 100 A4 204 0
-  active  usecasediagram_ref 128130 // Use_case_diagram
-    1041 565 100 A4 233 0
+  active  classdiagram_ref 128002 // Class Diagram
+    1164 664 100 A4 0 0
+  usecasediagram_ref 128130 // Use_case_diagram
+    931 531 100 A4 0 0
 end
 show_stereotypes
-selected usecase_ref 129154 // Creer categorie
+selected attribute_ref 139906 // type
 open
-  usecase_ref 128002 // Declarer_un_incident
-  usecase_ref 128130 // Creer_un_compte
-  usecase_ref 128258 // Confirmer_un_incident
-  usecase_ref 128386 // Infirmer_un_incident
-  class_ref 129282 // Admin
-  usecase_ref 128898 // proposition
+  class_ref 129026 // confirms
+  usecaseview_ref 128002 // Use_case
 end
 end
