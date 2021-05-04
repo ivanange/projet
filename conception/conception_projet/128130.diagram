@@ -1,53 +1,72 @@
 format 222
 
 subject 128002 ""
-  xyzwh 232 8 2000 586 665
+  xyzwh 234 9 2000 587 679
 classcanvas 128130 class_ref 129154 // user
   simpleclassdiagramsettings end
   xyz 103 166 2000
 end
 usecasecanvas 128258 usecase_ref 128002 // Declarer_un_incident
-  xyzwh 445 109 3005 119 41 label_xy 456 120
+  xyzwh 456 33 3005 119 41 label_xy 467 44
 end
 usecasecanvas 128386 usecase_ref 128130 // Creer_un_compte
-  xyzwh 422 32 3005 119 41 label_xy 440 42
+  xyzwh 299 16 3005 119 41 label_xy 317 26
 end
 usecasecanvas 128514 usecase_ref 128258 // Confirmer_un_incident
-  xyzwh 363 337 3005 119 41 label_xy 363 348
+  xyzwh 416 232 3005 119 41 label_xy 416 243
 end
 usecasecanvas 128642 usecase_ref 128386 // Infirmer_un_incident
-  xyzwh 285 290 3005 119 41 label_xy 297 302
+  xyzwh 279 203 3005 119 41 label_xy 291 215
 end
 usecasecanvas 128770 usecase_ref 128514 // s'authentifier
-  xyzwh 589 188 3005 119 41 label_xy 618 200
+  xyzwh 666 131 3005 119 41 label_xy 695 143
 end
 usecasecanvas 129666 usecase_ref 128642 // Consulter_le_tableau_de_bord
-  xyzwh 448 391 3005 163 69 label_xy 454 418
+  xyzwh 489 309 3005 163 69 label_xy 495 336
 end
 usecasecanvas 130306 usecase_ref 128770 // consulter_les_incidents
-  xyzwh 322 431 3005 129 71 label_xy 328 457
+  xyzwh 248 317 3005 129 71 label_xy 254 343
 end
 classcanvas 132994 class_ref 129282 // Admin
   simpleclassdiagramsettings end
   xyz 107 513 2000
 end
 usecasecanvas 133506 usecase_ref 128898 // proposition
-  xyzwh 354 187 3005 87 53 label_xy 372 201
+  xyzwh 431 122 3005 87 53 label_xy 449 136
 end
 usecasecanvas 134914 usecase_ref 129026 // suggerer_une_modif
-  xyzwh 476 296 3005 115 83 label_xy 484 333
+  xyzwh 651 196 3005 115 83 label_xy 659 233
 end
-usecasecanvas 135682 usecase_ref 129154 // manager
-  xyzwh 299 555 3005 65 45 label_xy 310 570
+usecasecanvas 135682 usecase_ref 129154 // Creer categorie
+  xyzwh 696 628 3005 91 43 label_xy 700 640
+end
+usecasecanvas 136194 usecase_ref 135682 // modifier categorie
+  xyzwh 551 574 3005 115 39 label_xy 561 583
+end
+usecasecanvas 136322 usecase_ref 135810 // supprimer categorie
+  xyzwh 520 469 3005 115 41 label_xy 528 481
+end
+usecasecanvas 136450 usecase_ref 135938 // consulter categories
+  xyzwh 440 601 3005 111 43 label_xy 444 611
+end
+usecasecanvas 136578 usecase_ref 136066 // consulter utilisateur
+  xyzwh 349 455 3010 135 45 label_xy 367 466
+end
+usecasecanvas 136706 usecase_ref 136194 // modifier utilisateur
+  xyzwh 632 380 3005 121 49 label_xy 652 393
+end
+usecasecanvas 136834 usecase_ref 136322 // bannir utilisateur
+  xyzwh 271 398 3015 101 55 label_xy 282 418
+end
+usecasecanvas 136962 usecase_ref 136450 // notifier utilisateur
+  xyzwh 447 532 3005 101 43 label_xy 454 547
 end
 line 129026 ----
   from ref 128130 z 3006 to ref 128386
 line 129794 ----
-  from ref 129666 z 3006 to point 321 369
-  line 129922 z 3006 to ref 128130
+  from ref 129666 z 3006 to ref 128130
 line 130434 ----
-  from ref 128130 z 3006 to point 275 392
-  line 130562 z 3006 to ref 130306
+  from ref 128130 z 3006 to ref 130306
 relationcanvas 133122 relation_ref 129154 // <generalisation>
   from ref 132994 z 2001 to ref 128130
   no_role_a no_role_b
@@ -64,16 +83,32 @@ simplerelationcanvas 134402 simplerelation_ref 129410
   from ref 128642 z 3006 to ref 133506
 end
 simplerelationcanvas 134530 simplerelation_ref 129538
-  from ref 128258 z 3006 stereotype "<<include>>" xyz 562 145 3000 to ref 128770
+  from ref 128258 z 3006 stereotype "<<include>>" xyz 605.5 78.5 3000 to ref 128770
 end
 simplerelationcanvas 135170 simplerelation_ref 129922
-  from ref 134914 z 3006 to point 466 273
-  line 135298 z 3006 to ref 133506
+  from ref 134914 z 3006 to ref 133506
 end
 simplerelationcanvas 135426 simplerelation_ref 130050
-  from ref 133506 z 3006 stereotype "<<include>>" xyz 452 210 3000 to point 527 208
-  line 135554 z 3006 to ref 128770
+  from ref 133506 z 3006 stereotype "<<include>>" xyz 558.5 148 3000 to ref 128770
 end
 line 135810 ----
-  from ref 132994 z 3006 to ref 135682
+  from ref 132994 z 3006 to point 374 650
+  line 138242 z 3006 to ref 135682
+line 137090 ----
+  from ref 132994 z 3016 to ref 136834
+line 137218 ----
+  from ref 132994 z 3006 to point 420 420
+  line 138114 z 3006 to ref 136706
+line 137346 ----
+  from ref 132994 z 3011 to ref 136578
+line 137474 ----
+  from ref 132994 z 3006 to ref 136322
+line 137602 ----
+  from ref 132994 z 3006 to ref 136962
+line 137730 ---- decenter_end 405
+  from ref 132994 z 3006 to point 458 580
+  line 138498 z 3006 to ref 136194
+line 137858 ----
+  from ref 132994 z 3006 to point 386 610
+  line 138370 z 3006 to ref 136450
 end

@@ -1,0 +1,19 @@
+window_sizes 1366 715 320 1041 565 104
+
+diagrams
+  classdiagram_ref 128002 // Class Diagram
+    832 450 100 A4 204 0
+  active  usecasediagram_ref 128130 // Use_case_diagram
+    1041 565 100 A4 233 0
+end
+show_stereotypes
+selected usecase_ref 129154 // Creer categorie
+open
+  usecase_ref 128002 // Declarer_un_incident
+  usecase_ref 128130 // Creer_un_compte
+  usecase_ref 128258 // Confirmer_un_incident
+  usecase_ref 128386 // Infirmer_un_incident
+  class_ref 129282 // Admin
+  usecase_ref 128898 // proposition
+end
+end
