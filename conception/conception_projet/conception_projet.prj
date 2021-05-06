@@ -1,7 +1,7 @@
 format 224
 "conception_projet"
-  revision 2
-  modified_by 2 "mel"
+  revision 3
+  modified_by 2 "angelheart"
 
 
   
@@ -890,6 +890,11 @@ format 224
 	---|>
 	  on usecase_ref 128898 // proposition
       end
+
+      simplerelation 137474
+	-_->
+	  on usecase_ref 128258 // Confirmer_un_incident
+      end
     end
 
     usecase 128386 "Infirmer_un_incident"
@@ -954,7 +959,7 @@ format 224
        end
     end
 
-    usecase 128642 "Consulter_le_tableau_de_bord"
+    usecase 128642 "Consulter le tableau de bord"
       
       usecasediagramsettings end
       
@@ -975,6 +980,11 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 136578
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
     end
 
     usecase 128770 "consulter_les_incidents"
@@ -998,6 +1008,11 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 136706
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
     end
 
     class 129282 "Admin"
@@ -1099,6 +1114,16 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 137730
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+
+      simplerelation 138882
+	---|>
+	  on usecase_ref 143106 // Gerer categories
+      end
     end
 
     usecase 135682 "modifier categorie"
@@ -1122,6 +1147,16 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 137858
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+
+      simplerelation 138626
+	---|>
+	  on usecase_ref 143106 // Gerer categories
+      end
     end
 
     usecase 135810 "supprimer categorie"
@@ -1145,6 +1180,16 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 137218
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+
+      simplerelation 138498
+	---|>
+	  on usecase_ref 143106 // Gerer categories
+      end
     end
 
     usecase 135938 "consulter categories"
@@ -1168,6 +1213,16 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 137602
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+
+      simplerelation 138754
+	---|>
+	  on usecase_ref 143106 // Gerer categories
+      end
     end
 
     usecase 136066 "consulter utilisateur"
@@ -1191,6 +1246,16 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 137090
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+
+      simplerelation 138114
+	---|>
+	  on usecase_ref 142978 // Gerer utilisateurs
+      end
     end
 
     usecase 136194 "modifier utilisateur"
@@ -1214,6 +1279,16 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 136962
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+
+      simplerelation 138242
+	---|>
+	  on usecase_ref 142978 // Gerer utilisateurs
+      end
     end
 
     usecase 136322 "bannir utilisateur"
@@ -1237,6 +1312,16 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 136834
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+
+      simplerelation 137986
+	---|>
+	  on usecase_ref 142978 // Gerer utilisateurs
+      end
     end
 
     usecase 136450 "notifier utilisateur"
@@ -1260,6 +1345,162 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 137346
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+
+      simplerelation 138370
+	---|>
+	  on usecase_ref 142978 // Gerer utilisateurs
+      end
+    end
+
+    sequencediagram 134658 "creer_un_compte"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    classinstance 128002 ""
+      type class_ref 129154 // user
+      attributes
+        end
+      relations
+        end
+    end
+
+    class 135810 "Account"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 135938 "Platform"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classinstance 128130 ""
+      type class_ref 135938 // Platform
+      attributes
+        end
+      relations
+        end
+    end
+
+    sequencediagram 134786 "declarer incident"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 134914 "infirmer incident"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 135170 "confirmer incident"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 135042 "suggerer modification"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 135298 "consulter tableau de bord"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    class 136066 "AnalyticsService"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classinstance 128258 ""
+      type class_ref 136066 // AnalyticsService
+      attributes
+        end
+      relations
+        end
+    end
+
+    usecase 142978 "Gerer utilisateurs"
+      
+      usecasediagramsettings end
+      
+      sequencediagramsettings end
+      
+      collaborationdiagramsettings end
+      
+      classdiagramsettings member_max_width 0 end
+      
+      classcompositediagramsettings end
+      
+      objectdiagramsettings end
+      
+      objectcompositediagramsettings end
+      
+      statediagramsettings
+       end
+      
+      activitydiagramsettings
+       end
+      simplerelation 139010
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
+    end
+
+    usecase 143106 "Gerer categories"
+      
+      usecasediagramsettings end
+      
+      sequencediagramsettings end
+      
+      collaborationdiagramsettings end
+      
+      classdiagramsettings member_max_width 0 end
+      
+      classcompositediagramsettings end
+      
+      objectdiagramsettings end
+      
+      objectcompositediagramsettings end
+      
+      statediagramsettings
+       end
+      
+      activitydiagramsettings
+       end
+      simplerelation 139138
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128514 // s'authentifier
+      end
     end
   end
 end

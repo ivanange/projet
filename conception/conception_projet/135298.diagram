@@ -1,0 +1,64 @@
+format 224
+
+classinstancecanvas 128002 classinstance_ref 128002 // 
+  xyz 37 34 2005 life_line_z 2000
+end
+classinstancecanvas 129282 classinstance_ref 128130 // 
+  xyz 321 55 2000 life_line_z 2000
+end
+classinstancecanvas 132738 classinstance_ref 128258 // 
+  xyz 612 63 2000 life_line_z 2000
+end
+continuation 134018 " user authenticated"
+  xyzwh 391.5 94.5 2020 221 39
+durationcanvas 129410 classinstance_ref 128002 // :user
+  xyzwh 46 116 2010 11 40
+end
+durationcanvas 129538 classinstance_ref 129282 // :Platform
+  xyzwh 343 116 2010 11 25
+end
+durationcanvas 132866 classinstance_ref 129282 // :Platform
+  xyzwh 343 167 2010 11 40
+end
+durationcanvas 132994 classinstance_ref 132738 // :AnalyticsService
+  xyzwh 653 167 2010 11 25
+end
+durationcanvas 133250 classinstance_ref 132738 // :AnalyticsService
+  xyzwh 653 223 2010 11 40
+end
+durationcanvas 133378 classinstance_ref 129282 // :Platform
+  xyzwh 343 224 2010 11 25
+end
+durationcanvas 133634 classinstance_ref 129282 // :Platform
+  xyzwh 343 260 2010 11 40
+end
+durationcanvas 133762 classinstance_ref 128002 // :user
+  xyzwh 46 260 2010 11 25
+end
+msg 129666 asynchronous
+  from durationcanvas_ref 129410
+  to durationcanvas_ref 129538
+  yz 116 2015 explicitmsg "consult dashboard (timespan, categories)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 88 100
+msg 133122 synchronous
+  from durationcanvas_ref 132866
+  to durationcanvas_ref 132994
+  yz 167 2015 explicitmsg "timespan, categories to analyse"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 430 155
+msg 133506 return
+  from durationcanvas_ref 133250
+  to durationcanvas_ref 133378
+  yz 228 2015 explicitmsg "analytics"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 482 215
+msg 133890 return
+  from durationcanvas_ref 133634
+  to durationcanvas_ref 133762
+  yz 260 2015 explicitmsg "render analytics"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 162 247
+line 134274 -_-_
+  from ref 134018 z 2021 to ref 133122
+end
