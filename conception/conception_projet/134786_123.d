@@ -4,12 +4,12 @@ classinstancecanvas 128002 classinstance_ref 128002 //
   xyz 37 34 2005 life_line_z 2000
 end
 classinstance 128130 class_ref 128130 // Incident
-  name "confirmed incident"   xyz 696 125 2000 life_line_z 2000
+  name ""   xyz 739 126 2000 life_line_z 2000
 classinstancecanvas 129282 classinstance_ref 128130 // 
   xyz 321 55 2000 life_line_z 2000
 end
-continuation 130178 " user authenticated, user has permission"
-  xyzwh 448 92 2020 221 39
+continuation 130178 "incident details valid, user authenticated, user has permission"
+  xyzwh 391 76 2020 332 38
 durationcanvas 129410 classinstance_ref 128002 // :user
   xyzwh 45 116 2010 11 40
 end
@@ -19,11 +19,11 @@ end
 durationcanvas 129794 classinstance_ref 129282 // :Platform
   xyzwh 343 179 2010 11 40
 end
-durationcanvas 129922 classinstance_ref 128130 // confirmed incident:Incident
-  xyzwh 760 179 2010 11 25
+durationcanvas 129922 classinstance_ref 128130 // :Incident
+  xyzwh 759 179 2010 11 25
 end
-durationcanvas 130306 classinstance_ref 128130 // confirmed incident:Incident
-  xyzwh 760 240 2010 11 40
+durationcanvas 130306 classinstance_ref 128130 // :Incident
+  xyzwh 759 240 2010 11 40
 end
 durationcanvas 130434 classinstance_ref 129282 // :Platform
   xyzwh 343 240 2010 11 29
@@ -37,25 +37,24 @@ end
 msg 129666 asynchronous
   from durationcanvas_ref 129410
   to durationcanvas_ref 129538
-  yz 116 2015 explicitmsg "confirm (Incident)"
+  yz 116 2015 explicitmsg "incident details (name, place, date, description)"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 61 103
 msg 130050 synchronous
   from durationcanvas_ref 129794
   to durationcanvas_ref 129922
-  yz 179 2015 explicitmsg "update incident confidence"
+  yz 179 2015 unspecifiedmsg
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 493 166
 msg 130562 return
   from durationcanvas_ref 130306
   to durationcanvas_ref 130434
-  yz 240 2015 explicitmsg "confirmed incident"
+  yz 240 2015 explicitmsg "created incident"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 428 227
 msg 130818 return
   from durationcanvas_ref 130434
   to durationcanvas_ref 130690
-  yz 258 2015 explicitmsg "completion notification"
+  yz 258 2015 explicitmsg "creation notification"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 103 245
 reflexivemsg 132354 asynchronous

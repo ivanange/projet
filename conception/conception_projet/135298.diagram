@@ -12,7 +12,7 @@ end
 continuation 134018 " user authenticated"
   xyzwh 391.5 94.5 2020 221 39
 durationcanvas 129410 classinstance_ref 128002 // :user
-  xyzwh 46 116 2010 11 40
+  xyzwh 45 116 2010 11 40
 end
 durationcanvas 129538 classinstance_ref 129282 // :Platform
   xyzwh 343 116 2010 11 25
@@ -33,7 +33,7 @@ durationcanvas 133634 classinstance_ref 129282 // :Platform
   xyzwh 343 260 2010 11 40
 end
 durationcanvas 133762 classinstance_ref 128002 // :user
-  xyzwh 46 260 2010 11 25
+  xyzwh 45 260 2010 11 25
 end
 msg 129666 asynchronous
   from durationcanvas_ref 129410

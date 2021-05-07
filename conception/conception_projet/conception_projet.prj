@@ -1,7 +1,7 @@
 format 224
 "conception_projet"
-  revision 3
-  modified_by 2 "angelheart"
+  revision 4
+  modified_by 123 "mleandra"
 
 
   
@@ -1501,6 +1501,16 @@ format 224
 	  stereotype "include"
 	  on usecase_ref 128514 // s'authentifier
       end
+    end
+
+    sequencediagram 128251 "gerer_categories"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 128379 "gestion des utilisteur"
+      sequencediagramsettings end
+      overlapping_bars size A4
     end
   end
 end
