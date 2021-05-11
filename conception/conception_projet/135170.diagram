@@ -10,8 +10,10 @@ classinstancecanvas 129282 classinstance_ref 128130 //
 end
 continuation 130178 " user authenticated, user has permission"
   xyzwh 448 92 2020 221 39
+continuation 132482 "invalid data"
+  xyzwh 226 157 2000 81 30
 durationcanvas 129410 classinstance_ref 128002 // :user
-  xyzwh 45 116 2010 11 40
+  xyzwh 46 116 2010 11 40
 end
 durationcanvas 129538 classinstance_ref 129282 // :Platform
   xyzwh 343 116 2010 11 25
@@ -20,19 +22,22 @@ durationcanvas 129794 classinstance_ref 129282 // :Platform
   xyzwh 343 179 2010 11 40
 end
 durationcanvas 129922 classinstance_ref 128130 // confirmed incident:Incident
-  xyzwh 760 179 2010 11 25
+  xyzwh 761 179 2010 11 25
 end
 durationcanvas 130306 classinstance_ref 128130 // confirmed incident:Incident
-  xyzwh 760 240 2010 11 40
+  xyzwh 761 240 2010 11 40
 end
 durationcanvas 130434 classinstance_ref 129282 // :Platform
   xyzwh 343 240 2010 11 29
 end
 durationcanvas 130690 classinstance_ref 128002 // :user
-  xyzwh 45 258 2010 11 25
+  xyzwh 46 258 2010 11 25
 end
 durationcanvas 132226 classinstance_ref 129282 // :Platform
   xyzwh 343 299 2010 11 40
+end
+durationcanvas 132866 classinstance_ref 128002 // :user
+  xyzwh 46 201 2010 11 25
 end
 msg 129666 asynchronous
   from durationcanvas_ref 129410
@@ -63,6 +68,14 @@ reflexivemsg 132354 asynchronous
   yz 300 2015 explicitmsg "notify concerned users"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 379 298
+msg 132994 return
+  from durationcanvas_ref 129794
+  to durationcanvas_ref 132866
+  yz 201 2015 explicitmsg "error message"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 137 190
 line 132098 -_-_
   from ref 130178 z 2021 to ref 130050
+line 133378 -_-_
+  from ref 132482 z 2016 to ref 132994
 end

@@ -1,13 +1,9 @@
 window_sizes 1366 715 242 1119 565 104
 
-diagrams
-  active  usecasediagram_ref 128130 // Use_case_diagram
-    1119 565 100 A4 240 0
-end
 show_stereotypes
-selected usecasediagram_ref 128130 // Use_case_diagram
+selected sequencediagram_ref 135298 // consulter tableau de bord
 open
   classview_ref 128002 // Classes
-  sequencediagram_ref 135042 // suggerer modification
+  usecaseview_ref 128002 // Use_case
 end
 end

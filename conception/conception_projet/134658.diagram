@@ -14,6 +14,8 @@ note 131842 "name > 4 chars
 email must not already exist
 password > 4 chars"
   xyzwh 411 34 2000 155 63
+continuation 132610 "invalid data"
+  xyzwh 248 154 2020 81 30
 durationcanvas 129410 classinstance_ref 128002 // :user
   xyzwh 148 116 2010 11 40
 end
@@ -21,13 +23,13 @@ durationcanvas 129538 classinstance_ref 129282 // :Platform
   xyzwh 346 116 2010 11 25
 end
 durationcanvas 129794 classinstance_ref 129282 // :Platform
-  xyzwh 346 179 2010 11 40
+  xyzwh 346 174 2010 11 45
 end
 durationcanvas 129922 classinstance_ref 128130 // :User
-  xyzwh 566 179 2010 11 25
+  xyzwh 565 174 2010 11 30
 end
 durationcanvas 130306 classinstance_ref 128130 // :User
-  xyzwh 566 240 2010 11 40
+  xyzwh 565 243 2010 11 40
 end
 durationcanvas 130434 classinstance_ref 129282 // :Platform
   xyzwh 346 240 2010 11 29
@@ -45,7 +47,10 @@ durationcanvas 131330 classinstance_ref 129282 // :Platform
   xyzwh 346 360 2010 11 25
 end
 durationcanvas 131586 classinstance_ref 128130 // :User
-  xyzwh 566 371 2010 11 25
+  xyzwh 565 371 2010 11 25
+end
+durationcanvas 132354 classinstance_ref 128002 // :user
+  xyzwh 148 206 2010 11 30
 end
 msg 129666 asynchronous
   from durationcanvas_ref 129410
@@ -56,14 +61,14 @@ msg 129666 asynchronous
 msg 130050 synchronous
   from durationcanvas_ref 129794
   to durationcanvas_ref 129922
-  yz 179 2015 unspecifiedmsg
+  yz 174 2015 unspecifiedmsg
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
 msg 130562 return
   from durationcanvas_ref 130306
   to durationcanvas_ref 130434
-  yz 240 2015 explicitmsg "created user"
+  yz 243 2015 explicitmsg "created user"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 431 227
+  label_xy 431 230
 msg 130818 return
   from durationcanvas_ref 130434
   to durationcanvas_ref 130690
@@ -87,6 +92,14 @@ msg 131714 synchronous
   yz 371 2015 explicitmsg "verify user"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 435 358
+msg 132482 return
+  from durationcanvas_ref 129794
+  to durationcanvas_ref 132354
+  yz 206 2015 explicitmsg "error message"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 195 196
 line 131970 -_-_
   from ref 131842 z 2021 to ref 130178
+line 132738 -_-_ decenter_begin 469 decenter_end 680
+  from ref 132610 z 2021 to ref 132482
 end
