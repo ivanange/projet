@@ -1,7 +1,7 @@
 format 224
 "conception_projet"
-  revision 6
-  modified_by 2 "angelheart"
+  revision 13
+  modified_by 99 "lenovo"
 
 
   
@@ -1511,6 +1511,386 @@ format 224
     sequencediagram 128379 "gestion des utilisteur"
       sequencediagramsettings end
       overlapping_bars size A4
+    end
+
+    activity 134627 "activité_créer_un_compte"
+      activitydiagram 134627 "créeer_compte"
+	activitydiagramsettings
+	 end
+	size A4
+      end
+
+      activitynode 134627 initial_node ""
+	flow 134627 "<flow>"
+	  on activityaction_ref 134627 // activity action entrer et soumettre les infos
+	end
+      end
+
+      activityaction 134627 "entrer et soumettre les infos"
+	opaque_action
+	flow 166627 "<flow>"
+	  on activitynode_ref 162659 // decision
+	end
+      end
+
+      activityaction 134755 "Enregistrer les infos"
+	opaque_action
+	flow 167139 "<flow>"
+	  on activityaction_ref 134883 // activity action Envoie mail de confirmation
+	end
+      end
+
+      activityaction 134883 "Envoie mail de confirmation"
+	opaque_action
+	pin 134627 "user_mail" explicit_type ""
+	  unordered 
+	  in
+	end
+
+	flow 167267 "<flow>"
+	  on activityaction_ref 156515 // activity action Reception email de confirmation
+	end
+      end
+
+      activityaction 135011 "Confirmer par mail"
+	opaque_action
+	flow 167523 "<flow>"
+	  on activityaction_ref 135139 // activity action finalisation (compte crée et enregistré)
+	end
+      end
+
+      activityaction 135139 "finalisation (compte crée et enregistré)"
+	opaque_action
+	flow 167651 "<flow>"
+	  on activitynode_ref 135267 // activity_final
+	end
+      end
+
+      activitynode 135267 activity_final ""
+      end
+
+      activitynode 135395 initial_node ""
+      end
+
+      activityaction 135395 "saisir l'ID et le mot de passe"
+	opaque_action
+      end
+
+      activitynode 135523 decision ""
+      end
+
+      activityaction 135523 "connection"
+	opaque_action
+      end
+
+      activitynode 135651 activity_final ""
+      end
+
+      activitynode 162659 decision ""
+	flow 166755 "<flow>"
+	  on activityaction_ref 134755 // activity action Enregistrer les infos
+	end
+
+	flow 166883 "<flow>"
+	  on activitynode_ref 162787 // decision
+	end
+      end
+
+      activitynode 162787 decision ""
+	flow 167011 "<flow>"
+	  on activityaction_ref 134627 // activity action entrer et soumettre les infos
+	end
+
+	flow 167779 "<flow>"
+	  on activitynode_ref 135267 // activity_final
+	end
+      end
+
+      activityaction 156515 "Reception email de confirmation"
+	opaque_action
+	flow 167395 "<flow>"
+	  on activityaction_ref 135011 // activity action Confirmer par mail
+	end
+      end
+
+      activitypartition 148963 "system"
+      end
+
+      activitypartition 149091 "User"
+      end
+    end
+
+    activity 141155 "confirmer_incident"
+      activitydiagram 141155 "confirmer incident"
+	activitydiagramsettings draw_all_relations no
+	 end
+	size A4
+      end
+
+      activitynode 142179 initial_node ""
+	flow 143331 "<flow>"
+	  on activityaction_ref 142051 // activity action Actionner la confirmation
+	end
+      end
+
+      activityaction 142051 "Actionner la confirmation"
+	opaque_action
+	flow 143715 "<flow>"
+	  on activitynode_ref 142307 // decision
+	end
+      end
+
+      activitynode 142307 decision ""
+	flow 143843 "<flow>"
+	  on activityaction_ref 142307 // activity action incident confirmer et mise à jour
+	end
+
+	flow 143971 "<flow>"
+	  on activityaction_ref 142435 // activity action Envoie d'un message d'erreur
+	end
+      end
+
+      activityaction 142307 "incident confirmer et mise à jour"
+	opaque_action
+	flow 144227 "<flow>"
+	  on activityaction_ref 142563 // activity action Envoie du message de confirmation
+	end
+      end
+
+      activityaction 142435 "Envoie d'un message d'erreur"
+	opaque_action
+	flow 144099 "<flow>"
+	  on activitynode_ref 142435 // activity_final
+	end
+
+	flow 144867 "<flow>"
+	  on activityaction_ref 142947 // activity action reception du message d'erreur
+	end
+      end
+
+      activitynode 142435 activity_final ""
+      end
+
+      activityaction 142563 "Envoie du message de confirmation"
+	opaque_action
+	flow 144355 "<flow>"
+	  on activityaction_ref 142691 // activity action reception du message de confirmation
+	end
+
+	flow 144611 "<flow>"
+	  on activityaction_ref 142819 // activity action Reception du message de confirmation
+	end
+
+	flow 144739 "<flow>"
+	  on activityaction_ref 142691 // activity action reception du message de confirmation
+	end
+      end
+
+      activityaction 142691 "reception du message de confirmation"
+	opaque_action
+	flow 144483 "<flow>"
+	  on activitynode_ref 142563 // activity_final
+	end
+      end
+
+      activitynode 142563 activity_final ""
+      end
+
+      activityaction 142819 "Reception du message de confirmation"
+	opaque_action
+      end
+
+      activitypartition 128355 "User"
+      end
+
+      activityaction 142947 "reception du message d'erreur"
+	opaque_action
+	flow 144995 "<flow>"
+	  on activitynode_ref 142563 // activity_final
+	end
+      end
+
+      activitypartition 128995 "sys"
+      end
+    end
+
+    activity 147683 "declaration_incident"
+      activitydiagram 147683 "declarer_incident"
+	activitydiagramsettings draw_all_relations no
+	 end
+	size A4
+      end
+
+      activitynode 149091 initial_node ""
+	flow 159331 "<flow>"
+	  on activityaction_ref 149475 // activity action Remplir et valider le formulaire d'incident
+	end
+      end
+
+      activityaction 149475 "Remplir et valider le formulaire d'incident"
+	opaque_action
+	flow 160099 "<flow>"
+	  on activitynode_ref 149219 // decision
+	end
+      end
+
+      activitynode 149219 decision ""
+	flow 151779 "<flow>"
+	  on activityaction_ref 149603 // activity action incident enregistrer
+	end
+
+	flow 151907 "<flow>"
+	  on activityaction_ref 149475 // activity action Remplir et valider le formulaire d'incident
+	end
+
+	flow 152163 "<flow>"
+	  on activitynode_ref 149347 // decision
+	end
+      end
+
+      activityaction 149603 "incident enregistrer"
+	opaque_action
+	flow 159971 "<flow>"
+	  on activityaction_ref 149859 // activity action Envoie message confirmation
+	end
+      end
+
+      activitynode 149347 decision ""
+	flow 152291 "<flow>"
+	  on activityaction_ref 149475 // activity action Remplir et valider le formulaire d'incident
+	end
+
+	flow 159843 "<flow>"
+	  on activitynode_ref 156131 // activity_final
+	end
+      end
+
+      activityaction 149731 "notification de confirmation"
+	opaque_action
+      end
+
+      activityaction 149859 "Envoie message confirmation"
+	opaque_action
+	flow 152547 "<flow>"
+	  on activityaction_ref 149987 // activity action reception messagge confirmation
+	end
+
+	flow 159715 "<flow>"
+	  on activityaction_ref 149987 // activity action reception messagge confirmation
+	end
+      end
+
+      activityaction 149987 "reception messagge confirmation"
+	opaque_action
+	flow 159587 "<flow>"
+	  on activitynode_ref 156131 // activity_final
+	end
+      end
+
+      activitynode 156131 activity_final "fin"
+      end
+
+      activitypartition 142307 "User"
+      end
+
+      activitypartition 142435 "system"
+      end
+    end
+
+    activity 154211 "activité_gerer_utilisateur"
+      activitydiagram 154211 "gestion utilisateurs"
+	activitydiagramsettings draw_all_relations no
+	 end
+	size A4
+      end
+
+      activitynode 169315 initial_node ""
+	flow 174307 "<flow>"
+	  on activityaction_ref 163043 // activity action Initier une action sur un utilisateur
+	end
+      end
+
+      activitynode 169443 decision ""
+	flow 174691 "<flow>"
+	  on activityaction_ref 163555 // activity action modifier permissions
+	end
+
+	flow 174819 "<flow>"
+	  on activityaction_ref 163299 // activity action Bannir
+	end
+
+	flow 174947 "<flow>"
+	  on activityaction_ref 163427 // activity action mettre à jour la confiance
+	end
+
+	flow 175075 "<flow>"
+	  on activityaction_ref 163171 // activity action notification
+	end
+      end
+
+      activityaction 163043 "Initier une action sur un utilisateur"
+	opaque_action
+	flow 174435 "<flow>"
+	  on activitynode_ref 169443 // decision
+	end
+
+	flow 174563 "<flow>"
+	  on activitynode_ref 169443 // decision
+	end
+      end
+
+      activityaction 163171 "notification"
+	opaque_action
+	flow 175203 "<flow>"
+	  on activitynode_ref 169571 // merge
+	end
+      end
+
+      activityaction 163299 "Bannir"
+	opaque_action
+	flow 175587 "<flow>"
+	  on activitynode_ref 169571 // merge
+	end
+      end
+
+      activityaction 163427 "mettre à jour la confiance"
+	opaque_action
+	flow 175459 "<flow>"
+	  on activitynode_ref 169571 // merge
+	end
+      end
+
+      activityaction 163555 "modifier permissions"
+	opaque_action
+	flow 175331 "<flow>"
+	  on activitynode_ref 169571 // merge
+	end
+      end
+
+      activityaction 163683 "Reception de la notification concernant l'action"
+	opaque_action
+	flow 175843 "<flow>"
+	  on activitynode_ref 169699 // activity_final
+	end
+      end
+
+      activitynode 169571 merge ""
+	flow 175715 "<flow>"
+	  on activityaction_ref 163683 // activity action Reception de la notification concernant l'action
+	end
+      end
+
+      activitypartition 155619 "Admin"
+      end
+
+      activitypartition 155747 "PlateForme"
+      end
+
+      activitypartition 155875 "User"
+      end
+
+      activitynode 169699 activity_final ""
+      end
     end
   end
 end
