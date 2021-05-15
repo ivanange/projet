@@ -1,0 +1,112 @@
+format 224
+
+activitynodecanvas 128099 activitynode_ref 142179 // initial_node
+  xyz 194.45 66.25 2000
+end
+activityactioncanvas 128483 activityaction_ref 142051 // activity action Actionner la confirmation
+  
+  show_opaque_action_definition default
+  xyzwh 163.3 116.7 2005 79 45
+end
+activitynodecanvas 129123 activitynode_ref 142307 // decision
+  xyz 549.15 116.1 2000
+end
+textcanvas 129379 "action valide ?"
+  xyzwh 529.06 106.25 2000 80 15
+activityactioncanvas 129507 activityaction_ref 142307 // activity action incident confirmer et mise à jour
+  
+  show_opaque_action_definition default
+  xyzwh 694.6 107.55 2000 101 61
+end
+activityactioncanvas 129763 activityaction_ref 142435 // activity action Envoie d'un message d'erreur
+  
+  show_opaque_action_definition default
+  xyzwh 512.88 223.95 2000 101 61
+end
+activityactioncanvas 130659 activityaction_ref 142563 // activity action Envoie du message de confirmation
+  
+  show_opaque_action_definition default
+  xyzwh 694.6 333.45 2000 101 61
+end
+activityactioncanvas 130915 activityaction_ref 142691 // activity action reception du message de confirmation
+  
+  show_opaque_action_definition default
+  xyzwh 132.3 323.95 2000 101 61
+end
+activitynodecanvas 131299 activitynode_ref 142563 // activity_final
+  xyz 178.68 519.21 2000
+end
+textcanvas 131555 "confirmation réussie"
+  xyzwh 192.38 470.69 2006 98 14
+activitypartitioncanvas 132195 activitypartition_ref 128355 // User
+  xyzwh 103.54 5.67 2000 227 417
+end
+textcanvas 132579 "[oui]"
+  xyzwh 627.17 134.41 2016 33 15
+textcanvas 132707 "[non]"
+  xyzwh 521.93 178.15 2016 28 15
+activityactioncanvas 133091 activityaction_ref 142947 // activity action reception du message d'erreur
+  
+  show_opaque_action_definition default
+  xyzwh 140.5 220.5 2005 101 61
+end
+textcanvas 134115 "confirmation annlée"
+  xyzwh 77.68 536.48 2013 94 14
+activitypartitioncanvas 134371 activitypartition_ref 128995 // sys
+  xyzwh 469.41 40.45 2000 345 412
+end
+flowcanvas 128611 flow_ref 143331 // <flow>
+  
+  from ref 128099 z 2006 to ref 128483
+   write_horizontally default
+end
+flowcanvas 129251 flow_ref 143715 // <flow>
+  decenter_end 566
+  
+  from ref 128483 z 2006 to ref 129123
+   write_horizontally default
+end
+flowcanvas 129635 flow_ref 143843 // <flow>
+  
+  from ref 129123 z 2001 to ref 129507
+   write_horizontally default
+end
+flowcanvas 129891 flow_ref 143971 // <flow>
+  
+  from ref 129123 z 2001 to ref 129763
+   write_horizontally default
+end
+flowcanvas 131043 flow_ref 144227 // <flow>
+  decenter_end 485
+  
+  from ref 129507 z 2001 to ref 130659
+   write_horizontally default
+end
+flowcanvas 131427 flow_ref 144483 // <flow>
+  decenter_begin 550
+  
+  from ref 130915 z 2001 to ref 131299
+   write_horizontally default
+end
+flowcanvas 132067 flow_ref 144739 // <flow>
+  decenter_end 565
+  
+  from ref 130659 z 2001 to ref 130915
+   write_horizontally default
+end
+flowcanvas 133219 flow_ref 144867 // <flow>
+  decenter_begin 540
+  decenter_end 583
+  
+  from ref 129763 z 2006 to ref 133091
+   write_horizontally default
+end
+flowcanvas 133731 flow_ref 144995 // <flow>
+  decenter_begin 569
+  
+  from ref 133091 z 2006 to point 72.11 253.13
+  line 133987 z 2006 to point 73.07 528.3
+  line 133859 z 2006 to ref 131299
+   write_horizontally default
+end
+end

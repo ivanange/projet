@@ -1,0 +1,59 @@
+format 224
+
+activitynodecanvas 128099 activitynode_ref 135395 // initial_node
+  xyz 101 105 2000
+end
+activityactioncanvas 128355 activityaction_ref 135395 // activity action saisir l'ID et le mot de passe
+  
+  show_opaque_action_definition default
+  xyzwh 61 162 2000 100 60
+end
+activitynodecanvas 128611 activitynode_ref 135523 // decision
+  xyz 95 264 2000
+end
+activityactioncanvas 128867 activityaction_ref 135523 // activity action connection
+  
+  show_opaque_action_definition default
+  xyzwh 225 311 2000 100 60
+end
+activitynodecanvas 129507 activitynode_ref 135651 // activity_final
+  xyz 487 329 2000
+end
+textcanvas 129763 "utilisateur connecté"
+  xyzwh 355 319 2006 94 14
+textcanvas 130019 "non"
+  xyzwh 179 255 2000 18 14
+textcanvas 130147 "oui"
+  xyzwh 163 352 2008 14 14
+textcanvas 130275 "données valides?"
+  xyzwh 12 276 2000 85 14
+flowcanvas 128483 flow_ref 136291 // <flow>
+  
+  from ref 128099 z 2001 to ref 128355
+   write_horizontally default
+end
+flowcanvas 128739 flow_ref 136419 // <flow>
+  
+  from ref 128355 z 2001 to ref 128611
+   write_horizontally default
+end
+flowcanvas 128995 flow_ref 136547 // <flow>
+  decenter_end 790
+  
+  from ref 128611 z 2001 to point 137 280
+  line 129123 z 2001 to ref 128355
+   write_horizontally default
+end
+flowcanvas 129251 flow_ref 136675 // <flow>
+  decenter_end 515
+  
+  from ref 128611 z 2001 to point 105 340
+  line 129379 z 2001 to ref 128867
+   write_horizontally default
+end
+flowcanvas 129635 flow_ref 136803 // <flow>
+  
+  from ref 128867 z 2001 to ref 129507
+   write_horizontally default
+end
+end

@@ -1,0 +1,103 @@
+format 224
+
+activitynodecanvas 128099 activitynode_ref 149091 // initial_node
+  xyz 282 71 2000
+end
+activityactioncanvas 128227 activityaction_ref 149475 // activity action Remplir et valider le formulaire d'incident
+  
+  show_opaque_action_definition default
+  xyzwh 243 139 2000 100 60
+end
+activitynodecanvas 128483 activitynode_ref 149219 // decision
+  xyz 522 152 2000
+end
+activityactioncanvas 128739 activityaction_ref 149603 // activity action incident enregistrer
+  
+  show_opaque_action_definition default
+  xyzwh 635 144 2000 100 60
+end
+activitynodecanvas 129507 activitynode_ref 149347 // decision
+  xyz 280 260 2000
+end
+activityactioncanvas 130147 activityaction_ref 149859 // activity action Envoie message confirmation
+  
+  show_opaque_action_definition default
+  xyzwh 632 270 2000 100 60
+end
+activityactioncanvas 130275 activityaction_ref 149987 // activity action reception messagge confirmation
+  
+  show_opaque_action_definition default
+  xyzwh 241 344 2000 100 60
+end
+textcanvas 132579 "[oui]"
+  xyzwh 584 151 2011 26 15
+textcanvas 132707 "[non]"
+  xyzwh 536 253 2011 24 14
+textcanvas 132835 "Declaration confirmer"
+  xyzwh 294 481 2006 103 14
+textcanvas 132963 "Declaration annulée"
+  xyzwh 177 572 2000 95 14
+activitynodecanvas 133347 activitynode_ref 156131 // activity_final
+  xyz 278 549 2000
+end
+activitypartitioncanvas 134371 activitypartition_ref 142307 // User
+  xyzwh 150 22 2000 245 446
+end
+activitypartitioncanvas 134499 activitypartition_ref 142435 // system
+  xyzwh 489 33 2016 296 445
+end
+textcanvas 134627 "infos valides?"
+  xyzwh 500 142 2021 67 14
+flowcanvas 128867 flow_ref 151779 // <flow>
+  
+  from ref 128483 z 2001 to ref 128739
+   write_horizontally default
+end
+flowcanvas 129635 flow_ref 152163 // <flow>
+  
+  from ref 128483 z 2001 to point 530 275
+  line 132195 z 2001 to ref 129507
+   write_horizontally default
+end
+flowcanvas 129891 flow_ref 152291 // <flow>
+  
+  from ref 129507 z 2001 to ref 128227
+   write_horizontally default
+end
+flowcanvas 133091 flow_ref 159331 // <flow>
+  
+  from ref 128099 z 2001 to ref 128227
+   write_horizontally default
+end
+flowcanvas 133475 flow_ref 159587 // <flow>
+  
+  from ref 130275 z 2001 to ref 133347
+   write_horizontally default
+end
+flowcanvas 133603 flow_ref 159715 // <flow>
+  decenter_end 683
+  
+  from ref 130147 z 2001 to point 680 384
+  line 133731 z 2001 to ref 130275
+   write_horizontally default
+end
+flowcanvas 133859 flow_ref 159843 // <flow>
+  decenter_begin 565
+  
+  from ref 129507 z 2001 to point 189 276
+  line 134115 z 2001 to point 188 558
+  line 133987 z 2001 to ref 133347
+   write_horizontally default
+end
+flowcanvas 134243 flow_ref 159971 // <flow>
+  decenter_begin 460
+  
+  from ref 128739 z 2001 to ref 130147
+   write_horizontally default
+end
+flowcanvas 135267 flow_ref 160099 // <flow>
+  
+  from ref 128227 z 2001 to ref 128483
+   write_horizontally default
+end
+end

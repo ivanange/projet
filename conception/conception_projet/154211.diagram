@@ -1,0 +1,119 @@
+format 224
+
+activitynodecanvas 128099 activitynode_ref 169315 // initial_node
+  xyz 80.8 76 2000
+end
+activitynodecanvas 128227 activitynode_ref 169443 // decision
+  xyz 76.4 257.2 2000
+end
+activityactioncanvas 128355 activityaction_ref 163043 // activity action Initier une action sur un utilisateur
+  
+  show_opaque_action_definition default
+  xyzwh 46.4 136.8 2005 87 60
+end
+activityactioncanvas 128739 activityaction_ref 163171 // activity action notification
+  
+  show_opaque_action_definition default
+  xyzwh 339 145 2000 100 60
+end
+activityactioncanvas 128867 activityaction_ref 163299 // activity action Bannir
+  
+  show_opaque_action_definition default
+  xyzwh 303 407 2000 100 60
+end
+activityactioncanvas 128995 activityaction_ref 163427 // activity action mettre à jour la confiance
+  
+  show_opaque_action_definition default
+  xyzwh 315 327 2000 100 60
+end
+activityactioncanvas 129123 activityaction_ref 163555 // activity action modifier permissions
+  
+  show_opaque_action_definition default
+  xyzwh 304 225 2005 100 60
+end
+activityactioncanvas 130275 activityaction_ref 163683 // activity action Reception de la notification concernant l'action
+  
+  show_opaque_action_definition default
+  xyzwh 694 285 2000 103 79
+end
+activitynodecanvas 130403 activitynode_ref 169571 // merge
+  xyz 525 292 2000
+end
+activitypartitioncanvas 131171 activitypartition_ref 155619 // Admin
+  xyzwh 21 23 2011 168 471
+end
+activitypartitioncanvas 131299 activitypartition_ref 155747 // PlateForme
+  xyzwh 254 35 2006 316 488
+end
+activitypartitioncanvas 131427 activitypartition_ref 155875 // User
+  xyzwh 659 128 2000 156 366
+end
+activitynodecanvas 131555 activitynode_ref 169699 // activity_final
+  xyz 675 572 2000
+end
+textcanvas 131811 "Action terminée"
+  xyzwh 699 532 2000 75 14
+flowcanvas 128483 flow_ref 174307 // <flow>
+  
+  from ref 128099 z 2006 to ref 128355
+   write_horizontally default
+end
+flowcanvas 129251 flow_ref 174563 // <flow>
+  
+  from ref 128355 z 2006 to ref 128227
+   write_horizontally default
+end
+flowcanvas 129379 flow_ref 174691 // <flow>
+  
+  from ref 128227 z 2006 to ref 129123
+   write_horizontally default
+end
+flowcanvas 129507 flow_ref 174819 // <flow>
+  
+  from ref 128227 z 2001 to point 126 355
+  line 129635 z 2001 to ref 128867
+   write_horizontally default
+end
+flowcanvas 129763 flow_ref 174947 // <flow>
+  
+  from ref 128227 z 2001 to point 187 310
+  line 129891 z 2001 to ref 128995
+   write_horizontally default
+end
+flowcanvas 130019 flow_ref 175075 // <flow>
+  
+  from ref 128227 z 2001 to point 251 172
+  line 130147 z 2001 to ref 128739
+   write_horizontally default
+end
+flowcanvas 130531 flow_ref 175203 // <flow>
+  
+  from ref 128739 z 2001 to ref 130403
+   write_horizontally default
+end
+flowcanvas 130659 flow_ref 175331 // <flow>
+  
+  from ref 129123 z 2006 to ref 130403
+   write_horizontally default
+end
+flowcanvas 130787 flow_ref 175459 // <flow>
+  
+  from ref 128995 z 2001 to ref 130403
+   write_horizontally default
+end
+flowcanvas 130915 flow_ref 175587 // <flow>
+  
+  from ref 128867 z 2001 to ref 130403
+   write_horizontally default
+end
+flowcanvas 131043 flow_ref 175715 // <flow>
+  
+  from ref 130403 z 2001 to ref 130275
+   write_horizontally default
+end
+flowcanvas 131683 flow_ref 175843 // <flow>
+  
+  from ref 130275 z 2001 to ref 131555
+   write_horizontally default
+end
+end
