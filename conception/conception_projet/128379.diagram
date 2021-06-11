@@ -10,8 +10,8 @@ classinstance 128507 class_ref 128002 // User
   name ""   xyz 468 14 2000 life_line_z 2000
 fragment 134267 "alt"
   xyzwh 177 327 2020 432 316
-  separator 4113
-  separator 7228
+  separator 4112
+  separator 7227
 end
 textcanvas 134395 "if( warn >3):"
   xyzwh 182 348 2025 74 15
