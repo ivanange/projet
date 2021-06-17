@@ -1,0 +1,205 @@
+<div class="h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <img class="mx-auto h-12 w-auto" :src="app.logoUrl" :alt="app.name" />
+      <h2 class="
+            mt-6
+            text-center text-3xl
+            font-extrabold
+            text-gray-900
+            capitalize
+          ">
+        Sign Up
+      </h2>
+    </div>
+    <form class="space-y-5" action="/register" method="POST">
+      <div class="flex">
+        <div class="w-1/2 pr-2">
+          <label for="first_name" class="sr-only">First Name</label>
+          <input v-model="account.first_name" id="first_name" name="first_name" type="text" autocomplete="first_name"
+            required class="
+                appearance-none
+                relative
+                block
+                w-full
+                px-3
+                py-2
+                border border-gray-300
+                placeholder-gray-500
+                text-gray-900
+                rounded-md
+                focus:outline-none
+                focus:ring-lime-400
+                focus:border-lime-400
+                focus:z-10
+                sm:text-sm
+              " placeholder="First Name" />
+        </div>
+        <div class="w-1/2 pl-2">
+          <label for="last_name" class="sr-only">Last Name</label>
+          <input v-model="account.last_name" id="last_name" name="last_name" type="text" autocomplete="last_name"
+            required class="
+                appearance-none
+                relative
+                block
+                w-full
+                px-3
+                py-2
+                border border-gray-300
+                placeholder-gray-500
+                text-gray-900
+                rounded-md
+                focus:outline-none
+                focus:ring-lime-400
+                focus:border-lime-400
+                focus:z-10
+                sm:text-sm
+              " placeholder="Last Name" />
+        </div>
+      </div>
+      <div>
+        <label for="email" class="sr-only">Email address</label>
+        <input v-model="account.email" id="email" name="email" type="email" autocomplete="email" required class="
+              appearance-none
+              relative
+              block
+              w-full
+              px-3
+              py-2
+              border border-gray-300
+              placeholder-gray-500
+              text-gray-900
+              rounded-md
+              focus:outline-none
+              focus:ring-lime-400
+              focus:border-lime-400
+              focus:z-10
+              sm:text-sm
+            " placeholder="Email address" />
+        <small v-if="error.data.username" class="text-red-500">
+          <!-- error.data.username.join(",") -->
+        </small>
+      </div>
+      <div>
+        <label for="password" class="sr-only">Password</label>
+        <input v-model="account.password" id="password" name="password" type="password" autocomplete="current-password"
+          required class="
+              appearance-none
+              relative
+              block
+              w-full
+              px-3
+              py-2
+              border border-gray-300
+              placeholder-gray-500
+              text-gray-900
+              rounded-md
+              focus:outline-none
+              focus:ring-lime-400
+              focus:border-lime-400
+              focus:z-10
+              sm:text-sm
+            " placeholder="Password" />
+        <small v-if="error.data.password" class="text-red-500">{{
+          error.data.password.join(",")
+          }}</small>
+      </div>
+      <div>
+        <label for="password_confirmation" class="sr-only">Password</label>
+        <input v-model="password_confirm" id="password_confirmation" name="password_confirmation" type="password"
+          autocomplete="current-password" required class="
+              appearance-none
+              relative
+              block
+              w-full
+              px-3
+              py-2
+              border border-gray-300
+              placeholder-gray-500
+              text-gray-900
+              rounded-md
+              focus:outline-none
+              focus:ring-lime-400
+              focus:border-lime-400
+              focus:z-10
+              sm:text-sm
+            " placeholder="Confirm Password" />
+        <small class="text-red-500" v-if="!errors.password_confirmation">Pass word and confimation don't match</small>
+      </div>
+      <div>
+        <label for="invite_code" class="sr-only">Invite code</label>
+        <input v-model="account.invite_code" id="invite_code" name="invite_code" type="text" autocomplete="invite_code"
+          class="
+              appearance-none
+              relative
+              block
+              w-full
+              px-3
+              py-2
+              border border-gray-300
+              placeholder-gray-500
+              text-gray-900
+              rounded-md
+              focus:outline-none
+              focus:ring-lime-400
+              focus:border-lime-400
+              focus:z-10
+              sm:text-sm
+            " placeholder="Invite code" />
+        <span class="text-xs text-gray-400">You may leave empty if you were not invited.
+        </span>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <label for="agree" class="text-gray-500 text-sm">
+            <input v-model="agree" id="agree" type="checkbox" name="agree"
+              class="rounded text-lime-400 focus:ring-lime-400 mr-1" required />
+            I Agree to the current
+            <a class="text-lime-500 hover:text-lime-400" href="">Terms and policies</a>
+            <small class="text-red-500 block" v-if="!errors.agreement">You need to agree</small>
+          </label>
+        </div>
+
+        <div class="text-sm">
+          <a href="/signin" class="
+                font-medium
+                text-lime-500
+                hover:text-lime-400
+                capitalize
+                underline
+                pr-2
+              ">
+            Sign In
+          </a>
+        </div>
+      </div>
+      <div class="flex justify-center" v-if="error.message">
+        <small class="text-red-500">{{ error.message }}</small>
+      </div>
+
+      <div>
+        <button type="submit" class="
+              group
+              relative
+              w-full
+              flex
+              justify-center
+              py-2
+              px-4
+              border border-transparent
+              text-sm
+              font-medium
+              rounded-md
+              text-white
+              bg-lime-500
+              hover:bg-lime-600
+              focus:outline-none
+              focus:ring-2 focus:ring-offset-2 focus:ring-lime-400
+            ">
+          Sign Up
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
