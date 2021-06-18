@@ -1,12 +1,12 @@
-<div class="h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="h-full w-full flex items-center justify-center py-12 px-6">
   <div class="max-w-md w-full space-y-8">
     <div>
-      <img class="mx-auto h-12 w-auto" :src="app.logoUrl" :alt="app.name" />
+      <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" />
       <h2 class="
             mt-6
             text-center text-3xl
             font-extrabold
-            text-gray-900
+            text-black
             capitalize
           ">
         Sign Up
@@ -29,8 +29,8 @@
                 text-gray-900
                 rounded-md
                 focus:outline-none
-                focus:ring-lime-400
-                focus:border-lime-400
+                focus:ring-black
+                focus:border-black
                 focus:z-10
                 sm:text-sm
               " placeholder="First Name" />
@@ -50,14 +50,14 @@
                 text-gray-900
                 rounded-md
                 focus:outline-none
-                focus:ring-lime-400
-                focus:border-lime-400
+                focus:ring-black
+                focus:border-black
                 focus:z-10
                 sm:text-sm
               " placeholder="Last Name" />
         </div>
       </div>
-      <div>
+      <!-- <div>
         <label for="email" class="sr-only">Email address</label>
         <input v-model="account.email" id="email" name="email" type="email" autocomplete="email" required class="
               appearance-none
@@ -71,14 +71,22 @@
               text-gray-900
               rounded-md
               focus:outline-none
-              focus:ring-lime-400
-              focus:border-lime-400
+              focus:ring-black
+              focus:border-black
               focus:z-10
               sm:text-sm
             " placeholder="Email address" />
         <small v-if="error.data.username" class="text-red-500">
-          <!-- error.data.username.join(",") -->
         </small>
+      </div> -->
+      <div class="mt-1 relative rounded-md shadow-sm">
+        <div
+          class="absolute inset-y-0 left-0 px-3 border-r flex items-center pointer-events-none bg-black text-white rounded-l-md">
+          <span class="text-gray-50 sm:text-sm">+237</span>
+        </div>
+        <input type="text" name="phone" id="phone" required
+          class="tracking-wider focus:ring-black focus:border-black block w-full pl-20 pr-12 sm:text-sm border-gray-300 rounded-md"
+          placeholder="698298873">
       </div>
       <div>
         <label for="password" class="sr-only">Password</label>
@@ -95,14 +103,12 @@
               text-gray-900
               rounded-md
               focus:outline-none
-              focus:ring-lime-400
-              focus:border-lime-400
+              focus:ring-black
+              focus:border-black
               focus:z-10
               sm:text-sm
             " placeholder="Password" />
-        <small v-if="error.data.password" class="text-red-500">{{
-          error.data.password.join(",")
-          }}</small>
+        <small v-if="error.data.password" class="text-red-500"></small>
       </div>
       <div>
         <label for="password_confirmation" class="sr-only">Password</label>
@@ -119,44 +125,22 @@
               text-gray-900
               rounded-md
               focus:outline-none
-              focus:ring-lime-400
-              focus:border-lime-400
+              focus:ring-black
+              focus:border-black
               focus:z-10
               sm:text-sm
             " placeholder="Confirm Password" />
-        <small class="text-red-500" v-if="!errors.password_confirmation">Pass word and confimation don't match</small>
-      </div>
-      <div>
-        <label for="invite_code" class="sr-only">Invite code</label>
-        <input v-model="account.invite_code" id="invite_code" name="invite_code" type="text" autocomplete="invite_code"
-          class="
-              appearance-none
-              relative
-              block
-              w-full
-              px-3
-              py-2
-              border border-gray-300
-              placeholder-gray-500
-              text-gray-900
-              rounded-md
-              focus:outline-none
-              focus:ring-lime-400
-              focus:border-lime-400
-              focus:z-10
-              sm:text-sm
-            " placeholder="Invite code" />
-        <span class="text-xs text-gray-400">You may leave empty if you were not invited.
-        </span>
+        <small class="text-red-500" v-if="!errors.password_confirmation">Pass word and confimation don't
+          match</small>
       </div>
 
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <label for="agree" class="text-gray-500 text-sm">
+          <label for="agree" class="text-gray-500 text-xs">
             <input v-model="agree" id="agree" type="checkbox" name="agree"
-              class="rounded text-lime-400 focus:ring-lime-400 mr-1" required />
+              class="rounded text-black focus:ring-black mr-1" required />
             I Agree to the current
-            <a class="text-lime-500 hover:text-lime-400" href="">Terms and policies</a>
+            <a class="text-black focus:text-gray-900" href="">Terms and policies</a>
             <small class="text-red-500 block" v-if="!errors.agreement">You need to agree</small>
           </label>
         </div>
@@ -164,8 +148,7 @@
         <div class="text-sm">
           <a href="/signin" class="
                 font-medium
-                text-lime-500
-                hover:text-lime-400
+          text-black
                 capitalize
                 underline
                 pr-2
@@ -175,7 +158,9 @@
         </div>
       </div>
       <div class="flex justify-center" v-if="error.message">
-        <small class="text-red-500">{{ error.message }}</small>
+        <small class="text-red-500">
+          <!-- error.message -->
+        </small>
       </div>
 
       <div>
@@ -192,10 +177,9 @@
               font-medium
               rounded-md
               text-white
-              bg-lime-500
-              hover:bg-lime-600
+              bg-black
               focus:outline-none
-              focus:ring-2 focus:ring-offset-2 focus:ring-lime-400
+              focus:ring-2 focus:ring-offset-2 focus:ring-black
             ">
           Sign Up
         </button>
