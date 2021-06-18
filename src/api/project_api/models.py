@@ -69,13 +69,37 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+
+class place(object):
+    """docstring forplace."""
+
+    address = models.CharField(max_length = 255, blank = True)
+    city = models.CharField(max_length = 255, blank = True)
+    country = models.CharField(max_length = 255, blank = True)
+    quarter = models.CharField(max_length = 255, blank = True)
+    longitude = models.CharField(max_length = 255, blank = True)
+    latitude = models.CharField(max_length = 255, blank = True)
+    region = models.CharField(max_length = 255, blank = True)
+
+
+class Category(object):
+    """docstring forCategory."""
+
+    name = models.CharField(max_length = 20)
+    description = models.CharField(max_length = 100)
+
+
+
 class Incident(object):
     """docstring for Incident"""
-    title =
-    date =
-    location =
-    textual_description =
-    video =
-    audios =
-    images =
-    confidence =
+    title = models.CharField(max_length=255)
+    location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
+    date = models.DateTimeField("creation date", blank = True, null = True
+    category = models.ForeignKey(Category, models.SET_NULL, blank = True, null = True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
+    # location = models.CharField(max_length = 20)
+    textual_description = models.CharField(max_length = 100)
+    video = models.FileField(upload_to='videos/%Y/%m/%d')
+    audios = models.FileField(upload_to='audios/%Y/%m/%d')
+    images = models.ImageField(upload_to='images/%Y/%m/%d')
+    confidence = models.IntegerField(default = 0)

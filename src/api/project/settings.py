@@ -122,3 +122,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'project_api.UserProfile'
+MEDIA_ROOT = '/home/media'
