@@ -67,3 +67,15 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """ str speciel methode of UserProfile """
         return self.email
+
+
+class Incident(object):
+    """docstring for Incident"""
+    title =
+    date =
+    location =
+    textual_description =
+    video =
+    audios =
+    images =
+    confidence =
