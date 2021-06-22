@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Spik
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,14 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title class="text-black" size="large">Spik</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div id="">
+    <strong>Ready to go?</strong>
+    <p class="text-gray-900">Start Spiking</p>
+    <ion-button [routerLink]="['/signin']">Go to signin</ion-button>
+    <ion-button [routerLink]="['/signup']">Go to signup</ion-button>
   </div>
 </ion-content>
