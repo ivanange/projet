@@ -34,7 +34,7 @@ class UserProfileManager(BaseUserManager):
 
 
 
-class UserProfile(AbstractBaseUser, PermissionsMixin):
+class UserProfile(AbstractBaseUser, PermissionsMixin, object):
     """database for user in the systeme"""
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
@@ -70,7 +70,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
 
 
-class place(object):
+class place(models.Model):
     """docstring forplace."""
 
     address = models.CharField(max_length = 255, blank = True)
@@ -82,7 +82,7 @@ class place(object):
     region = models.CharField(max_length = 255, blank = True)
 
 
-class Category(object):
+class Category(models.Model):
     """docstring forCategory."""
 
     name = models.CharField(max_length = 20)
@@ -90,16 +90,15 @@ class Category(object):
 
 
 
-class Incident(object):
+class Incident(models.Model):
     """docstring for Incident"""
     title = models.CharField(max_length=255)
     location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
-    date = models.DateTimeField("creation date", blank = True, null = True
+    date = models.DateTimeField("creation date", blank = True, null = True)
     category = models.ForeignKey(Category, models.SET_NULL, blank = True, null = True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
-    # location = models.CharField(max_length = 20)
-    textual_description = models.CharField(max_length = 100)
-    video = models.FileField(upload_to='videos/%Y/%m/%d')
-    audios = models.FileField(upload_to='audios/%Y/%m/%d')
-    images = models.ImageField(upload_to='images/%Y/%m/%d')
+    textual_description = models.CharField(max_length = 100, blank = True, null = True)
+    video = models.FileField(upload_to='videos/%Y/%m/%d', blank=True,null=True)
+    audios = models.FileField(upload_to='audios/%Y/%m/%d', blank=True,null=True)
+    images = models.ImageField(upload_to='images/%Y/%m/%d', blank=True,null=True)
     confidence = models.IntegerField(default = 0)
