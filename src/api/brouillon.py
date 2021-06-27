@@ -5,8 +5,8 @@
 # python manage.py makemigrations
 # python manage.py migrate
 
+# python manage.py flush
 
-## Revoir le televersement avec django
 
 
 # from pathlib import Path

@@ -35,7 +35,9 @@ class UserProfileManager(BaseUserManager):
 
 
 class UserProfile(AbstractBaseUser, PermissionsMixin, object):
+
     """database for user in the systeme"""
+
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length = 255, blank = True)
@@ -65,12 +67,13 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, object):
         return self.name
 
     def __str__(self):
-        """ str speciel methode of UserProfile """
+        """ str special methode of UserProfile """
         return self.email
 
 
 
 class place(models.Model):
+
     """docstring forplace."""
 
     address = models.CharField(max_length = 255, blank = True)
@@ -83,6 +86,7 @@ class place(models.Model):
 
 
 class Category(models.Model):
+
     """docstring forCategory."""
 
     name = models.CharField(max_length = 20)
@@ -91,14 +95,45 @@ class Category(models.Model):
 
 
 class Incident(models.Model):
+
     """docstring for Incident"""
+
     title = models.CharField(max_length=255)
     location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
     date = models.DateTimeField("creation date", blank = True, null = True)
     category = models.ForeignKey(Category, models.SET_NULL, blank = True, null = True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
+    confirms = models.ManyToManyField(settings.AUTH_USER_MODEL,
+        related_name= "user_confirms",
+        through='ConfirmOrInfirm',
+        through_fields=('incident', 'person'),
+        )
     textual_description = models.CharField(max_length = 100, blank = True, null = True)
     video = models.FileField(upload_to='videos/%Y/%m/%d', blank=True,null=True)
     audios = models.FileField(upload_to='audios/%Y/%m/%d', blank=True,null=True)
     images = models.ImageField(upload_to='images/%Y/%m/%d', blank=True,null=True)
     confidence = models.IntegerField(default = 0)
+
+    def __str__(self):
+        return self.title
+
+
+class ConfirmOrInfirm(models.Model):
+
+    """docstring for ConfirmOrInfirm."""
+
+    class Decision(models.TextChoices):
+        """docstring for Decision ."""
+        DEFAULT = ('DFT',"RAS")
+        CONFIRM = ('CNF',"Confirm")
+        INFIRM = ("INF", "Infirm")
+
+
+    incident = models.ForeignKey(Incident, on_delete=models.CASCADE)
+    person = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    decision = models.CharField(max_length = 3,
+                                choices = Decision.choices ,
+                                default = Decision.DEFAULT)
+    created_at = models.DateTimeField("date created", blank = True , null = True)
+    updated_at = models.DateTimeField("date uplated", blank = True, null = True)
+    deleted_at = models.DateTimeField("date deleted", blank = True, null = True)
