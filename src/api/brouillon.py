@@ -7,6 +7,8 @@
 
 # python manage.py flush
 
+# https://codesource.io/django-rest-api-documentation-with-swagger-ui/ 
+
 
 
 # from pathlib import Path
