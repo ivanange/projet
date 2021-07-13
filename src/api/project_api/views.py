@@ -28,4 +28,28 @@ class UserProfileAPIView(APIView):
 		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
-# Create your views here.
+class UserProfileDetail(APIView):
+	"""docstring for UserProfileDetail."""
+
+	serializer_class = serializers.UserProfileSerializer
+
+	def get_user(self, id):
+		try:
+			return models.UserProfile.objects.get(id=id)
+		except models.UserProfile.DoesNotExist:
+			return HttpResponse(status = status.HTTP_404_NOT_FOUND)
+
+	def get(self, request, id):
+
+		user = self.get_user(id)
+		serializer = self.serializer_class(user)
+		return Response(serializer.data)
+
+	def put(self, request, id):
+
+		user = self.get_user(id)
+		serializer = self.serializer_class(data = request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
