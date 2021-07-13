@@ -7,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasswordResetComponent implements OnInit {
 
+  email = true;
+  verify = false;
+  reset = false;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

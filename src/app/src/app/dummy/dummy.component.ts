@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-dummy',
   templateUrl: './dummy.component.html',
 })
-export class LightWithIconsAtBottomComponent implements OnInit {
+export class DummyComponent implements OnInit {
   isList: number;
   isMenu = false;
   isSearch = false;

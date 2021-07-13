@@ -1,0 +1,98 @@
+<div class="banniere d-block py-5">
+    <h1 class="d-block display-4 text-white py-5 my-5 text-center">Projects</h1>
+</div>
+
+<div class="container-fluid px-5 my-4 pt-3">
+    <div class="form-group mx-auto" style="max-width: 700px;">
+        <input class="mb-4" #q (keyup)="search(q.value)" name="search" type="text" class="form-control form-control-lg" id="search" placeholder="Rechercher des Projets">
+        <br>
+    </div>
+
+    <div *ngIf="projects.length; else nothing" class="table-responsive">
+        <table class="table table-striped table-hover mb-4 table-responsive-lg">
+            <thead class="font-weight-normal thead-dark">
+                <tr class="">
+                    <th class="text-center font-weight-normal">Projet</th>
+                    <th class="text-center font-weight-normal">Montant</th>
+                    <th class="text-center font-weight-normal">Durée</th>
+                    <th class="text-center font-weight-normal">Taux</th>
+                    <th class="text-center font-weight-normal">Fiabilité</th>
+                    <th class="text-center font-weight-normal"> Financement</th>
+                    <th class="text-center font-weight-normal"> Collecte </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let project of projects" (click)="onSelect(project)" class="colonne">
+                    <td class="">
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <i [class]="project.categoryIcon" data-toggle="tooltip" data-placement="top" [title]='project.category.data.name'>
+              </i>
+                            <small class="d-block">{{project.name}} </small>
+                        </div>
+                    </td>
+                    <td class="">
+                        <div class="d-flex justify-content-center align-items-center">
+                            {{project.amount | number:'1.0-0' }}&nbsp;XAF
+                        </div>
+                    </td>
+                    <td class="">
+                        <div class="d-flex justify-content-center align-items-center">
+                            {{project.readableDuration}}
+                        </div>
+                    </td>
+                    <td class="">
+                        <div class="d-flex justify-content-center align-items-center">
+                            {{project.interest_rate }}%
+                        </div>
+                    </td>
+                    <td class="">
+                        <div class="d-flex justify-content-center align-items-center">
+                            {{project.reliability}}%
+                        </div>
+                    </td>
+                    <td class="">
+                        <div class="d-flex justify-content-center align-items-center">
+                            {{project.percentage }}%
+                        </div>
+                    </td>
+                    <td class="">
+                        <div class="d-flex justify-content-center align-items-center">
+                            {{project.readableStatus | titlecase}}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between align-items-center px-3">
+            <span class="font-weight-bold" *ngIf="meta">
+        {{meta.pagination.total}} Projects trouvés
+      </span>
+            <nav>
+                <ul class="pagination mb-0" *ngIf="metas.length">
+                    <li class="page-item" [ngClass]="{ disabled: meta.pagination.current_page == 1}">
+                        <a class="page-link" routerLink="/projects" [queryParams]="{page: meta.pagination.current_page - 1}">
+              Previous
+            </a>
+                    </li>
+                    <li *ngFor="let index of metas" class="page-item" [ngClass]="{ active : index == meta.pagination.current_page}">
+                        <a class="page-link" routerLink="/projects" [queryParams]="{page: index}">{{index}}</a>
+                    </li>
+                    <li class="page-item" [ngClass]="{ disabled: meta.pagination.current_page == meta.pagination.total_pages}">
+                        <a routerLink="/projects" [queryParams]="{page: meta.pagination.current_page + 1}" class="page-link">
+              Next
+            </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+    <!-- <div class="" style="max-width: 500px;">
+    <a href="add-project" class="p-2 m-2 btn btn-md btn-primary shadow text-white rounded-pill">Soummettre Projet</a>
+  </div> -->
+    <ng-template #nothing>
+        <div class="text-center my-5">
+            <h3 class="text-muted">No results for this search</h3>
+        </div>
+    </ng-template>
+</div>
