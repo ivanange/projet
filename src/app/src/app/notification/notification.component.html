@@ -1,0 +1,24 @@
+<div *ngIf="notificationService.notifications.length" class="position-fixed text-dark pb-4 h-auto w-fit"
+  style="z-index: 10000000; right:2px; bottom:0;">
+
+  <div class="" id="notifications">
+    <button class="clear w-100 border-top-0 border-bottom-0  border-left-0 bg-white py-1 mb-2 shadow-sm text-secondary"
+      (click)="notificationService.clear()" style="border-right: 1px solid #dee2e66e;">Clear</button>
+    <div *ngFor='let notification of notificationService.notifications; index as index' class="toast" role="alert"
+      aria-live="assertive" aria-atomic="true" style="opacity:1; width: 300px;">
+      <div class="toast-header text-secondary px-1">
+        <img src="../../assets/images/logoicon.jpg" height="25" width="25" class="rounded mr-2" alt="Pecunia Logo">
+        <strong class="mr-auto">Pecunia</strong>
+        <small>{{notification.date | date | titlecase}}</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"
+          (click)="notificationService.remove(index)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        <h6 class="font-weight-bold">{{notification.title}}</h6>
+        <span>{{notification.message}}</span>
+      </div>
+    </div>
+  </div>
+</div>

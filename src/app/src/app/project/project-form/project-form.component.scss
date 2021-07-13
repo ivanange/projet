@@ -1,0 +1,21 @@
+.btDevenir:hover>.btnDevenir:hover {
+    color: white !important;
+    font-weight: 500;
+    top: 100%;
+    transition: top 2s;
+    text-decoration: none;
+    background-color: #007bffd9 !important;
+}
+
+.contenaire-bg {
+    background-image: url('../../../assets/images/background-connexion-min.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+

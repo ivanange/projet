@@ -1,0 +1,190 @@
+<div class="justify-content-center h-auto container">
+  <a class="d-block mt-3" routerLink="/projects">Retour à la liste</a>
+  <hr>
+  <!-- projet -->
+  <div class="row justify-content-center my-4 bg-light p-3 rounded">
+    <div class="my-3 w-100 pl-3 col-sm-12">
+      <h2>{{project.name}}</h2>
+    </div>
+    <!-- caroussel images  -->
+    <div class="col-lg-7 col-md-7 col-sm-12">
+      <div *ngIf="project.images.length; else default" id="project-images" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div *ngFor="let image of project.images; index as index" [class.active]="index==0" class="carousel-item"
+            data-interval="5000">
+            <img [src]="image.url" class="d-block w-100 rounded-sm" [alt]="image.name">
+          </div>
+        </div>
+        <a *ngIf="project.images.length > 1" class="carousel-control-prev" href="#project-images" role="button"
+          data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a *ngIf="project.images.length > 1" class="carousel-control-next" href="#project-images" role="button"
+          data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+      <ng-template #default>
+        <div class="w-100 h-100 bg-white d-flex flex-column align-items-center justify-content-center border rounded">
+          <i [class]="project.categoryIcon" class="text-primary mr-3  position-relative"
+            style="font-size:5em; top: 0px;"></i>
+          <h2 class="mt-1">{{project.category.data.name}}</h2>
+        </div>
+      </ng-template>
+    </div>
+    <!-- description projet -->
+    <div class="col-lg-5 col-md-5 col-sm-12">
+      <div class="row pb-2">
+        <div class="col-6 pb-1">
+          <h4>Collecté</h4>
+          <h4 class="text-primary">{{ project.financed | number:'1.0-0' }}&nbsp;XAF</h4>
+        </div>
+        <div class="col-6 text-right pb-1 ">
+          <h4 class="pr-1"> Objectif </h4>
+          <h4 class="text-primary"> {{ project.amount | number:'1.0-0' }}&nbsp;XAF</h4>
+        </div>
+        <div class="col-12">
+          <div class="progress rounded-pill" style="height: 1em;">
+            <div
+              class="progress-bar progress-bar-striped progress-bar-animated h-100 font-weight-bold text-center text-white"
+              role="progressbar" [style]="{width: project.percentage+'%'}" [attr.aria-valuenow]="project.percentage"
+              aria-valuemin="0" aria-valuemax="100">
+              {{ project.percentage }}%
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between align-items-baseline mb-2">
+        <span class="text-capitalize d-flex align-items-baseline font-weight-bold">
+          <i class="fas fa-chart-line text-primary mr-3 position-relative" style="font-size:1.5em; top: 1px;"></i>
+          taux
+        </span>
+        <div class="">
+          <!-- <small *ngIf="!auth.connected; else taux"
+            class="text-white p-1 text-capitalize rounded font-weight-bold bg-primary"
+            title="Vous devez etre enregistré pour acceder à cette information">
+            Masqué
+          </small>
+          <ng-template #taux>
+            {{project.interest_rate}}%
+          </ng-template> -->
+          {{project.interest_rate }}%
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-baseline mb-2">
+        <span class="text-capitalize d-flex align-items-baseline font-weight-bold">
+          <i [class]="project.categoryIcon" class="text-primary mr-3  position-relative"
+            style="font-size:1.4em; top: 1px;"></i>
+          type
+        </span>
+        <div class="">
+          {{project.category.data.name}}
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-baseline mb-2">
+        <span class="text-capitalize d-flex align-items-baseline font-weight-bold">
+          <i class="far fa-clock text-primary mr-3" style="font-size:1.5em;"></i>
+          durée
+        </span>
+        <div class="">
+          {{project.readableDuration }}
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-baseline mb-2">
+        <span class="text-capitalize d-flex align-items-baseline font-weight-bold position-relative" style="left: 2px;">
+          <i class="far fa-calendar text-primary mr-3" style="font-size:1.4em;"></i>
+          Date de cloture
+        </span>
+        <div class="">
+          {{project.readableFundindDeadLine | titlecase}}
+          <!-- {{project.funding_deadline| date | titlecase}} -->
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-baseline mb-2">
+        <span class="text-capitalize d-flex align-items-baseline font-weight-bold">
+          <i class="fas fa-balance-scale text-primary mr-2" style="font-size:1.4em;"></i>
+          <div class="pl-1">fiabilité</div>
+        </span>
+        <div class="">
+          {{project.reliability }}%
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-baseline mb-2">
+        <span class="text-capitalize d-flex align-items-baseline font-weight-bold">
+          <i class="fas fa-comments text-primary mr-2" style="font-size:1.4em;"></i>
+          <div class="pl-1">Propriétaire</div>
+        </span>
+        <div class="">
+          <a [href]="'mailto:'+project.user.data.email">{{project.user.data.name }}</a>
+        </div>
+      </div>
+      <hr>
+      <div class="row my-3 text-center ">
+        <a [routerLink]="['/checkout', project.id]"
+          class="px-3 btn rounded-pill text-capitalize text-lg-center border-primary mx-auto projetBtn"> Preter </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!--- project description  (tabs) -->
+  <div class="row border-bottom my-3">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="projet-tab" data-toggle="tab" href="#projet" role="tab" aria-controls="projet"
+          aria-selected="true">Détails</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="ficheTechnique-tab" data-toggle="tab" href="#ficheTechnique" role="tab"
+          aria-controls="ficheTehnique" aria-selected="false">Documents techniques</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="remboursement-tab" data-toggle="tab" href="#remboursement" role="tab"
+          aria-controls="remboursement" aria-selected="false">Remboursements</a>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="row my-4">
+    <div class="col-12 my-4">
+      <div *ngIf='auth.connected; else nodescription' class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="projet" role="tabpanel" aria-labelledby="projet-tab">
+          <p>
+            {{project.description}}
+          </p>
+          <div class="container bg-danger text-body text-center p-3" *ngIf='!auth.connected'>
+            <i class="fa fa-lock fa-3x"></i> Vous devez être connecté(e) pour accéder à cet onglet
+          </div>
+        </div>
+        <div class="tab-pane fade" id="ficheTechnique" role="tabpanel" aria-labelledby="ficheTechnique-tab">
+          <div class="d-flex flex-column">
+            <div class="d-flex flex-column mb-3" *ngFor="let document of project.files">
+              <i [class]="project.type(document.path)" style="font-size: 3em;"></i>
+              <span class="d-block mt-1 text-capitalize">{{document.name}}</span>
+              <a class="text-capitalize" target="_blank" [href]="document.url">télécharger</a>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="remboursement" role="tabpanel" aria-labelledby="remboursements-tab">
+          <div *ngIf="project.status === 'funded'; else notfunded">
+            details remboursement (progressbar)
+          </div>
+          <ng-template #notfunded>
+            Projet encore en cours de collecte.
+          </ng-template>
+        </div>
+      </div>
+      <ng-template #nodescription>
+        <div class="bg-gradient-success border border-light rounded-sm py-3 w-auto px-3"
+          style="border-left: 3px solid #17a2b8 !important;">
+          La description n'est pas disponible, connectez vous pour pouvoir la voir
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+</div>
