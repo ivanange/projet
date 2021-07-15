@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
+from django.db.models.base import Model
 
 
 class UserProfileManager(BaseUserManager):
@@ -92,8 +93,6 @@ class Category(models.Model):
     name = models.CharField(max_length = 20)
     description = models.CharField(max_length = 100)
 
-
-
 class Incident(models.Model):
 
     """docstring for Incident"""
@@ -118,6 +117,8 @@ class Incident(models.Model):
         return self.title
 
 
+    
+
 class ConfirmOrInfirm(models.Model):
 
     """docstring for ConfirmOrInfirm."""
@@ -130,7 +131,7 @@ class ConfirmOrInfirm(models.Model):
 
 
     incident = models.ForeignKey(Incident, on_delete=models.CASCADE)
-    person = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    person = models.ForeignKey  (settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     decision = models.CharField(max_length = 3,
                                 choices = Decision.choices ,
                                 default = Decision.DEFAULT)
