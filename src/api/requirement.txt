@@ -2,8 +2,5 @@ django==3.1
 djangorestframework==3.11.1
 django-rest-swagger==2.2.0
 pyyaml
-<<<<<<< HEAD
 djongo
-=======
 Pillow
->>>>>>> 4339bdf94426dbac7b470dc70fd1d77c184ae0c8

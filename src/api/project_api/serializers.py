@@ -9,7 +9,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = models.UserProfile
-        fields = ('id', 'email', 'name', 'password')
+        fields = ('id', 'email', 'name', 'password', 'phone')
         extra_kwargs = {
             'password' : {
                 'write_only' : True,
@@ -25,7 +25,64 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user = models.UserProfile.objects.create_user(
             email =  validated_data['email'],
             name =  validated_data['name'],
-            password = validated_data['password']
+            password = validated_data['password'],
+            phone = validated_data['phone'],
         )
 
         return user
+
+
+
+class IncidentSerializer(serializers.ModelSerializer):
+    """Serializes Incident"""
+
+    class Meta:
+        model = models.Incident
+        fields = ('id', 'user', 'title')
+        extra_kwargs = {
+            'user' : {
+                'read_only' : True
+            }
+        }
+
+
+class ConfirmOrInfirmSerializer(serializers.ModelSerializer):
+    """Serializes Incident"""
+
+    class Meta:
+        model = models.ConfirmOrInfirm
+        fields = ('id', 'person', 'decision', 'incident',)
+        extra_kwargs = {
+            'person' : {
+                'read_only' : True
+            },
+
+        }
+
+
+class NotifSerializer(serializers.ModelSerializer):
+    """Serializes Incident"""
+
+    class Meta:
+        model = models.notif
+        fields = ('id', 'to_user', 'from_user', 'message')
+        extra_kwargs = {
+            'from_user' : {
+                'read_only' : True
+            },
+
+        }
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    """Serializes Incident"""
+
+    class Meta:
+        model = models.Category
+        fields = ('id', 'by_admin', 'name', 'description')
+        extra_kwargs = {
+            'by_admin' : {
+                'read_only' : True
+            },
+
+        }
