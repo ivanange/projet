@@ -4,3 +4,4 @@ django-rest-swagger==2.2.0
 pyyaml
 djongo
 Pillow
+django_filters

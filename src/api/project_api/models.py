@@ -9,13 +9,13 @@ from django.db.models.base import Model
 class UserProfileManager(BaseUserManager):
     """manager for user profiles"""
 
-    def create_user(self, email, name, phone, password=None):
+    def create_user(self, email, name, phone, avatar=None , password=None):
         """create the new user profile"""
         if not phone:
             raise ValueError("User most have an email adresse")
 
         # email = self.normalize_email(email)
-        user = self.model(email=email, name=name, phone = phone)
+        user = self.model(email=email, name=name, phone = phone , avatar = avatar)
 
         user.set_password(password)
         user.save(using=self._db)
@@ -25,7 +25,7 @@ class UserProfileManager(BaseUserManager):
 
     def create_superuser(self, email, name,  phone, password):
         """create and save superuser with given detail"""
-        user = self.create_user(email, name, phone, password)
+        user = self.create_user(email, name, phone, avatar, password)
 
         user.is_superuser = True
         user.is_staff = True
@@ -39,11 +39,12 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, object):
 
     """database for user in the systeme"""
 
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique=True, blank=True,null=True)
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length = 255, unique=True)
     address = models.CharField(max_length = 255, blank = True)
-    avatar = models.CharField(max_length = 255, blank = True)
+    # avatar = models.CharField(max_length = 255, blank = True)
+    avatar = models.FileField(upload_to='images/%Y/%m/%d', blank=True, null=True)
     # settings = models.CharField(max_length = 255, blank = True)
     settings = models.JSONField(null=True)
     verified_at = models.DateTimeField("date verified", blank = True, null = True)
@@ -120,7 +121,7 @@ class Incident(models.Model):
         return self.title
 
 
-    
+
 
 class ConfirmOrInfirm(models.Model):
 

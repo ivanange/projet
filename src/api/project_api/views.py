@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
+from rest_framework.parsers import FileUploadParser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.settings import api_settings
@@ -35,6 +36,8 @@ class CustomAuthToken(ObtainAuthToken):
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     """Handle creating and updating user profile"""
+
+    parser_class = (FileUploadParser,)
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
     authentication_classes = (TokenAuthentication,)
