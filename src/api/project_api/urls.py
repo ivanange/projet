@@ -14,7 +14,7 @@ from project_api import views
 router = DefaultRouter()
 router.register('profile', views.UserProfileViewSet)
 router.register('incident', views.IncidentViewSet)
-router.register('confirm', views.ConfirmOrInfirmViewSet)
+router.register('proposition', views.PropositionViewSet)
 router.register('notification', views.NotifViewSet)
 router.register('category', views.CategoryViewSet)
 

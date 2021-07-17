@@ -47,12 +47,12 @@ class IncidentSerializer(serializers.ModelSerializer):
         }
 
 
-class ConfirmOrInfirmSerializer(serializers.ModelSerializer):
+class PropositionSerializer(serializers.ModelSerializer):
     """Serializes Incident"""
 
     class Meta:
-        model = models.ConfirmOrInfirm
-        fields = ('id', 'person', 'decision', 'incident',)
+        model = models.Proposition
+        fields = ('id', 'person', 'decision', 'incident')
         extra_kwargs = {
             'person' : {
                 'read_only' : True

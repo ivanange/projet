@@ -63,11 +63,11 @@ class IncidentViewSet(viewsets.ModelViewSet):
         serializer.save(user = self.request.user)
 
 
-class ConfirmOrInfirmViewSet(viewsets.ModelViewSet):
+class PropositionViewSet(viewsets.ModelViewSet):
 
     authentication_classes = (TokenAuthentication,)
-    serializer_class = serializers.ConfirmOrInfirmSerializer
-    queryset = models.ConfirmOrInfirm.objects.all()
+    serializer_class = serializers.PropositionSerializer
+    queryset = models.Proposition.objects.all()
     permission_classes = (
         permissions.UpdateOWnConfirmStatus,
         IsAuthenticatedOrReadOnly,

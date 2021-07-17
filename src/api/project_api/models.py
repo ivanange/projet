@@ -108,7 +108,7 @@ class Incident(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
     confirms = models.ManyToManyField(settings.AUTH_USER_MODEL,
         related_name= "user_confirms",
-        through='ConfirmOrInfirm',
+        through='Proposition',
         through_fields=('incident', 'person'),
         )
     textual_description = models.CharField(max_length = 100, blank = True, null = True)
@@ -123,9 +123,9 @@ class Incident(models.Model):
 
 
 
-class ConfirmOrInfirm(models.Model):
+class Proposition(models.Model):
 
-    """docstring for ConfirmOrInfirm."""
+    """docstring for Proposition."""
 
     class Decision(models.TextChoices):
         """docstring for Decision ."""
@@ -134,14 +134,17 @@ class ConfirmOrInfirm(models.Model):
         INFIRM = ("INF", "Infirm")
 
 
-    incident = models.ForeignKey(Incident, on_delete=models.CASCADE)
-    person = models.ForeignKey  (settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    incident = models.ForeignKey(Incident, models.SET_NULL, null=True ,blank=True)
+    person = models.ForeignKey  (settings.AUTH_USER_MODEL, on_delete=models.CASCADE , null=True , blank=True)
     decision = models.CharField(max_length = 3,
                                 choices = Decision.choices ,
                                 default = Decision.DEFAULT)
     created_at = models.DateTimeField("date created", blank = True , null = True)
     updated_at = models.DateTimeField("date uplated", blank = True, null = True)
     deleted_at = models.DateTimeField("date deleted", blank = True, null = True)
+
+    def __str__(self):
+        return self.incident.title
 
 class notif(models.Model):
 	"""docstring for Notifications."""
