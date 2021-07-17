@@ -9,7 +9,7 @@ from django.db.models.base import Model
 class UserProfileManager(BaseUserManager):
     """manager for user profiles"""
 
-    def create_user(self, email, name, phone, avatar=None , password=None):
+    def create_user(self, email, name, phone,  password=None, avatar=None ):
         """create the new user profile"""
         if not phone:
             raise ValueError("User most have an email adresse")
@@ -23,9 +23,9 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
-    def create_superuser(self, email, name,  phone, password):
+    def create_superuser(self, email, name,  phone, password, avatar=None):
         """create and save superuser with given detail"""
-        user = self.create_user(email, name, phone, avatar, password)
+        user = self.create_user(email, name, phone, password, avatar)
 
         user.is_superuser = True
         user.is_staff = True
@@ -100,9 +100,10 @@ class Incident(models.Model):
     """docstring for Incident"""
 
     title = models.CharField(max_length=255)
-    location = models.JSONField(null=True)
+    locations = models.JSONField(null=True, blank = True)
     # location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
-    date = models.DateTimeField("creation date", blank = True, null = True)
+    start_date = models.DateTimeField("start date", blank = True, null = True)
+    end_date = models.DateTimeField("end date", blank = True, null = True)
     category = models.ForeignKey(Category, models.SET_NULL, blank = True, null = True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
     confirms = models.ManyToManyField(settings.AUTH_USER_MODEL,
@@ -111,10 +112,9 @@ class Incident(models.Model):
         through_fields=('incident', 'person'),
         )
     textual_description = models.CharField(max_length = 100, blank = True, null = True)
-    # video = models.FileField(upload_to='videos/%Y/%m/%d', blank=True,null=True)
-    video = models.JSONField(null=True)
-    audio = models.JSONField(null=True)
-    image = models.JSONField(null=True)
+    video = models.FileField(upload_to='videos/%Y/%m/%d', blank=True,null=True)
+    audio = models.FileField(upload_to='audio/%Y/%m/%d', blank=True,null=True)
+    image = models.FileField(upload_to='images/%Y/%m/%d', blank=True,null=True)
     confidence = models.IntegerField(default = 0)
 
     def __str__(self):
