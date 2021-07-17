@@ -39,7 +39,7 @@ class IncidentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Incident
-        fields = ('id', 'user', 'title')
+        fields = ('id', 'user', 'title' , 'category')
         extra_kwargs = {
             'user' : {
                 'read_only' : True

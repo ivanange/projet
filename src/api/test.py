@@ -26,10 +26,11 @@ multipart_data = MultipartEncoder(
 # r = requests.post("http://127.0.0.1:8000/api/profile/" ,  data=multipart_data,
 #                   headers={'Content-Type': multipart_data.content_type} )
 
-r = requests.post("http://127.0.0.1:8000/api/proposition/", headers = headers, data = data)
+r = requests.get("http://127.0.0.1:8000/api/proposition/", headers = headers, data = data)
 
 print(r.status_code)
 print('----------------')
 print(r.reason)
 print('----------------')
 print(r.text)
+

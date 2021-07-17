@@ -47,7 +47,12 @@ class JustGetIfAuthenticated(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
-        if request.method == 'post' :
-            return request.user.is_staff
+        if request.method == "GET":
+
+            return True
+
+        return request.user.is_staff == True
+
+
 
         # return request.user and request.user.is_authenticated

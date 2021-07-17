@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
 from rest_framework.parsers import FileUploadParser
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, DjangoModelPermissions
 from rest_framework.settings import api_settings
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -48,6 +48,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
 class IncidentViewSet(viewsets.ModelViewSet):
 
+    parser_class = (FileUploadParser,)
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.IncidentSerializer
     queryset = models.Incident.objects.all()
@@ -56,6 +57,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
         IsAuthenticatedOrReadOnly,
 
     )
+    filterset_fields = ('category',)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
@@ -101,8 +103,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
-    permission_classes = (IsAuthenticated,
-                permissions.JustGetIfAuthenticated,
+    permission_classes = (DjangoModelPermissions,
 
     )
 
