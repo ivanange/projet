@@ -1,21 +1,5 @@
 window_sizes 1366 715 0 1361 669 0
 
-diagrams
-  usecasediagram_ref 128130 // Use_case_diagram
-    895 452 90 A4 0 0
-  activitydiagram_ref 134627 // créeer_compte
-    114 86 90 A4 0 0
-  activitydiagram_ref 141155 // confirmer incident
-    114 86 100 A4 0 0
-  activitydiagram_ref 147683 // declarer_incident
-    114 86 100 A4 0 0
-  sequencediagram_ref 128379 // gestion des utilisteur
-    114 86 100 A4 540 0
-  activitydiagram_ref 154211 // gestion utilisateurs
-    114 86 100 A4 0 0
-  active  classdiagram_ref 128002 // Class Diagram
-    1361 669 100 A4 0 0
-end
 show_stereotypes
 selected classdiagram_ref 128002 // Class Diagram
 open

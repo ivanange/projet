@@ -7,7 +7,7 @@ import {
   ProjectAllResponse,
   ProjectResponse,
   UnregisteredProject,
-} from '../../models/Project';
+} from '../../models/Incident';
 
 @Injectable({
   providedIn: 'root',

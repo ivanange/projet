@@ -1,0 +1,20 @@
+<div class="px-6 py-6 flex flex-col items-center">
+  <form class="w-full relative" (submit)="next()">
+    <input type="text" name="name" id="name" [(ngModel)]="name" required
+      class="focus:ring-black focus:border-black block w-full pl-7 sm:text-sm shadow-sm border-gray-300 rounded-3xl placeholder-gray-400"
+      placeholder="Type incident name">
+    <button type="submit" class="absolute top-0 right-0 text-gray-500 p-2 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </button>
+  </form>
+  <div class="pt-4 px-2" id="incidents-list">
+    <a class="pb-4" [routerLink]="['/incidents/create']">
+      <h3 class="font-bold">Incendie à Bocom Nkoldongo</h3>
+      <h2 class="text-xs text-gray-500">
+        Here at Globex we take special care of what your organization needs instead of
+      </h2>
+    </a>
+  </div>
+</div>

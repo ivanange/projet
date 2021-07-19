@@ -22,31 +22,23 @@ module.exports = {
         'black-overlay': '#00000059',
         'regal-blue': '#243c5a',
 
-        gray: colors.gray,
+        ...colors,
         'cool-gray': colors.coolGray,
         'true-gray': colors.trueGray,
         'blue-gray': colors.blueGray,
         'warm-gray': colors.warmGray,
-        'light-blue': colors.lightBlue,
-        orange: colors.orange,
-        amber: colors.amber,
-        yellow: colors.yellow,
-        green: colors.green,
-        emerald: colors.emerald,
-        lime: colors.lime,
-        teal: colors.teal,
-        cyan: colors.cyan,
-        violet: colors.violet,
-        purple: colors.purple,
-        fuchsia: colors.fuchsia,
-        rose: colors.rose,
       },
 
       minWidth: {
         xs: '16rem'
       },
+
       height: {
         fit: 'fit-content'
+      },
+
+      boxShadow: {
+        'round-lg': '0 0px 15px -3px rgba(0, 0, 0, 0.1), 0 0px 10px -2px rgba(0, 0, 0, 0.05)',
       }
     },
 

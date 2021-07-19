@@ -1,0 +1,165 @@
+<div class="h-full px-4 py-6 flex justify-center items-center">
+  <form class="w-full space-y-5" (submit)="create()">
+    <h1 class="text-black text-xl font-semibold">Tell us more about the incident</h1>
+    <div>
+      <label for="title" class="sr-only">Title</label>
+      <input [(ngModel)]="incident.title" id="title" name="title" type="text" autocomplete="current-title" required
+        class="
+            appearance-none
+            relative
+            block
+            w-full
+            px-3
+            py-2
+            border border-gray-300
+            placeholder-gray-500
+            text-gray-900
+            rounded-md
+            focus:outline-none
+            focus:ring-black
+            focus:border-black
+            focus:z-10
+          " placeholder="Title" />
+      <small v-if="error.data.password" class="text-red-500"></small>
+    </div>
+    <div>
+      <label for="textual_description" class="sr-only">Textual_description</label>
+      <textarea [(ngModel)]="incident.textual_description" rows="6" id="textual_description" name="textual_description"
+        type="text" autocomplete="current-textual_description" class="
+            appearance-none
+            relative
+            block
+            w-full
+            px-3
+            py-2
+            border border-gray-300
+            placeholder-gray-500
+            text-gray-900
+            rounded-md
+            focus:outline-none
+            focus:ring-black
+            focus:border-black
+            focus:z-10
+            text-sm
+          " placeholder="What happened"></textarea>
+      <small v-if="error.data.password" class="text-red-500"></small>
+      <div class="flex justify-end items-center text-gray-500 pt-1">
+        <button (click)="addPhotoToGallery()"
+          class="px-1.5 py-1 rounded-full focus:bg-gray-100 text-gray-600 focus:outline-none" title="Add images">
+          <svg class="duration-100" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+        <button class="px-1.5 py-1 rounded-full focus:bg-gray-100 text-gray-600 focus:outline-none" title="Add video">
+          <svg class="duration-100" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path
+              d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+          </svg>
+        </button>
+        <button class="px-1.5 py-1 rounded-full focus:bg-gray-100 text-gray-600 focus:outline-none"
+          title="Add voice message">
+          <svg class="duration-100" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="flex flex-wrap">
+      <h2 for="date" class="text-gray-900 font-semibold w-full">When</h2>
+      <div class="w-1/2 pr-2">
+        <label for="date" class="text-gray-500 text-sm">Started</label>
+        <ion-datetime [max]="now" [(ngModel)]="incident.date" [ngModelOptions]="{standalone: true}" class="h-9
+        appearance-none
+        relative
+        block
+        w-full
+        px-3
+        py-2
+        border border-gray-300
+        placeholder-gray-500
+        text-gray-900
+        rounded-md
+        focus:outline-none
+        focus:ring-black
+        focus:border-black
+        focus:z-10
+        text-sm
+      " displayFormat="MMM DD, YYYY HH:mm" required>
+        </ion-datetime>
+      </div>
+      <div class="w-1/2 pl-2">
+        <label for="date" class="text-gray-500 text-sm">Ended</label>
+        <ion-datetime [max]="now" [(ngModel)]="incident.end_date" [ngModelOptions]="{standalone: true}" class="h-9
+        appearance-none
+        relative
+        block
+        w-full
+        px-3
+        py-2
+        border border-gray-300
+        placeholder-gray-500
+        text-gray-900
+        rounded-md
+        focus:outline-none
+        focus:ring-black
+        focus:border-black
+        focus:z-10
+        text-sm
+      " displayFormat="MMM DD, YYYY HH:mm" placeholder="Ended date if any">
+        </ion-datetime>
+      </div>
+    </div>
+    <div>
+      <h2 for="date" class="text-gray-900 font-semibold pb-1 w-full">Where</h2>
+      <label for="location" class="sr-only">Location</label>
+      <input [(ngModel)]="incident.location" rows="6" id="location" name="location" type="text"
+        autocomplete="current-location" class="
+            appearance-none
+            relative
+            block
+            w-full
+            px-3
+            py-2
+            border border-gray-300
+            placeholder-gray-500
+            text-gray-900
+            rounded-md
+            focus:outline-none
+            focus:ring-black
+            focus:border-black
+            focus:z-10
+            text-sm
+          " placeholder="At Marché Ndokoti" />
+      <small v-if="error.data.password" class="text-red-500"></small>
+    </div>
+    <div>
+      <button type="submit" class="
+            group
+            relative
+            w-full
+            flex
+            justify-center
+            py-2
+            px-4
+            border border-transparent
+            text-sm
+            font-medium
+            rounded-md
+            text-white
+            bg-black
+            focus:opacity-90
+            focus:outline-none
+            focus:ring-2 focus:ring-offset-2 focus:ring-black
+          ">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

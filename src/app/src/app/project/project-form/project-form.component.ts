@@ -4,9 +4,9 @@ import { NgForm } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
 import { NotificationService } from '../../services/notification.service';
 import { Router } from '@angular/router';
-import { UnregisteredProject } from '../../models/Project';
+import { UnregisteredProject } from '../../models/Incident';
 import { Category } from '../../models/Category';
-import { Project } from 'src/app/models/Project';
+import { Project } from 'src/app/models/Incident';
 
 @Component({
   selector: 'app-project-form',

@@ -124,7 +124,7 @@
               focus:z-10
               sm:text-sm
             " placeholder="Confirm Password" />
-        <small class="text-red-500" v-if="!errors.password_confirmation">Pass word and confimation don't
+        <small class="text-red-500" v-if="!errors.password_confirmation">Password and confimation don't
           match</small>
       </div>
 
@@ -172,6 +172,7 @@
               rounded-md
               text-white
               bg-black
+              focus:opacity-90
               focus:outline-none
               focus:ring-2 focus:ring-offset-2 focus:ring-black
             ">

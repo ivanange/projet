@@ -18,7 +18,7 @@ import {
 } from '../services//notification.service';
 import {
   Project
-} from '../models/Project';
+} from '../models/Incident';
 import {
   ActivatedRoute
 } from '@angular/router';

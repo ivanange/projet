@@ -18,7 +18,7 @@
 // @import "~@ionic/angular/css/typography.css";
 // @import '~@ionic/angular/css/display.css';
 
-/* Optional CSS utils that can be commented out */
+// /* Optional CSS utils that can be commented out */
 // @import "~@ionic/angular/css/padding.css";
 // @import "~@ionic/angular/css/float-elements.css";
 // @import "~@ionic/angular/css/text-alignment.css";
@@ -30,6 +30,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "default.theme.css";
 
 * {
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,

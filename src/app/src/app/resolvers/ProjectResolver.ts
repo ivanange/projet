@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   Router,
 } from '@angular/router';
-import { Project } from '../models/Project';
+import { Project } from '../models/Incident';
 import { BackendService } from '../services/backend.service';
 import { NotificationService } from '../services/notification.service';
 import { map, retry, catchError } from 'rxjs/operators';
@@ -17,7 +17,7 @@ export class ProjectResolver implements Resolve<Project> {
     private backend: BackendService,
     private notifications: NotificationService,
     private router: Router
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,

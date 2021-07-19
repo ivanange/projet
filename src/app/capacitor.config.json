@@ -1,20 +1,6 @@
 {
-  "appId": "io.spik.app",
-  "appName": "app",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {},
-  "windows": {
-    "androidStudioPath": "I:\\programs\\Android\\Android Studio\\bin\\studio64.exe"
-  },
-  "server": {
-    "url": "http://192.168.43.36:8100",
-    "cleartext": true
-  }
+	"appId": "io.spik.app",
+	"appName": "spik",
+	"webDir": "www",
+	"bundledWebRuntime": false
 }
