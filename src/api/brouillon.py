@@ -7,7 +7,7 @@
 
 # python manage.py flush
 
-# https://codesource.io/django-rest-api-documentation-with-swagger-ui/ 
+# https://codesource.io/django-rest-api-documentation-with-swagger-ui/
 
 
 
@@ -17,3 +17,8 @@
 # BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 #
 # print(BASE_DIR)
+
+
+# https://www.freecodecamp.org/news/learn-mongodb-a4ce205e7739/
+
+# https://stackoverflow.com/questions/58742948/rest-framework-swagger-autoschema-object-has-no-attribute-get-link

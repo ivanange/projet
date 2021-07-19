@@ -8,4 +8,6 @@ admin.site.register(models.Incident)
 
 admin.site.register(models.Category)
 
-admin.site.register(models.ConfirmOrInfirm)
+admin.site.register(models.Proposition)
+
+admin.site.register(models.notif)
