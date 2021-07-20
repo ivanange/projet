@@ -46,7 +46,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, object):
     # avatar = models.CharField(max_length = 255, blank = True)
     avatar = models.FileField(upload_to='images/%Y/%m/%d', blank=True, null=True)
     # settings = models.CharField(max_length = 255, blank = True)
-    settings = models.JSONField(null=True)
+    settings = models.JSONField(null=True, blank=True)
     verified_at = models.DateTimeField("date verified", blank = True, null = True)
     created_at = models.DateTimeField("date created", blank = True , null = True)
     updated_at = models.DateTimeField("date uplated", blank = True, null = True)
@@ -114,7 +114,7 @@ class Incident(models.Model):
         through='Proposition',
         through_fields=('incident', 'person'),
         )
-    textual_description = models.CharField(max_length = 100, blank = True, null = True)
+    textual_description = models.TextField(max_length = 100, blank = True, null = True)
     video = models.FileField(upload_to='videos/%Y/%m/%d', blank=True,null=True)
     audio = models.FileField(upload_to='audio/%Y/%m/%d', blank=True,null=True)
     image = models.FileField(upload_to='images/%Y/%m/%d', blank=True,null=True)

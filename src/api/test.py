@@ -2,7 +2,7 @@
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-api_key = "Token 4add78578abe956355f9005d0241a913268b343f"
+api_key = "Token 496fae129382e2859d6aa99add5799091077f047"
 
 headers = {
 	"Authorization" : api_key,
@@ -26,7 +26,7 @@ multipart_data = MultipartEncoder(
 # r = requests.post("http://127.0.0.1:8000/api/profile/" ,  data=multipart_data,
 #                   headers={'Content-Type': multipart_data.content_type} )
 
-r = requests.get("http://127.0.0.1:8000/api/proposition/", headers = headers, data = data)
+r = requests.post("http://127.0.0.1:8000/api/proposition/", headers = headers, data = data)
 
 print(r.status_code)
 print('----------------')

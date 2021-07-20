@@ -22,3 +22,20 @@
 # https://www.freecodecamp.org/news/learn-mongodb-a4ce205e7739/
 
 # https://stackoverflow.com/questions/58742948/rest-framework-swagger-autoschema-object-has-no-attribute-get-link
+
+
+*Permissions pour notif
+*Permissions pour proposition
+*Permissions pour incident
+*Gestion des proposition (mise à jour confiance etc ...)
+*Migration initiale
+*REVIEW
+*websocket pour Notifications
+
+
+
+
+UserProfile.objects.filter(id=1) # queryset of object
+user = UserProfile.objects.get(id=1) # just one object
+Incident.objects.filter(user = user).count() # le nombre d'incidents declaré par un user
+Proposition.objects.filter(person=user, decision="CNF").count()

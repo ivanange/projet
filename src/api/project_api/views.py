@@ -85,12 +85,23 @@ class NotifViewSet(viewsets.ModelViewSet):
 
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.NotifSerializer
-    queryset = models.notif.objects.all()
+    # queryset = models.notif.objects.filter(receive_at=request.user)
     permission_classes = (
         permissions.UpdateOnlyAdmin,
         IsAuthenticatedOrReadOnly,
 
     )
+
+    def get_queryset(self):
+        """
+        Filter objects so a user only sees his own stuff.
+        If user is admin, let him see all.
+        """
+        if self.request.user.is_staff:
+            return models.notif.objects.all()
+        else:
+            user = self.request.user
+            return models.notif.objects.filter(to_user = user)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
@@ -112,6 +123,33 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
         serializer.save(by_admin = self.request.user)
 
+
+
+class UserProfileDetail(APIView):
+    """docstring for UserProfileDetail."""
+
+    serializer_class = serializers.UserProfileDetailSerializer
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (DjangoModelPermissions,)
+	# filter_backends = (filters.SearchFilter,)
+	# search_fields = ('name', 'email',)
+
+    def get_user(self, id):
+        try:
+            return models.UserProfile.objects.get(id=id)
+        except models.UserProfile.DoesNotExist:
+            return HttpResponse(status = status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, id):
+        dict = {}
+        user = self.get_user(id)
+        dict["phone"] = user.phone
+        dict["name"] = user.name
+        dict["email"] = user.email
+        dict["total_declarer"] = models.Incident.objects.filter(user = user).count()
+        dict["total_confirmer"] = models.Proposition.objects.filter(person=user, decision="CNF").count()
+        dict["total_infirmer"] = models.Proposition.objects.filter(person=user, decision="INF").count()
+        return Response(dict)
 
 # ===================================================================
 #   			OLD VERSION WITH APIView						    #
@@ -141,36 +179,36 @@ class UserProfileAPIView(APIView):
 		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
-class UserProfileDetail(APIView):
-	"""docstring for UserProfileDetail."""
-
-	serializer_class = serializers.UserProfileSerializer
-	authentication_classes = (TokenAuthentication,)
-	permission_classes = (permissions.UpdateOwnProfile,)
-	filter_backends = (filters.SearchFilter,)
-	search_fields = ('name', 'email',)
-
-	def get_user(self, id):
-		try:
-			return models.UserProfile.objects.get(id=id)
-		except models.UserProfile.DoesNotExist:
-			return HttpResponse(status = status.HTTP_404_NOT_FOUND)
-
-	def get(self, request, id):
-
-		user = self.get_user(id)
-		serializer = self.serializer_class(user)
-		return Response(serializer.data)
-
-	def put(self, request, id):
-
-		user = self.get_user(id)
-		serializer = self.serializer_class(data = request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data)
-		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-
+# class UserProfileDetail(APIView):
+# 	"""docstring for UserProfileDetail."""
+#
+# 	serializer_class = serializers.UserProfileSerializer
+# 	authentication_classes = (TokenAuthentication,)
+# 	permission_classes = (permissions.UpdateOwnProfile,)
+# 	filter_backends = (filters.SearchFilter,)
+# 	search_fields = ('name', 'email',)
+#
+# 	def get_user(self, id):
+# 		try:
+# 			return models.UserProfile.objects.get(id=id)
+# 		except models.UserProfile.DoesNotExist:
+# 			return HttpResponse(status = status.HTTP_404_NOT_FOUND)
+#
+# 	def get(self, request, id):
+#
+# 		user = self.get_user(id)
+# 		serializer = self.serializer_class(user)
+# 		return Response(serializer.data)
+#
+# 	def put(self, request, id):
+#
+# 		user = self.get_user(id)
+# 		serializer = self.serializer_class(data = request.data)
+# 		if serializer.is_valid():
+# 			serializer.save()
+# 			return Response(serializer.data)
+# 		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+#
 
 class UserLoginApiView(ObtainAuthToken):
 

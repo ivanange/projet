@@ -3,13 +3,19 @@ from rest_framework import serializers
 from project_api import models
 
 
+
+
+class UserProfileDetailSerializer(serializers.Serializer):
+    """Serializer the user profile object"""
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
     """Serializer the user profile object"""
 
     class Meta:
 
         model = models.UserProfile
-        fields = ('id', 'email', 'name', 'password', 'phone' , 'avatar')
+        fields = '__all__'
         extra_kwargs = {
             'password' : {
                 'write_only' : True,
@@ -39,7 +45,7 @@ class IncidentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Incident
-        fields = ('id', 'user', 'title' , 'category')
+        fields = '__all__'
         extra_kwargs = {
             'user' : {
                 'read_only' : True
@@ -52,7 +58,7 @@ class PropositionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Proposition
-        fields = ('id', 'person', 'decision', 'incident')
+        fields = '__all__'
         extra_kwargs = {
             'person' : {
                 'read_only' : True
@@ -66,7 +72,7 @@ class NotifSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.notif
-        fields = ('id', 'to_user', 'from_user', 'message')
+        fields = '__all__'
         extra_kwargs = {
             'from_user' : {
                 'read_only' : True
@@ -80,7 +86,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Category
-        fields = ('id', 'by_admin', 'name', 'description')
+        fields = '__all__'
         extra_kwargs = {
             'by_admin' : {
                 'read_only' : True

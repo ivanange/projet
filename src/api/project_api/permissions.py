@@ -38,20 +38,15 @@ class UpdateOnlyAdmin(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
 
         if request.method in permissions.SAFE_METHODS :
-            return request.user.id == obj.to_user.id
+            return request.user == obj.from_user
 
         return (request.user.is_staff == True)
 
+        # if request.user.is_staff:
+        #     return True
+        # return obj.from_user == request.user
 
-class JustGetIfAuthenticated(permissions.BasePermission):
 
-    def has_object_permission(self, request, view, obj):
-
-        if request.method == "GET":
-
-            return True
-
-        return request.user.is_staff == True
 
 
 
