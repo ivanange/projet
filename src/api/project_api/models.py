@@ -4,6 +4,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
 from django.db.models.base import Model
+from datetime import datetime
 
 
 class UserProfileManager(BaseUserManager):
@@ -46,7 +47,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, object):
     # avatar = models.CharField(max_length = 255, blank = True)
     avatar = models.FileField(upload_to='images/%Y/%m/%d', blank=True, null=True)
     # settings = models.CharField(max_length = 255, blank = True)
-    settings = models.JSONField(null=True)
+    settings = models.JSONField(null=True, blank=True)
     verified_at = models.DateTimeField("date verified", blank = True, null = True)
     created_at = models.DateTimeField("date created", blank = True , null = True)
     updated_at = models.DateTimeField("date uplated", blank = True, null = True)
@@ -107,6 +108,7 @@ class Incident(models.Model):
     # location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
     start_date = models.DateTimeField("start date", blank = True, null = True)
     end_date = models.DateTimeField("end date", blank = True, null = True)
+    declared_at = models.DateTimeField("declared at", default=datetime.now)
     category = models.ForeignKey(Category, models.SET_NULL, blank = True, null = True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
     confirms = models.ManyToManyField(settings.AUTH_USER_MODEL,
@@ -114,7 +116,7 @@ class Incident(models.Model):
         through='Proposition',
         through_fields=('incident', 'person'),
         )
-    textual_description = models.CharField(max_length = 100, blank = True, null = True)
+    textual_description = models.TextField(max_length = 100, blank = True, null = True)
     video = models.FileField(upload_to='videos/%Y/%m/%d', blank=True,null=True)
     audio = models.FileField(upload_to='audio/%Y/%m/%d', blank=True,null=True)
     image = models.FileField(upload_to='images/%Y/%m/%d', blank=True,null=True)

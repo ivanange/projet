@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'project2',
+        'NAME': 'project',
     }
 }
 
