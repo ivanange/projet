@@ -7,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
+  public name = '';
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
+  search() { }
 }

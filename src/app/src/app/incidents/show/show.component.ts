@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-show',
   templateUrl: './show.component.html',
@@ -16,12 +17,12 @@ export class ShowComponent implements OnInit {
     'https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg'
   ];
 
-  constructor(private locator: Location) { }
+  constructor(private router: Router) { }
 
   ngOnInit() { }
 
   back() {
-    this.locator.back();
+    this.router.navigate(['index']);
   }
 
 }
