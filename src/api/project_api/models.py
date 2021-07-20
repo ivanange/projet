@@ -4,6 +4,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
 from django.db.models.base import Model
+from datetime import datetime
 
 
 class UserProfileManager(BaseUserManager):
@@ -107,6 +108,7 @@ class Incident(models.Model):
     # location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
     start_date = models.DateTimeField("start date", blank = True, null = True)
     end_date = models.DateTimeField("end date", blank = True, null = True)
+    declared_at = models.DateTimeField("declared at", default=datetime.now)
     category = models.ForeignKey(Category, models.SET_NULL, blank = True, null = True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
     confirms = models.ManyToManyField(settings.AUTH_USER_MODEL,

@@ -13,6 +13,8 @@ import django_filters.rest_framework
 from project_api import serializers
 from project_api import models
 from project_api import permissions
+from datetime import datetime
+from datetime import timedelta
 
 
 
@@ -149,6 +151,15 @@ class UserProfileDetail(APIView):
         dict["total_declarer"] = models.Incident.objects.filter(user = user).count()
         dict["total_confirmer"] = models.Proposition.objects.filter(person=user, decision="CNF").count()
         dict["total_infirmer"] = models.Proposition.objects.filter(person=user, decision="INF").count()
+        now = datetime.now()
+        last_month = now - timedelta(days = 30)
+        data = {}
+        data["valeur"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
+        last = last_month - timedelta(days = 30)
+        last_data = models.Incident.objects.filter(user = user, declared_at__gt = last, declared_at__lt = last_month).count()
+        data["tendance"] = ((data["valeur"] - last_data)/data["valeur"])*100
+        dict["declarer"] = data
+        # dict["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
         return Response(dict)
 
 # ===================================================================
