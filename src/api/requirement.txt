@@ -2,6 +2,7 @@ django==3.1
 djangorestframework==3.11.1
 django-rest-swagger==2.2.0
 pyyaml
+sqlparse==0.2.4
 djongo
 Pillow
-django_filters
+django_filter

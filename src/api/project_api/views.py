@@ -19,10 +19,6 @@ from datetime import datetime
 from datetime import timedelta
 
 
-
-
-
-
 class CustomAuthToken(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
@@ -34,7 +30,7 @@ class CustomAuthToken(ObtainAuthToken):
         return Response({
             'token': token.key,
             'user_id': user.pk,
-            'email': user.email
+            'phone': user.phone
         })
 
 
@@ -49,6 +45,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     # filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     # search_fields = ('name', 'email',)
     filterset_fields = ('name',)
+
 
 class IncidentViewSet(viewsets.ModelViewSet):
 
@@ -66,7 +63,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
 
-        serializer.save(user = self.request.user)
+        serializer.save(user=self.request.user)
 
 
 
@@ -84,7 +81,8 @@ class PropositionViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
 
-        serializer.save(person = self.request.user)
+        serializer.save(person=self.request.user)
+
 
 class NotifViewSet(viewsets.ModelViewSet):
 
@@ -106,12 +104,12 @@ serializers.DateField()
             return models.notif.objects.all()
         else:
             user = self.request.user
-            return models.notif.objects.filter(to_user = user)
+            return models.notif.objects.filter(to_user=user)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
 
-        serializer.save(from_user = self.request.user)
+        serializer.save(from_user=self.request.user)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -121,13 +119,12 @@ class CategoryViewSet(viewsets.ModelViewSet):
     queryset = models.Category.objects.all()
     permission_classes = (DjangoModelPermissions,
 
-    )
+                          )
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
 
-        serializer.save(by_admin = self.request.user)
-
+        serializer.save(by_admin=self.request.user)
 
 
 class UserProfileDetail(APIView):
@@ -136,14 +133,14 @@ class UserProfileDetail(APIView):
     serializer_class = serializers.UserProfileDetailSerializer
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (DjangoModelPermissions,)
-	# filter_backends = (filters.SearchFilter,)
-	# search_fields = ('name', 'email',)
+    # filter_backends = (filters.SearchFilter,)
+    # search_fields = ('name', 'email',)
 
     def get_user(self, id):
         try:
             return models.UserProfile.objects.get(id=id)
         except models.UserProfile.DoesNotExist:
-            return HttpResponse(status = status.HTTP_404_NOT_FOUND)
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, id):
         dict = {}
@@ -151,15 +148,20 @@ class UserProfileDetail(APIView):
         dict["phone"] = user.phone
         dict["name"] = user.name
         dict["email"] = user.email
-        dict["total_declarer"] = models.Incident.objects.filter(user = user).count()
-        dict["total_confirmer"] = models.Proposition.objects.filter(person=user, decision="CNF").count()
-        dict["total_infirmer"] = models.Proposition.objects.filter(person=user, decision="INF").count()
+        dict["total_declarer"] = models.Incident.objects.filter(
+            user=user).count()
+        dict["total_confirmer"] = models.Proposition.objects.filter(
+            person=user, decision="CNF").count()
+        dict["total_infirmer"] = models.Proposition.objects.filter(
+            person=user, decision="INF").count()
         now = datetime.now()
-        last_month = now - timedelta(days = 30)
+        last_month = now - timedelta(days=30)
         data = {}
-        data["valeur"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
-        last = last_month - timedelta(days = 30)
-        last_data = models.Incident.objects.filter(user = user, declared_at__gt = last, declared_at__lt = last_month).count()
+        data["valeur"] = models.Incident.objects.filter(
+            user=user, declared_at__gt=last_month).count()
+        last = last_month - timedelta(days=30)
+        last_data = models.Incident.objects.filter(
+            user=user, declared_at__gt=last, declared_at__lt=last_month).count()
         data["tendance"] = ((data["valeur"] - last_data)/data["valeur"])*100
         dict["declarer"] = data
         # dict["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
@@ -192,29 +194,31 @@ class  AnaliticsViews(viewsets.ModelViewSet):
 # ===================================================================
 #   			OLD VERSION WITH APIView						    #
 # ===================================================================
+
+
 class UserProfileAPIView(APIView):
-	"""docstring forUserProfileApiView."""
+    """docstring forUserProfileApiView."""
 
-	serializer_class = serializers.UserProfileSerializer
-	authentication_classes = (TokenAuthentication,)
-	permission_classes = (permissions.UpdateOwnProfile,)
+    serializer_class = serializers.UserProfileSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
 
-	# filter_backends = (filters.SearchFilter,)
-	# search_fields = ('name', 'email',)
+    # filter_backends = (filters.SearchFilter,)
+    # search_fields = ('name', 'email',)
 
-	def get(self, request):
+    def get(self, request):
 
-		users = models.UserProfile.objects.all()
-		serializer = self.serializer_class(users, many = True)
-		return Response(serializer.data)
+        users = models.UserProfile.objects.all()
+        serializer = self.serializer_class(users, many=True)
+        return Response(serializer.data)
 
-	def post(self, request):
+    def post(self, request):
 
-		serializer = self.serializer_class(data = request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status = status.HTTP_201_CREATED)
-		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class UserProfileDetail(APIView):

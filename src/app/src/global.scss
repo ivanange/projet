@@ -37,3 +37,15 @@
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   @apply duration-300;
 }
+
+:root {
+  --ion-color-primary: black;
+  --border-width: 0;
+  // --padding-top: 1rem;
+  // --padding-bottom: 1rem;
+  // --min-height: 5rem;
+}
+
+.header-md::after {
+  display: none;
+}
