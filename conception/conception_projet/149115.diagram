@@ -1,0 +1,76 @@
+format 224
+
+classinstance 128123 class_ref 129282 // Admin
+  name ""   xyz 118 4 2005 life_line_z 2000
+classinstance 128251 class_ref 135035 // systéme
+  name ""   xyz 342 5 2000 life_line_z 2000
+classinstance 128379 class_ref 128002 // User
+  name ""   xyz 556 4 2005 life_line_z 2000
+classinstance 128507 class_ref 128386 // Role
+  name ""   xyz 708 6 2000 life_line_z 2000
+durationcanvas 128635 classinstance_ref 128123 // :Admin
+  xyzwh 131 81 2010 11 40
+end
+durationcanvas 128763 classinstance_ref 128251 // :systéme
+  xyzwh 364 81 2010 11 63
+end
+durationcanvas 129019 classinstance_ref 128379 // :User
+  xyzwh 575 117 2010 11 25
+end
+durationcanvas 129275 classinstance_ref 128379 // :User
+  xyzwh 575 147 2010 11 40
+end
+durationcanvas 129403 classinstance_ref 128251 // :systéme
+  xyzwh 364 147 2010 11 25
+end
+durationcanvas 129659 classinstance_ref 128251 // :systéme
+  xyzwh 364 183 2010 11 40
+end
+durationcanvas 129787 classinstance_ref 128123 // :Admin
+  xyzwh 131 183 2010 11 25
+end
+durationcanvas 130043 classinstance_ref 128123 // :Admin
+  xyzwh 131 255 2010 11 56
+end
+durationcanvas 130171 classinstance_ref 128251 // :systéme
+  xyzwh 364 255 2010 11 25
+end
+durationcanvas 130427 classinstance_ref 128251 // :systéme
+  xyzwh 364 304 2010 11 40
+end
+msg 128891 synchronous
+  from durationcanvas_ref 128635
+  to durationcanvas_ref 128763
+  yz 81 2015 explicitmsg "demande tous les utilisteurs"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 158 70
+msg 129147 synchronous
+  from durationcanvas_ref 128763
+  to durationcanvas_ref 129019
+  yz 117 2015 explicitmsg "show user()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 419 106
+msg 129531 return
+  from durationcanvas_ref 129275
+  to durationcanvas_ref 129403
+  yz 147 2015 explicitmsg "utilisateur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 445 136
+msg 129915 return
+  from durationcanvas_ref 129659
+  to durationcanvas_ref 129787
+  yz 183 2015 explicitmsg "liste des utilisateurs"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 177 172
+msg 130299 synchronous
+  from durationcanvas_ref 130043
+  to durationcanvas_ref 130171
+  yz 255 2015 explicitmsg "demande de modification du role"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 175 244
+msg 130555 return
+  from durationcanvas_ref 130427
+  to durationcanvas_ref 130043
+  yz 304 2015 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+end

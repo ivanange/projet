@@ -1,7 +1,7 @@
 format 224
 "conception_projet"
-  revision 14
-  modified_by 2 "angelheart"
+  revision 24
+  modified_by 123 "mleandra"
 
 
   
@@ -168,7 +168,7 @@ format 224
 	MysqlColumn
       end
 
-      operation 128002 "fullname"
+      operation 128002 "create"
 	public explicit_return_type "string"
 	nparams 0
 	
@@ -233,12 +233,12 @@ format 224
 	MysqlColumn
       end
 
-      classrelation 128002 // (owns)
-	relation 128002 ---- name "owns"
+      classrelation 128002 // (possede)
+	relation 128002 ---- name "possede"
 	  a role_name "" multiplicity "*" private
-	    classrelation_ref 128002 // (owns)
+	    classrelation_ref 128002 // (possede)
 	  b role_name "" multiplicity "*" private
-	    classrelation_ref 128130 // (owns)
+	    classrelation_ref 128130 // (possede)
       end
 
       classrelation 128514 // (has)
@@ -265,12 +265,58 @@ format 224
 	    classrelation_ref 129666 // <association>
       end
 
-      classrelation 129794 // (confirms)
-	relation 128898 ---- name "confirms"
+      classrelation 129794 // (propose)
+	relation 128898 ---- name "propose"
 	  a role_name "" multiplicity "*" private
-	    classrelation_ref 129794 // (confirms)
+	    classrelation_ref 129794 // (propose)
 	  b role_name "" multiplicity "*" private
-	    classrelation_ref 129922 // (confirms)
+	    classrelation_ref 129922 // (propose)
+      end
+
+      classrelation 134779 // recoit
+	relation_ref 134651 // recoit
+      end
+
+      attribute 134779 "password"
+	public explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134907 "Actifs"
+	public explicit_type "bool"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 128123 "supprime"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	
+	
+	
+      end
+
+      operation 128251 "modifier"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	
+	
+	
       end
     end
 
@@ -387,28 +433,48 @@ format 224
 	relation_ref 128386 // declares
       end
 
-      classrelation 129026 // (belongs_to)
-	relation 128514 ---- name "belongs_to"
+      classrelation 129026 // (appartient)
+	relation 128514 ---- name "appartient"
 	  a role_name "" multiplicity "1" private
-	    classrelation_ref 129026 // (belongs_to)
+	    classrelation_ref 129026 // (appartient)
 	  b role_name "" multiplicity "*" private
-	    classrelation_ref 129154 // (belongs_to)
+	    classrelation_ref 129154 // (appartient)
       end
 
-      classrelation 129282 // (occurs_at)
-	relation 128642 ---- name "occurs_at"
+      classrelation 129282 // (se  deroule)
+	relation 128642 ---- name "se  deroule"
 	  a role_name "" multiplicity "1" private
-	    classrelation_ref 129282 // (occurs_at)
+	    classrelation_ref 129282 // (se  deroule)
 	  b role_name "" multiplicity "*" private
-	    classrelation_ref 129410 // (occurs_at)
+	    classrelation_ref 129410 // (se  deroule)
       end
 
       classrelation 129666 // <association>
 	relation_ref 128770 // <association>
       end
 
-      classrelation 129922 // (confirms)
-	relation_ref 128898 // confirms
+      classrelation 129922 // (propose)
+	relation_ref 128898 // propose
+      end
+
+      operation 128379 "creer"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	
+	
+	
+      end
+
+      operation 128507 "modifier_confiance"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	
+	
+	
       end
     end
 
@@ -455,16 +521,16 @@ format 224
 	MysqlColumn
       end
 
-      classrelation 128130 // (owns)
-	relation_ref 128002 // owns
+      classrelation 128130 // (possede)
+	relation_ref 128002 // possede
       end
 
-      classrelation 128258 // (contains)
-	relation 128130 ---- name "contains"
+      classrelation 128258 // (contient)
+	relation 128130 ---- name "contient"
 	  a role_name "" multiplicity "*" private
-	    classrelation_ref 128258 // (contains)
+	    classrelation_ref 128258 // (contient)
 	  b role_name "" multiplicity "*" private
-	    classrelation_ref 128386 // (contains)
+	    classrelation_ref 128386 // (contient)
       end
     end
 
@@ -566,8 +632,8 @@ format 224
 	MysqlColumn
       end
 
-      classrelation 129410 // (occurs_at)
-	relation_ref 128642 // occurs_at
+      classrelation 129410 // (se  deroule)
+	relation_ref 128642 // se  deroule
       end
     end
 
@@ -614,8 +680,19 @@ format 224
 	MysqlColumn
       end
 
-      classrelation 129154 // (belongs_to)
-	relation_ref 128514 // belongs_to
+      classrelation 129154 // (appartient)
+	relation_ref 128514 // appartient
+      end
+
+      attribute 135035 "Actifs"
+	public explicit_type "bool"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -662,8 +739,8 @@ format 224
 	MysqlColumn
       end
 
-      classrelation 128386 // (contains)
-	relation_ref 128130 // contains
+      classrelation 128386 // (contient)
+	relation_ref 128130 // contient
       end
 
       classrelation 128642 // (has)
@@ -671,7 +748,7 @@ format 224
       end
     end
 
-    class 129026 "confirms"
+    class 129026 "proposition"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -738,6 +815,69 @@ format 224
       end
 
       attribute 139906 "type"
+	public explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 134651 "modification"
+	public explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 141691 "notifications"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 134651 // (recoit)
+	relation 134651 ---- name "recoit"
+	  a role_name "" multiplicity "1" public
+	    classrelation_ref 134651 // (recoit)
+	  b role_name "" multiplicity "*" public
+	    classrelation_ref 134779 // recoit
+      end
+
+      attribute 141563 "message"
+	public explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 141691 "sent_at"
+	public explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 141819 "recieve_at"
 	public explicit_type "string"
 	cpp_decl ""
 	java_decl ""
@@ -1890,6 +2030,196 @@ format 224
       end
 
       activitynode 169699 activity_final ""
+      end
+    end
+
+    sequencediagram 134907 "DS declarer incident"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 135035 "DSD declaration des incident "
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    class 128379 "sytéme"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 128507 "incident"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    sequencediagram 135163 "DS infirme/corfirm/suggere"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    class 135035 "systéme"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    sequencediagram 141691 "DSD confirm"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    class 135163 "Proposition"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    sequencediagram 148219 "DSD infirme"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 148347 "DSD suggerer_modification"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 148475 "DS  creer_categorie"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 148603 "DS supprimer categorie"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 148731 "DSD supprimer categorie"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 148859 "DSD creer categorie"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 148987 "DS modified user"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 149115 "DSD  modifier_permission"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 155771 "DS authentification de l'utilisateur"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 155899 "DScreer_  compte"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 156027 "DSD creer utilisateur"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 156155 "DSD authentification"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 169211 "DS consulter tableau de bord"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+  end
+
+  classview 128123 "deploiement"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    associated_deployment_view deploymentview_ref 128123 // deploiement
+  end
+
+  deploymentview 128123 "deploiement"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    deploymentdiagram 162683 "dd"
+      deploymentdiagramsettings
+       end
+      size A4
+    end
+
+    deploymentnode 128123 "server"
+      stereotype "cpu"
+    end
+
+    deploymentnode 128251 "backend"
+      stereotype "device"
+    end
+
+    deploymentnode 128379 "mobile"
+      stereotype "device"
+    end
+
+    artifact 128123 "base de donnée non sql"
+      stereotype "database"
+      associated_elems
+      end
+    end
+
+    artifact 128251 "REST service"
+      associated_artifacts
       end
     end
   end

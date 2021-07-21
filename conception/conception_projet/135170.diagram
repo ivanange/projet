@@ -13,38 +13,38 @@ continuation 130178 " user authenticated, user has permission"
 continuation 132482 "invalid data"
   xyzwh 226 157 2000 81 30
 durationcanvas 129410 classinstance_ref 128002 // :user
-  xyzwh 46 116 2010 11 40
+  xyzwh 45 112 2010 11 44
 end
 durationcanvas 129538 classinstance_ref 129282 // :Platform
-  xyzwh 343 116 2010 11 25
+  xyzwh 343 112 2010 11 34
 end
 durationcanvas 129794 classinstance_ref 129282 // :Platform
   xyzwh 343 179 2010 11 40
 end
 durationcanvas 129922 classinstance_ref 128130 // confirmed incident:Incident
-  xyzwh 761 179 2010 11 25
+  xyzwh 760 179 2010 11 25
 end
 durationcanvas 130306 classinstance_ref 128130 // confirmed incident:Incident
-  xyzwh 761 240 2010 11 40
+  xyzwh 760 240 2010 11 40
 end
 durationcanvas 130434 classinstance_ref 129282 // :Platform
   xyzwh 343 240 2010 11 29
 end
 durationcanvas 130690 classinstance_ref 128002 // :user
-  xyzwh 46 258 2010 11 25
+  xyzwh 45 258 2010 11 25
 end
 durationcanvas 132226 classinstance_ref 129282 // :Platform
   xyzwh 343 299 2010 11 40
 end
 durationcanvas 132866 classinstance_ref 128002 // :user
-  xyzwh 46 201 2010 11 25
+  xyzwh 45 201 2010 11 25
 end
 msg 129666 asynchronous
   from durationcanvas_ref 129410
   to durationcanvas_ref 129538
-  yz 116 2015 explicitmsg "confirm (Incident)"
+  yz 112 2015 explicitmsg "confirmer (Incident)"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 61 103
+  label_xy 61 99
 msg 130050 synchronous
   from durationcanvas_ref 129794
   to durationcanvas_ref 129922

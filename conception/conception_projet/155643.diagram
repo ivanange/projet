@@ -1,0 +1,12 @@
+format 224
+
+deploymentnodecanvas 128123 deploymentnode_ref 134651 // backend
+  xyzwh 125 53 2000 61 32
+end
+deploymentnodecanvas 128251 deploymentnode_ref 134779 // server
+  xyzwh 374 169 2000 51 32
+end
+deploymentnodecanvas 128379 deploymentnode_ref 134907 // mobile
+  xyzwh 358 49 2000 52 32
+end
+end

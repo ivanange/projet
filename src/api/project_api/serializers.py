@@ -1,3 +1,4 @@
+from datetime import date
 from rest_framework import serializers
 
 from project_api import models
@@ -93,3 +94,15 @@ class CategorySerializer(serializers.ModelSerializer):
             },
 
         }
+
+
+class AnaliticsSerializer(serializers.Serializer):
+
+    category = serializers.CharField(max_length = 255)
+    date_debut = serializers.DateTimeField()
+    date_fin = serializers.DateTimeField()
+    region = serializers.CharField(max_length = 255)
+    ville =serializers.CharField(max_length = 255)
+    quartier = serializers.CharField(max_length = 255)
+
+

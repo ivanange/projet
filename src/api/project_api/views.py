@@ -1,8 +1,10 @@
+from django.db.models.aggregates import Count
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
-from rest_framework.parsers import FileUploadParser
+from rest_framework.parsers import FileUploadParser , JSONParser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, DjangoModelPermissions
 from rest_framework.settings import api_settings
@@ -67,6 +69,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
         serializer.save(user = self.request.user)
 
 
+
 class PropositionViewSet(viewsets.ModelViewSet):
 
     authentication_classes = (TokenAuthentication,)
@@ -91,7 +94,7 @@ class NotifViewSet(viewsets.ModelViewSet):
     permission_classes = (
         permissions.UpdateOnlyAdmin,
         IsAuthenticatedOrReadOnly,
-
+serializers.DateField()
     )
 
     def get_queryset(self):
@@ -161,6 +164,30 @@ class UserProfileDetail(APIView):
         dict["declarer"] = data
         # dict["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
         return Response(dict)
+
+
+
+
+
+
+
+class  AnaliticsViews(viewsets.ModelViewSet):
+
+    def general_report(self):
+        queryset =  models.Category.objects.values('name').annotate(dcount =Count('name')).order_by()
+        return Response(queryset)
+
+    def specific_report(self,request):
+        
+
+        if request.method == 'POST':
+            data = JSONParser().parse(request)
+            ser =  serializers.AnaliticsSerializer(data)
+            queryset = models.Category.objects.filter(name=ser.category,start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).order_by('name')
+            return reponse(queryset)
+
+
+
 
 # ===================================================================
 #   			OLD VERSION WITH APIView						    #

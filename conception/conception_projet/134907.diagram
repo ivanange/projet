@@ -1,0 +1,70 @@
+format 224
+
+note 131067 "L'utilisateur doit etre au prealable connecté a son compte"
+  xyzwh 177 -1 2000 185 41
+classinstance 131195 class_ref 128379 // sytéme
+  name ""   xyz 433.5 6.5 2000 life_line_z 2000
+classinstance 131323 class_ref 129154 // user
+  name ""   xyz 54.5 4.5 2005 life_line_z 2000
+durationcanvas 131579 classinstance_ref 131323 // :user
+  xyzwh 62 54 2010 11 156
+end
+durationcanvas 131707 classinstance_ref 131195 // :sytéme
+  xyzwh 452 104 2010 11 40
+end
+durationcanvas 131835 classinstance_ref 131195 // :sytéme
+  xyzwh 452 56 2010 11 26
+end
+durationcanvas 131963 classinstance_ref 131323 // :user
+  xyzwh 62 56 2010 11 33
+end
+durationcanvas 132091 classinstance_ref 131323 // :user
+  xyzwh 62 156 2010 11 50
+end
+durationcanvas 132219 classinstance_ref 131195 // :sytéme
+  xyzwh 452 159 2010 11 59
+end
+durationcanvas 132347 classinstance_ref 131195 // :sytéme
+  xyzwh 452 240 2010 11 40
+end
+durationcanvas 132475 classinstance_ref 131195 // :sytéme
+  xyzwh 452 314 2010 11 40
+end
+durationcanvas 132731 classinstance_ref 131323 // :user
+  xyzwh 62 314 2010 11 25
+end
+msg 132859 return
+  from durationcanvas_ref 132475
+  to durationcanvas_ref 132731
+  yz 314 2015 explicitmsg "erreur et renvoie du formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 133 303
+msg 132987 return
+  from durationcanvas_ref 132219
+  to durationcanvas_ref 131579
+  yz 199 2015 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+reflexivemsg 133243 asynchronous
+  to durationcanvas_ref 132347
+  yz 246 2015 explicitmsg "notifie les utilisteurs concernés"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 481 247
+msg 133371 asynchronous
+  from durationcanvas_ref 131707
+  to durationcanvas_ref 131579
+  yz 107 2015 explicitmsg "envoie du formulaire de declaration"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 98 99
+msg 133499 asynchronous
+  from durationcanvas_ref 131963
+  to durationcanvas_ref 131835
+  yz 56 2015 explicitmsg "demande de declaration d'un incident"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 86 45
+msg 133755 synchronous
+  from durationcanvas_ref 132091
+  to durationcanvas_ref 132219
+  yz 163 2015 explicitmsg "remplie les information relatif a l'incident"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 99 153
+end

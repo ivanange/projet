@@ -1,0 +1,85 @@
+format 224
+
+classinstance 128123 class_ref 129282 // Admin
+  name ""   xyz 95 4 2005 life_line_z 2000
+classinstance 128251 class_ref 135035 // systéme
+  name ""   xyz 447 3 2000 life_line_z 2000
+durationcanvas 128379 classinstance_ref 128123 // :Admin
+  xyzwh 108 51 2010 11 46
+end
+durationcanvas 128507 classinstance_ref 128251 // :systéme
+  xyzwh 469 50 2010 11 57
+end
+durationcanvas 129403 classinstance_ref 128251 // :systéme
+  xyzwh 469 199 2010 11 25
+end
+durationcanvas 129531 classinstance_ref 128123 // :Admin
+  xyzwh 108 208 2010 11 25
+end
+durationcanvas 129787 classinstance_ref 128123 // :Admin
+  xyzwh 108 269 2010 11 31
+end
+durationcanvas 129915 classinstance_ref 128251 // :systéme
+  xyzwh 469 274 2010 11 26
+end
+durationcanvas 130171 classinstance_ref 128251 // :systéme
+  xyzwh 469 361 2010 11 36
+end
+durationcanvas 130299 classinstance_ref 128123 // :Admin
+  xyzwh 108 368 2010 11 29
+end
+durationcanvas 131451 classinstance_ref 128123 // :Admin
+  xyzwh 108 124 2010 11 29
+end
+durationcanvas 131579 classinstance_ref 128251 // :systéme
+  xyzwh 469 123 2010 11 25
+end
+durationcanvas 132091 classinstance_ref 128251 // :systéme
+  xyzwh 469 180 2010 11 40
+end
+durationcanvas 132219 classinstance_ref 128123 // :Admin
+  xyzwh 108 180 2010 11 25
+end
+msg 128635 synchronous
+  from durationcanvas_ref 128379
+  to durationcanvas_ref 128507
+  yz 52 2015 explicitmsg "demande  la recherche la categorie"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 163 41
+msg 129659 return
+  from durationcanvas_ref 129403
+  to durationcanvas_ref 129531
+  yz 211 2015 explicitmsg "erreur categorie non  trouver"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 203 200
+msg 130043 synchronous
+  from durationcanvas_ref 129787
+  to durationcanvas_ref 129915
+  yz 289 2015 explicitmsg "supprimer la categorie"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 218 278
+msg 130427 return
+  from durationcanvas_ref 130171
+  to durationcanvas_ref 130299
+  yz 386 2015 explicitmsg "categorie supprimer/erreur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 208 375
+msg 130555 return
+  from durationcanvas_ref 128507
+  to durationcanvas_ref 128379
+  yz 83 2020 explicitmsg "formulaire de recherche"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 214 72
+msg 131707 synchronous
+  from durationcanvas_ref 131451
+  to durationcanvas_ref 131579
+  yz 124 2015 explicitmsg "remplie le formulaire de recherche"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 214 113
+msg 132347 return
+  from durationcanvas_ref 132091
+  to durationcanvas_ref 132219
+  yz 180 3005 explicitmsg "categorie trouvée"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 252 169
+end

@@ -1,0 +1,119 @@
+format 224
+
+classinstance 128123 class_ref 129282 // Admin
+  name ""   xyz 89 4 2005 life_line_z 2000
+classinstance 128251 class_ref 135035 // systéme
+  name ""   xyz 383 5 2000 life_line_z 2000
+classinstance 128379 class_ref 128642 // Category
+  name ""   xyz 706 14 2000 life_line_z 2000
+durationcanvas 128507 classinstance_ref 128123 // :Admin
+  xyzwh 102 77 2010 11 75
+end
+durationcanvas 128635 classinstance_ref 128251 // :systéme
+  xyzwh 405 76 2010 11 25
+end
+durationcanvas 129147 classinstance_ref 128251 // :systéme
+  xyzwh 405 132 2010 11 40
+end
+durationcanvas 129403 classinstance_ref 128123 // :Admin
+  xyzwh 102 203 2010 11 40
+end
+durationcanvas 129531 classinstance_ref 128251 // :systéme
+  xyzwh 405 205 2010 11 66
+end
+durationcanvas 129787 classinstance_ref 128379 // :Category
+  xyzwh 729 232 2010 11 26
+end
+durationcanvas 130043 classinstance_ref 128379 // :Category
+  xyzwh 729 280 2010 11 40
+end
+durationcanvas 130171 classinstance_ref 128251 // :systéme
+  xyzwh 405 280 2010 11 25
+end
+durationcanvas 130427 classinstance_ref 128251 // :systéme
+  xyzwh 405 350 2010 11 40
+end
+durationcanvas 130555 classinstance_ref 128123 // :Admin
+  xyzwh 102 343 2010 11 43
+end
+durationcanvas 130811 classinstance_ref 128123 // :Admin
+  xyzwh 102 396 2010 11 40
+end
+durationcanvas 130939 classinstance_ref 128251 // :systéme
+  xyzwh 405 396 2010 11 25
+end
+durationcanvas 131195 classinstance_ref 128379 // :Category
+  xyzwh 729 405 2010 11 25
+end
+durationcanvas 131451 classinstance_ref 128379 // :Category
+  xyzwh 729 457 2010 11 40
+end
+durationcanvas 131579 classinstance_ref 128251 // :systéme
+  xyzwh 405 457 2010 11 25
+end
+durationcanvas 131835 classinstance_ref 128251 // :systéme
+  xyzwh 405 545 2010 11 40
+end
+durationcanvas 131963 classinstance_ref 128123 // :Admin
+  xyzwh 102 544 2010 11 32
+end
+msg 128763 synchronous
+  from durationcanvas_ref 128507
+  to durationcanvas_ref 128635
+  yz 77 2015 explicitmsg "demande  la recherche la categorie"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 125 66
+msg 129275 return
+  from durationcanvas_ref 129147
+  to durationcanvas_ref 128507
+  yz 132 2015 explicitmsg "formulaire de recherche"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 152 121
+msg 129659 synchronous
+  from durationcanvas_ref 129403
+  to durationcanvas_ref 129531
+  yz 205 2015 explicitmsg "remplir le formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 161 194
+msg 129915 synchronous
+  from durationcanvas_ref 129531
+  to durationcanvas_ref 129787
+  yz 232 2015 explicitmsg "rechercher_category(nom)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 504 221
+msg 130299 return
+  from durationcanvas_ref 130043
+  to durationcanvas_ref 130171
+  yz 280 2015 explicitmsg "resultat de la recherche"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 511 269
+msg 130683 return
+  from durationcanvas_ref 130427
+  to durationcanvas_ref 130555
+  yz 355 2015 explicitmsg "categorie trouver"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 219 344
+msg 131067 synchronous
+  from durationcanvas_ref 130811
+  to durationcanvas_ref 130939
+  yz 396 2015 explicitmsg "supprimer la categorie"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 156 385
+msg 131323 synchronous
+  from durationcanvas_ref 130939
+  to durationcanvas_ref 131195
+  yz 405 2020 explicitmsg "supprimer(id_categorie,actifs= False)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 479 394
+msg 131707 return
+  from durationcanvas_ref 131451
+  to durationcanvas_ref 131579
+  yz 457 2015 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+msg 132091 return
+  from durationcanvas_ref 131835
+  to durationcanvas_ref 131963
+  yz 565 2015 explicitmsg "categorie supprimer"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 211 554
+end

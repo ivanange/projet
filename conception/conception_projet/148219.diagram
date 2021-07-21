@@ -1,0 +1,73 @@
+format 224
+
+classinstance 128123 class_ref 129154 // user
+  name ""   xyz 92 4 2005 life_line_z 2000
+classinstance 128251 class_ref 135035 // systéme
+  name ""   xyz 286 2 2000 life_line_z 2000
+classinstance 128379 class_ref 135163 // Proposition
+  name ""   xyz 741 17 2000 life_line_z 2000
+classinstance 128891 class_ref 128507 // incident
+  name ""   xyz 510 13 2000 life_line_z 2000
+durationcanvas 128507 classinstance_ref 128123 // :user
+  xyzwh 100 53 2010 11 47
+end
+durationcanvas 128635 classinstance_ref 128251 // :systéme
+  xyzwh 308 52 2010 11 80
+end
+durationcanvas 129019 classinstance_ref 128891 // :incident
+  xyzwh 530 71 2010 11 25
+end
+durationcanvas 129275 classinstance_ref 128379 // :Proposition
+  xyzwh 769 108 2010 11 27
+end
+durationcanvas 129531 classinstance_ref 128251 // :systéme
+  xyzwh 308 169 2010 11 40
+end
+durationcanvas 129787 classinstance_ref 128251 // :systéme
+  xyzwh 308 234 2010 11 40
+end
+durationcanvas 129915 classinstance_ref 128123 // :user
+  xyzwh 100 234 2010 11 25
+end
+durationcanvas 130171 classinstance_ref 128251 // :systéme
+  xyzwh 308 292 2010 11 40
+end
+durationcanvas 130299 classinstance_ref 128123 // :user
+  xyzwh 100 292 2010 11 25
+end
+msg 128763 synchronous
+  from durationcanvas_ref 128507
+  to durationcanvas_ref 128635
+  yz 54 2015 explicitmsg "infirme un incident"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 165 43
+msg 129147 asynchronous
+  from durationcanvas_ref 128635
+  to durationcanvas_ref 129019
+  yz 72 2015 explicitmsg "baisse_confiance(id_incident)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 348 59
+msg 129403 asynchronous
+  from durationcanvas_ref 128635
+  to durationcanvas_ref 129275
+  yz 114 2015 explicitmsg "creer_or_update_proposition(id_incidendent,confiance,type)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 336 105
+reflexivemsg 129659 asynchronous
+  to durationcanvas_ref 129531
+  yz 170 2015 explicitmsg "notifie les utilisateurs concernés"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 252 159
+msg 130043 return
+  from durationcanvas_ref 129787
+  to durationcanvas_ref 129915
+  yz 234 2015 explicitmsg "mofication valide"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 169 223
+msg 130427 return
+  from durationcanvas_ref 130171
+  to durationcanvas_ref 130299
+  yz 292 2015 explicitmsg "modification non valide"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 154 281
+end

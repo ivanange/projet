@@ -76,18 +76,18 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, object):
 
 
 
-# class place(models.Model):
-#
-#     """docstring forplace."""
-#
-#     address = models.CharField(max_length = 255, blank = True)
-#     city = models.CharField(max_length = 255, blank = True)
-#     country = models.CharField(max_length = 255, blank = True)
-#     quarter = models.CharField(max_length = 255, blank = True)
-#     longitude = models.CharField(max_length = 255, blank = True)
-#     latitude = models.CharField(max_length = 255, blank = True)
-#     region = models.CharField(max_length = 255, blank = True)
+"""class place(models.Model):
 
+     docstring forplace.
+
+     address = models.CharField(max_length = 255, blank = True)
+     city = models.CharField(max_length = 255, blank = True)
+     country = models.CharField(max_length = 255, blank = True)
+     quarter = models.CharField(max_length = 255, blank = True)
+     longitude = models.CharField(max_length = 255, blank = True)
+     latitude = models.CharField(max_length = 255, blank = True)
+     region = models.CharField(max_length = 255, blank = True)
+"""
 
 class Category(models.Model):
 
@@ -105,7 +105,7 @@ class Incident(models.Model):
 
     title = models.CharField(max_length=255)
     locations = models.JSONField(null=True, blank = True)
-    # location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
+    #place = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
     start_date = models.DateTimeField("start date", blank = True, null = True)
     end_date = models.DateTimeField("end date", blank = True, null = True)
     declared_at = models.DateTimeField("declared at", default=datetime.now)
