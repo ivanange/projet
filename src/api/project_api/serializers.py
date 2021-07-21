@@ -10,6 +10,11 @@ class UserProfileDetailSerializer(serializers.Serializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     """Serializer the user profile object"""
 
+    def __init__(self, *args, **kwargs):
+        super(UserProfileSerializer, self).__init__(*args, **kwargs)
+        if self.context['request'].method == "PUT":
+            self.fields.pop('password')
+
     class Meta:
 
         model = models.UserProfile
@@ -22,6 +27,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 }
             }
         }
+
+    def validate_email(self, value):
+        lower_email = value.lower()
+        if lower_email != "":
+            if models.UserProfile.objects.filter(email__iexact=lower_email).exists():
+                raise serializers.ValidationError("Duplicate")
+        return lower_email
+
+
 
     def create(self, validated_data):
         """create the return new user"""

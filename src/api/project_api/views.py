@@ -44,6 +44,15 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     # search_fields = ('name', 'email',)
     filterset_fields = ('name',)
 
+    # def update(self, request, *args, **kwargs):
+    #     partial = True # Here I change partial to True
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance, data=request.data, partial=partial)
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_update(serializer)
+    #
+    #     return Response(serializer.data)
+
 
 class IncidentViewSet(viewsets.ModelViewSet):
 
@@ -159,7 +168,8 @@ class UserProfileDetail(APIView):
         last = last_month - timedelta(days=30)
         last_data = models.Incident.objects.filter(
             user=user, declared_at__gt=last, declared_at__lt=last_month).count()
-        data["tendance"] = ((data["valeur"] - last_data)/data["valeur"])*100
+
+        data["tendance"] = ((data["valeur"] - last_data)/data["valeur"])*100 if data["valeur"] > 0 else 0
         dict["declarer"] = data
         # dict["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
         return Response(dict)
