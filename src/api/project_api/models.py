@@ -45,8 +45,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, models.Model):
     address = models.CharField(max_length=255, blank=True)
     # avatar = models.CharField(max_length = 255, blank = True)
     avatar = models.FileField(upload_to="images/%Y/%m/%d", blank=True, null=True)
-    # settings = models.CharField(max_length = 255, blank = True)
-    settings = JSONField(null=True, blank=True)
+    settings = models.CharField(max_length=1055, blank=True)
+    # settings = JSONField(null=True, blank=True)
     verified_at = models.DateTimeField("date verified", blank=True, null=True)
     created_at = models.DateTimeField("date created", blank=True, null=True)
     updated_at = models.DateTimeField("date uplated", blank=True, null=True)
@@ -113,7 +113,8 @@ class Incident(models.Model):
     """docstring for Incident"""
 
     title = models.CharField(max_length=255)
-    locations = JSONField(null=True, blank=True)
+    locations = models.CharField(max_length=1000, null=True, blank=True)
+    # locations = JSONField(null=True, blank=True)
     # location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
     start_date = models.DateTimeField("start date", blank=True, null=True)
     end_date = models.DateTimeField("end date", blank=True, null=True)
