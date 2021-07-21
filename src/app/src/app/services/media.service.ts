@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Storage } from '@capacitor/storage';
-import { VideoCapturePlusOptions, VideoCapturePlus } from '@ionic-native/video-capture-plus/ngx';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
 
 export interface Photo {
   filepath: string;
@@ -15,12 +15,22 @@ export interface Photo {
 export class MediaService {
 
   public photos: Photo[] = [];
-  public videoCaptureOptions: VideoCapturePlusOptions = {
+  public videoCaptureOptions = {
     limit: 1,
     highquality: true,
   };
 
-  constructor(private videoRecorder: VideoCapturePlus) { }
+  public imageCaptureOptions = {
+    limit: 1,
+    highquality: true,
+  };
+
+  public audioCaptureOptions = {
+    limit: 1,
+    highquality: true,
+  };
+
+  constructor(private media: MediaCapture) { }
 
   public async addNewToGallery() {
     // Take a photo
@@ -46,10 +56,29 @@ export class MediaService {
     });
   }
 
-  public async capture(limit = 1) {
-    return await this.videoRecorder.captureVideo({
+  public async captureImage(limit = 1) {
+    const files = await this.media.captureImage({
+      ...this.imageCaptureOptions,
+      limit,
+    });
+    return files;
+  }
+
+  public async captureVideo(limit = 1) {
+    const files = await this.media.captureVideo({
       ...this.videoCaptureOptions,
       limit,
     });
+    return files;
   }
+
+  public async captureAudio(limit = 1) {
+    const files = await this.media.captureAudio({
+      ...this.audioCaptureOptions,
+      limit,
+    });
+    return files;
+  }
+
+
 }
