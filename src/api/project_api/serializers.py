@@ -28,11 +28,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
         user = models.UserProfile.objects.create_user(
-            email=validated_data['email'] if 'email' in validated_data else None,
+            email=validated_data['email'] ,
             name=validated_data['name'],
             password=validated_data['password'],
             phone=validated_data['phone'],
-            avatar=validated_data['avatar'] if 'avatar' in validated_data else None,
+            avatar=validated_data['avatar'] ,
         )
 
         return user

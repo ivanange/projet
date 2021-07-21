@@ -42,7 +42,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, models.Model):
 
     """database for user in the systeme"""
 
-    email = models.EmailField("email" , max_length=254, blank = True, null = True, unique=True)
+    email = models.EmailField("email" , max_length=254, blank = True)
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length = 255, unique=True)
     address = models.CharField(max_length = 255, blank = True)
@@ -64,14 +64,14 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, models.Model):
 
     REQUIRED_FIELDS = ['name']
 
-    # def save(self, *args, **kwargs):
-    #
-    #     if self.email != "": # If it's not blank
-    #         if not validate_email(self.email): # If it's not an email address
-    #             raise ValidationError(u'%s is not an email address, dummy!' % self.email)
-    #         if UserProfile.objects.filter(email = self.email): # If it already exists
-    #             raise ValidationError(u'%s already exists in database, jerk' % self.email)
-    #     super(UserProfile, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+
+        if self.email != "": # If it's not blank
+            if not validate_email(self.email): # If it's not an email address
+                raise ValidationError(u'%s is not an email address, dummy!' % self.email)
+            if UserProfile.objects.filter(email = self.email): # If it already exists
+                raise ValidationError(u'%s already exists in database, jerk' % self.email)
+        super(UserProfile, self).save(*args, **kwargs)
 
     def get_full_name(self):
         """retrieve the full name of the user"""
