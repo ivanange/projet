@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HistoryService } from 'src/app/services/history.service';
 @Component({
   selector: 'app-show',
   templateUrl: './show.component.html',
@@ -17,12 +18,8 @@ export class ShowComponent implements OnInit {
     'https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg'
   ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public history: HistoryService) { }
 
   ngOnInit() { }
-
-  back() {
-    this.router.navigate(['index']);
-  }
 
 }
