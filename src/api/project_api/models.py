@@ -2,21 +2,23 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.db.models.base import Model
 from datetime import datetime
-
+from jsonfield import JSONField
 
 class UserProfileManager(BaseUserManager):
     """manager for user profiles"""
 
-    def create_user(self, email, name, phone,  password=None, avatar=None ):
+    def create_user(self, name, email ,phone, password=None, avatar=None ):
         """create the new user profile"""
         if not phone:
-            raise ValueError("User most have an email adresse")
+            raise ValueError("User most have an phone adresse")
 
-        # email = self.normalize_email(email)
-        user = self.model(email=email, name=name, phone = phone , avatar = avatar)
+        email = self.normalize_email(email)
+        user = self.model( name=name,  email = email, phone = phone,  avatar = avatar)
 
         user.set_password(password)
         user.save(using=self._db)
@@ -24,9 +26,9 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
-    def create_superuser(self, email, name,  phone, password, avatar=None):
+    def create_superuser(self, name, email, phone  ,password=None, avatar=None ):
         """create and save superuser with given detail"""
-        user = self.create_user(email, name, phone, password, avatar)
+        user = self.create_user( name, email, phone, password, avatar)
 
         user.is_superuser = True
         user.is_staff = True
@@ -36,18 +38,18 @@ class UserProfileManager(BaseUserManager):
 
 
 
-class UserProfile(AbstractBaseUser, PermissionsMixin, object):
+class UserProfile(AbstractBaseUser, PermissionsMixin, models.Model):
 
     """database for user in the systeme"""
 
-    email = models.EmailField(max_length=255, unique=True, blank=True,null=True)
+    email = models.EmailField("email" , max_length=254, blank = True, null = True, unique=True)
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length = 255, unique=True)
     address = models.CharField(max_length = 255, blank = True)
     # avatar = models.CharField(max_length = 255, blank = True)
     avatar = models.FileField(upload_to='images/%Y/%m/%d', blank=True, null=True)
     # settings = models.CharField(max_length = 255, blank = True)
-    settings = models.JSONField(null=True, blank=True)
+    settings = JSONField(null=True, blank=True)
     verified_at = models.DateTimeField("date verified", blank = True, null = True)
     created_at = models.DateTimeField("date created", blank = True , null = True)
     updated_at = models.DateTimeField("date uplated", blank = True, null = True)
@@ -60,7 +62,16 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, object):
 
     USERNAME_FIELD = 'phone'
 
-    REQUIRED_FIELDS = ['name', 'email']
+    REQUIRED_FIELDS = ['name']
+
+    # def save(self, *args, **kwargs):
+    #
+    #     if self.email != "": # If it's not blank
+    #         if not validate_email(self.email): # If it's not an email address
+    #             raise ValidationError(u'%s is not an email address, dummy!' % self.email)
+    #         if UserProfile.objects.filter(email = self.email): # If it already exists
+    #             raise ValidationError(u'%s already exists in database, jerk' % self.email)
+    #     super(UserProfile, self).save(*args, **kwargs)
 
     def get_full_name(self):
         """retrieve the full name of the user"""
@@ -72,7 +83,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, object):
 
     def __str__(self):
         """ str special methode of UserProfile """
-        return self.email
+        return self.phone
 
 
 
@@ -104,7 +115,7 @@ class Incident(models.Model):
     """docstring for Incident"""
 
     title = models.CharField(max_length=255)
-    locations = models.JSONField(null=True, blank = True)
+    locations = JSONField(null=True, blank = True)
     # location = models.ForeignKey(place, models.SET_NULL, blank=True,null=True)
     start_date = models.DateTimeField("start date", blank = True, null = True)
     end_date = models.DateTimeField("end date", blank = True, null = True)
