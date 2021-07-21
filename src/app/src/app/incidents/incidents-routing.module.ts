@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticatedGuard } from '../guards/authenticated.guard';
 import { HideBarGuard } from '../guards/hide-bar.guard';
+import { ShowBarGuard } from '../guards/show-bar.guard';
 import { CreateComponent } from './create/create.component';
 import { CreatingComponent } from './creating/creating.component';
 import { IndexComponent } from './index/index.component';
@@ -13,27 +14,24 @@ const routes: Routes = [
     canActivate: [AuthenticatedGuard],
     children: [
       {
+        canActivate: [HideBarGuard],
         path: 'create',
         component: CreateComponent,
       },
       {
         path: 'creating',
-        canActivate: [HideBarGuard],
+        canActivate: [ShowBarGuard],
         component: CreatingComponent,
       },
       {
         path: 'index',
+        canActivate: [ShowBarGuard],
         component: IndexComponent,
       },
       {
         path: 'show',
         canActivate: [HideBarGuard],
         component: ShowComponent,
-      },
-      {
-        path: '',
-        redirectTo: 'index',
-        pathMatch: 'full'
       },
     ],
   }

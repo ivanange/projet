@@ -9,12 +9,7 @@ import { ToolbarService } from './services/toolbar.service';
 })
 export class AppComponent {
   constructor(private menu: MenuController, public toolbar: ToolbarService, private route: ActivatedRoute, private router: Router) {
-    route.url.subscribe(
-      (url) => {
-        console.log(url);
-        let you = url.length > 1 ? null : router.navigate(['/index']);
-      }
-    );
+    router.navigate(['/index']);
   }
 
   public async openMenu() {

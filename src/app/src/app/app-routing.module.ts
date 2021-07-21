@@ -6,11 +6,7 @@ import { StatsModule } from './stats/stats.module';
 import { UserModule } from './user/user.module';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'index',
-    pathMatch: 'full'
-  },
+
 ];
 @NgModule({
   imports: [

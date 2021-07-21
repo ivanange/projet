@@ -25,7 +25,7 @@ urlpatterns = [
     path('user/detail/<int:id>', views.UserProfileDetail.as_view()),
     path('', include(router.urls)),
     # path('login', views.UserLoginApiView.as_view()),
-    # path('api-token-auth/', views.CustomAuthToken.as_view()),
+    path('api-token-auth/', views.CustomAuthToken.as_view()),
     # path('api-token-auth/' , V.obtain_auth_token),
 
     # path('docs/', schema_view),

@@ -14,7 +14,7 @@ export class CreateComponent implements OnInit {
   ngOnInit() { }
 
   next() {
-    this.router.navigate(['/tabs/incidents/creating'], { queryParams: { name: this.name } });
+    this.router.navigate(['/creating'], { queryParams: { name: this.name } });
   }
 
 }
