@@ -139,17 +139,6 @@
           </label>
         </div>
 
-        <div class="text-xs">
-          <a href="/signin" class="
-                font-medium
-          text-black
-                capitalize
-                underline
-                pr-2
-              ">
-            Sign In
-          </a>
-        </div>
       </div>
       <div class="flex justify-center" v-if="error.message">
         <small class="text-red-500">
@@ -178,6 +167,12 @@
             ">
           Sign Up
         </button>
+        <span class="block mt-4 text-gray-500 text-sm text-center">
+          Already have an account ? &nbsp;
+          <a [routerLink]="'/signin'" class="font-medium text-black">
+            Sign In
+          </a>
+        </span>
       </div>
     </form>
   </div>
