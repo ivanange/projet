@@ -51,6 +51,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         return user
 
+class ChangePasswordSerializer(serializers.Serializer):
+    model = models.UserProfile
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+
 
 class IncidentSerializer(serializers.ModelSerializer):
     """Serializes Incident"""
