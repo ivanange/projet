@@ -4,6 +4,10 @@ classinstance 128123 class_ref 129154 // user
   name ""   xyz 60 15 2005 life_line_z 2000
 classinstance 128251 class_ref 135035 // systéme
   name ""   xyz 432 17 2000 life_line_z 2000
+fragment 130683 "alt"
+  xyzwh 37 249 2000 510 212
+  separator 5000
+end
 durationcanvas 128379 classinstance_ref 128123 // :user
   xyzwh 68 65 2010 11 180
 end

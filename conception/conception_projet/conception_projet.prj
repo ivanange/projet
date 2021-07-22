@@ -1,6 +1,6 @@
 format 224
 "conception_projet"
-  revision 24
+  revision 25
   modified_by 123 "mleandra"
 
 
@@ -2162,6 +2162,16 @@ format 224
     end
 
     sequencediagram 169211 "DS consulter tableau de bord"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 175739 "DS infirm"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 175867 "DS suggerer une modification"
       sequencediagramsettings end
       overlapping_bars size A4
     end

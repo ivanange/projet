@@ -92,7 +92,7 @@ class NotifViewSet(viewsets.ModelViewSet):
     permission_classes = (
         permissions.UpdateOnlyAdmin,
         IsAuthenticatedOrReadOnly,
-serializers.DateField()
+        serializers.DateField()
     )
 
     def get_queryset(self):
@@ -186,7 +186,7 @@ class  AnaliticsViews(viewsets.ModelViewSet):
             data = JSONParser().parse(request)
             ser =  serializers.AnaliticsSerializer(data)
             queryset = models.Category.objects.filter(name=ser.category,start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).order_by('name')
-            return reponse(queryset)
+            return Response(queryset)
 
 
 
