@@ -6,3 +6,5 @@ sqlparse==0.2.4
 djongo
 Pillow
 django_filter
+phonenumbers
+names
