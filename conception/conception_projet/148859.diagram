@@ -2,50 +2,54 @@ format 224
 
 classinstance 128123 class_ref 129282 // Admin
   name ""   xyz 62 4 2005 life_line_z 2000
-classinstance 128251 class_ref 135035 // systéme
-  name ""   xyz 341 10 2000 life_line_z 2000
+classinstance 128251 class_ref 135035 // platform
+  name ""   xyz 342 10 2000 life_line_z 2000
 classinstance 128379 class_ref 128642 // Category
   name ""   xyz 607 15 2000 life_line_z 2000
+fragment 133115 "alt"
+  xyzwh 40 343 2015 655 210
+  separator 5000
+end
 durationcanvas 128507 classinstance_ref 128123 // :Admin
   xyzwh 75 60 2010 11 140
 end
-durationcanvas 128635 classinstance_ref 128251 // :systéme
+durationcanvas 128635 classinstance_ref 128251 // :platform
   xyzwh 363 60 2010 11 37
 end
 durationcanvas 128891 classinstance_ref 128379 // :Category
   xyzwh 630 76 2010 11 50
 end
-durationcanvas 129147 classinstance_ref 128251 // :systéme
+durationcanvas 129147 classinstance_ref 128251 // :platform
   xyzwh 363 104 2010 11 27
 end
-durationcanvas 130043 classinstance_ref 128251 // :systéme
+durationcanvas 130043 classinstance_ref 128251 // :platform
   xyzwh 363 168 2010 11 40
 end
 durationcanvas 130299 classinstance_ref 128123 // :Admin
   xyzwh 75 231 2010 11 88
 end
-durationcanvas 130427 classinstance_ref 128251 // :systéme
+durationcanvas 130427 classinstance_ref 128251 // :platform
   xyzwh 363 227 2010 11 25
 end
-durationcanvas 131067 classinstance_ref 128251 // :systéme
+durationcanvas 131067 classinstance_ref 128251 // :platform
   xyzwh 363 293 2010 11 40
 end
 durationcanvas 131323 classinstance_ref 128123 // :Admin
   xyzwh 75 352 2010 11 73
 end
-durationcanvas 131451 classinstance_ref 128251 // :systéme
+durationcanvas 131451 classinstance_ref 128251 // :platform
   xyzwh 363 355 2010 11 44
 end
 durationcanvas 131707 classinstance_ref 128379 // :Category
   xyzwh 630 367 2010 11 32
 end
-durationcanvas 132347 classinstance_ref 128251 // :systéme
+durationcanvas 132347 classinstance_ref 128251 // :platform
   xyzwh 363 430 2010 11 40
 end
 durationcanvas 132475 classinstance_ref 128123 // :Admin
   xyzwh 75 430 2010 11 25
 end
-durationcanvas 132731 classinstance_ref 128251 // :systéme
+durationcanvas 132731 classinstance_ref 128251 // :platform
   xyzwh 363 497 2010 11 40
 end
 durationcanvas 132859 classinstance_ref 128123 // :Admin

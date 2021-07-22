@@ -2,38 +2,54 @@ format 224
 
 classinstance 128123 class_ref 129154 // user
   name ""   xyz 62 4 2005 life_line_z 2000
-classinstance 128251 class_ref 135035 // systéme
-  name ""   xyz 286 15 2000 life_line_z 2000
+classinstance 128251 class_ref 135035 // platform
+  name ""   xyz 288 15 2000 life_line_z 2000
 classinstance 128379 class_ref 128507 // incident
   name ""   xyz 445 13 2000 life_line_z 2000
 classinstance 128507 class_ref 135163 // Proposition
   name ""   xyz 670 25 2000 life_line_z 2000
+fragment 130683 "alt"
+  xyzwh 34 184 2000 700 221
+  separator 6357
+end
 durationcanvas 128635 classinstance_ref 128123 // :user
   xyzwh 70 66 2010 11 85
 end
-durationcanvas 128763 classinstance_ref 128251 // :systéme
-  xyzwh 308 65 2010 11 103
+durationcanvas 128763 classinstance_ref 128251 // :platform
+  xyzwh 309 65 2010 11 103
 end
 durationcanvas 129019 classinstance_ref 128507 // :Proposition
   xyzwh 698 101 2010 11 67
 end
-durationcanvas 129403 classinstance_ref 128251 // :systéme
-  xyzwh 308 115 2010 11 36
+durationcanvas 129403 classinstance_ref 128251 // :platform
+  xyzwh 309 115 2010 11 36
 end
-durationcanvas 129659 classinstance_ref 128251 // :systéme
-  xyzwh 308 200 2010 11 40
+durationcanvas 129659 classinstance_ref 128251 // :platform
+  xyzwh 309 230 2010 11 40
 end
-durationcanvas 129915 classinstance_ref 128251 // :systéme
-  xyzwh 308 262 2010 11 40
+durationcanvas 129915 classinstance_ref 128251 // :platform
+  xyzwh 309 294 2010 11 25
 end
 durationcanvas 130043 classinstance_ref 128123 // :user
-  xyzwh 70 262 2010 11 25
+  xyzwh 70 296 2010 11 25
 end
-durationcanvas 130299 classinstance_ref 128251 // :systéme
-  xyzwh 308 331 2010 11 40
+durationcanvas 130299 classinstance_ref 128251 // :platform
+  xyzwh 309 366 2010 11 25
 end
 durationcanvas 130427 classinstance_ref 128123 // :user
-  xyzwh 70 331 2010 11 25
+  xyzwh 70 359 2010 11 25
+end
+durationcanvas 131067 classinstance_ref 128507 // :Proposition
+  xyzwh 698 197 2010 11 40
+end
+durationcanvas 131195 classinstance_ref 128251 // :platform
+  xyzwh 309 197 2010 11 25
+end
+durationcanvas 131451 classinstance_ref 128507 // :Proposition
+  xyzwh 698 331 2010 11 40
+end
+durationcanvas 131579 classinstance_ref 128251 // :platform
+  xyzwh 309 331 2010 11 25
 end
 msg 128891 synchronous
   from durationcanvas_ref 128635
@@ -46,7 +62,7 @@ msg 129147 asynchronous
   to durationcanvas_ref 129019
   yz 157 2015 explicitmsg "creer_or_update_proposition(id_incidendent,confiance,type,modification )"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 350 149
+  label_xy 351 149
 msg 129275 return
   from durationcanvas_ref 128763
   to durationcanvas_ref 128635
@@ -61,19 +77,31 @@ msg 129531 synchronous
   label_xy 116 129
 reflexivemsg 129787 asynchronous
   to durationcanvas_ref 129659
-  yz 202 2015 explicitmsg "notifie les utilisateurs concerné"
+  yz 232 2015 explicitmsg "notifie les utilisateurs concerné"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 329 190
+  label_xy 330 220
 msg 130171 return
   from durationcanvas_ref 129915
   to durationcanvas_ref 130043
-  yz 262 2015 explicitmsg "modification reussie"
+  yz 297 2015 explicitmsg "modification reussie"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 146 251
+  label_xy 146 286
 msg 130555 return
   from durationcanvas_ref 130299
   to durationcanvas_ref 130427
-  yz 331 2015 explicitmsg "modification non valide"
+  yz 367 2015 explicitmsg "modification non valide"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 139 320
+  label_xy 139 356
+msg 131323 return
+  from durationcanvas_ref 131067
+  to durationcanvas_ref 131195
+  yz 197 3005 explicitmsg "reussi"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 494 186
+msg 131707 return
+  from durationcanvas_ref 131451
+  to durationcanvas_ref 131579
+  yz 340 2015 explicitmsg "echec"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 494 329
 end

@@ -2,8 +2,8 @@ format 224
 
 note 131067 "L'utilisateur doit etre au prealable connecté a son compte"
   xyzwh 214 5 2000 185 41
-classinstance 131195 class_ref 128379 // sytéme
-  name ""   xyz 450.5 4 2000 life_line_z 2000
+classinstance 131195 class_ref 135035 // platform
+  name ""   xyz 449.5 4 2000 life_line_z 2000
 classinstance 131323 class_ref 129154 // user
   name ""   xyz 54.5 4.5 2005 life_line_z 2000
 fragment 134011 "alt"
@@ -11,9 +11,9 @@ fragment 134011 "alt"
   separator 5000
 end
 durationcanvas 131579 classinstance_ref 131323 // :user
-  xyzwh 62 187.5 2010 11 64
+  xyzwh 62 187 2010 11 64
 end
-durationcanvas 131835 classinstance_ref 131195 // :sytéme
+durationcanvas 131835 classinstance_ref 131195 // :platform
   xyzwh 469 53 2010 11 71
 end
 durationcanvas 131963 classinstance_ref 131323 // :user
@@ -22,13 +22,13 @@ end
 durationcanvas 132091 classinstance_ref 131323 // :user
   xyzwh 62 53 2010 11 207
 end
-durationcanvas 132219 classinstance_ref 131195 // :sytéme
+durationcanvas 132219 classinstance_ref 131195 // :platform
   xyzwh 469 171 2010 11 80
 end
-durationcanvas 132347 classinstance_ref 131195 // :sytéme
+durationcanvas 132347 classinstance_ref 131195 // :platform
   xyzwh 469 266 2010 11 40
 end
-durationcanvas 132475 classinstance_ref 131195 // :sytéme
+durationcanvas 132475 classinstance_ref 131195 // :platform
   xyzwh 469 342 2010 11 40
 end
 durationcanvas 132731 classinstance_ref 131323 // :user
@@ -43,9 +43,9 @@ msg 132859 return
 msg 132987 return
   from durationcanvas_ref 132219
   to durationcanvas_ref 131579
-  yz 240.5 2015 explicitmsg "aucune erreur"
+  yz 240 2015 explicitmsg "aucune erreur"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 228 229.5
+  label_xy 228 229
 reflexivemsg 133243 asynchronous
   to durationcanvas_ref 132347
   yz 272 2015 explicitmsg "notifie les utilisteurs concernés"

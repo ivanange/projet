@@ -1,0 +1,85 @@
+format 224
+
+classinstance 132475 class_ref 129282 // Admin
+  name ""   xyz 161 1 2005 life_line_z 2000
+classinstance 132603 class_ref 135035 // platform
+  name ""   xyz 541 1 2000 life_line_z 2000
+durationcanvas 132987 classinstance_ref 132603 // :platform
+  xyzwh 562 552.5 2010 11 40
+end
+durationcanvas 133115 classinstance_ref 132475 // :Admin
+  xyzwh 174 146.5 2010 11 40
+end
+durationcanvas 133499 classinstance_ref 132603 // :platform
+  xyzwh 562 143.5 2010 11 29
+end
+durationcanvas 133627 classinstance_ref 132475 // :Admin
+  xyzwh 174 265.5 2010 11 40
+end
+durationcanvas 133755 classinstance_ref 132603 // :platform
+  xyzwh 562 265.5 2010 11 25
+end
+durationcanvas 134139 classinstance_ref 132603 // :platform
+  xyzwh 562 460.5 2010 11 40
+end
+durationcanvas 134267 classinstance_ref 132603 // :platform
+  xyzwh 562 201.5 2010 11 28
+end
+durationcanvas 134395 classinstance_ref 132475 // :Admin
+  xyzwh 174 459.5 2010 11 25
+end
+durationcanvas 134779 classinstance_ref 132475 // :Admin
+  xyzwh 174 193.5 2010 11 36
+end
+durationcanvas 135035 classinstance_ref 132475 // :Admin
+  xyzwh 174 74 2010 11 56
+end
+durationcanvas 135163 classinstance_ref 132603 // :platform
+  xyzwh 562 77 2010 11 60
+end
+durationcanvas 135291 classinstance_ref 132475 // :Admin
+  xyzwh 174 579.5 2010 11 27
+end
+msg 135547 synchronous
+  from durationcanvas_ref 133627
+  to durationcanvas_ref 133755
+  yz 265.5 2015 explicitmsg "avertir utilisateur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 262 254.5
+msg 135675 synchronous
+  from durationcanvas_ref 135035
+  to durationcanvas_ref 135163
+  yz 77 2015 explicitmsg "demande la recherche d'un utilisateur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 250 57.5
+msg 136059 return
+  from durationcanvas_ref 134139
+  to durationcanvas_ref 134395
+  yz 460.5 2015 explicitmsg "modifié non  valide"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 303 452.5
+msg 136187 return
+  from durationcanvas_ref 134267
+  to durationcanvas_ref 134779
+  yz 218.5 2015 explicitmsg "utilisteur trouver"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 275 207.5
+msg 136315 synchronous
+  from durationcanvas_ref 133115
+  to durationcanvas_ref 133499
+  yz 161.5 3005 explicitmsg "rempli le formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 267 150.5
+msg 136571 return
+  from durationcanvas_ref 132987
+  to durationcanvas_ref 135291
+  yz 579.5 2015 explicitmsg "utilisateur non trouver"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 307 568.5
+msg 136699 return
+  from durationcanvas_ref 135163
+  to durationcanvas_ref 135035
+  yz 108 2015 explicitmsg "formulaire de recherche"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 265 103.5
+end

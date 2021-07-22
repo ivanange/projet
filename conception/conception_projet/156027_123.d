@@ -2,30 +2,26 @@ format 224
 
 classinstance 128123 class_ref 129154 // user
   name ""   xyz 126.5 22 2005 life_line_z 2000
-classinstance 128251 class_ref 135035 // platform
-  name ""   xyz 476.5 23 2000 life_line_z 2000
+classinstance 128251 class_ref 135035 // systéme
+  name ""   xyz 475.5 23 2000 life_line_z 2000
 classinstance 130171 class_ref 128002 // User
   name ""   xyz 719 10 2000 life_line_z 2000
-fragment 130811 "alt"
-  xyzwh 82 286 2015 481 281
-  separator 5000
-end
-durationcanvas 128379 classinstance_ref 128251 // :platform
+durationcanvas 128379 classinstance_ref 128251 // :systéme
   xyzwh 497 160 2010 11 52
 end
-durationcanvas 128507 classinstance_ref 128251 // :platform
+durationcanvas 128507 classinstance_ref 128251 // :systéme
   xyzwh 497 77 2010 11 190
 end
-durationcanvas 128635 classinstance_ref 128251 // :platform
+durationcanvas 128635 classinstance_ref 128251 // :systéme
   xyzwh 497 75 2010 11 195
 end
 durationcanvas 128763 classinstance_ref 128123 // :user
   xyzwh 134 76 2010 11 161
 end
-durationcanvas 128891 classinstance_ref 128251 // :platform
+durationcanvas 128891 classinstance_ref 128251 // :systéme
   xyzwh 497 353 2010 11 40
 end
-durationcanvas 129019 classinstance_ref 128251 // :platform
+durationcanvas 129019 classinstance_ref 128251 // :systéme
   xyzwh 497 475 2010 11 40
 end
 durationcanvas 129147 classinstance_ref 128123 // :user

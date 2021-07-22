@@ -2,15 +2,15 @@ format 224
 
 classinstance 128123 class_ref 129154 // user
   name ""   xyz 118.5 4 2005 life_line_z 2000
-classinstance 128251 class_ref 135035 // platform
-  name ""   xyz 435.5 4 2000 life_line_z 2000
+classinstance 128251 class_ref 135035 // systéme
+  name ""   xyz 434.5 4 2000 life_line_z 2000
 durationcanvas 128635 classinstance_ref 128123 // :user
   xyzwh 126 48 2010 11 83
 end
-durationcanvas 129019 classinstance_ref 128251 // :platform
+durationcanvas 129019 classinstance_ref 128251 // :systéme
   xyzwh 456 50 2010 11 76
 end
-durationcanvas 129915 classinstance_ref 128251 // :platform
+durationcanvas 129915 classinstance_ref 128251 // :systéme
   xyzwh 456 205 2010 11 40
 end
 durationcanvas 130043 classinstance_ref 128123 // :user

@@ -1,6 +1,6 @@
 format 224
 "conception_projet"
-  revision 25
+  revision 26
   modified_by 123 "mleandra"
 
 
@@ -475,6 +475,28 @@ format 224
 	
 	
 	
+      end
+
+      attribute 148347 "create_at"
+	public explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 148475 "end_date"
+	public explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -2043,7 +2065,7 @@ format 224
       overlapping_bars size A4
     end
 
-    class 128379 "sytéme"
+    class 128379 "platforms"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -2067,12 +2089,12 @@ format 224
       
     end
 
-    sequencediagram 135163 "DS infirme/corfirm/suggere"
+    sequencediagram 135163 "DS corfirm"
       sequencediagramsettings end
       overlapping_bars size A4
     end
 
-    class 135035 "systéme"
+    class 135035 "platform"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -2172,6 +2194,16 @@ format 224
     end
 
     sequencediagram 175867 "DS suggerer une modification"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 182395 "DS bannir utilisateur"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 182523 "DSD bannir"
       sequencediagramsettings end
       overlapping_bars size A4
     end

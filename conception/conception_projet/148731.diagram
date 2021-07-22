@@ -2,23 +2,27 @@ format 224
 
 classinstance 128123 class_ref 129282 // Admin
   name ""   xyz 89 4 2005 life_line_z 2000
-classinstance 128251 class_ref 135035 // systéme
-  name ""   xyz 383 5 2000 life_line_z 2000
+classinstance 128251 class_ref 135035 // platform
+  name ""   xyz 384 5 2000 life_line_z 2000
 classinstance 128379 class_ref 128642 // Category
   name ""   xyz 706 14 2000 life_line_z 2000
+fragment 132731 "alt"
+  xyzwh 41 329 2000 771 484
+  separator 3884
+end
 durationcanvas 128507 classinstance_ref 128123 // :Admin
   xyzwh 102 77 2010 11 75
 end
-durationcanvas 128635 classinstance_ref 128251 // :systéme
+durationcanvas 128635 classinstance_ref 128251 // :platform
   xyzwh 405 76 2010 11 25
 end
-durationcanvas 129147 classinstance_ref 128251 // :systéme
+durationcanvas 129147 classinstance_ref 128251 // :platform
   xyzwh 405 132 2010 11 40
 end
 durationcanvas 129403 classinstance_ref 128123 // :Admin
   xyzwh 102 203 2010 11 40
 end
-durationcanvas 129531 classinstance_ref 128251 // :systéme
+durationcanvas 129531 classinstance_ref 128251 // :platform
   xyzwh 405 205 2010 11 66
 end
 durationcanvas 129787 classinstance_ref 128379 // :Category
@@ -27,10 +31,10 @@ end
 durationcanvas 130043 classinstance_ref 128379 // :Category
   xyzwh 729 280 2010 11 40
 end
-durationcanvas 130171 classinstance_ref 128251 // :systéme
+durationcanvas 130171 classinstance_ref 128251 // :platform
   xyzwh 405 280 2010 11 25
 end
-durationcanvas 130427 classinstance_ref 128251 // :systéme
+durationcanvas 130427 classinstance_ref 128251 // :platform
   xyzwh 405 350 2010 11 40
 end
 durationcanvas 130555 classinstance_ref 128123 // :Admin
@@ -39,7 +43,7 @@ end
 durationcanvas 130811 classinstance_ref 128123 // :Admin
   xyzwh 102 396 2010 11 40
 end
-durationcanvas 130939 classinstance_ref 128251 // :systéme
+durationcanvas 130939 classinstance_ref 128251 // :platform
   xyzwh 405 396 2010 11 25
 end
 durationcanvas 131195 classinstance_ref 128379 // :Category
@@ -48,14 +52,20 @@ end
 durationcanvas 131451 classinstance_ref 128379 // :Category
   xyzwh 729 457 2010 11 40
 end
-durationcanvas 131579 classinstance_ref 128251 // :systéme
+durationcanvas 131579 classinstance_ref 128251 // :platform
   xyzwh 405 457 2010 11 25
 end
-durationcanvas 131835 classinstance_ref 128251 // :systéme
+durationcanvas 131835 classinstance_ref 128251 // :platform
   xyzwh 405 545 2010 11 40
 end
 durationcanvas 131963 classinstance_ref 128123 // :Admin
   xyzwh 102 544 2010 11 32
+end
+durationcanvas 132347 classinstance_ref 128251 // :platform
+  xyzwh 405 628 2010 11 40
+end
+durationcanvas 132475 classinstance_ref 128123 // :Admin
+  xyzwh 102 628 2010 11 25
 end
 msg 128763 synchronous
   from durationcanvas_ref 128507
@@ -116,4 +126,10 @@ msg 132091 return
   yz 565 2015 explicitmsg "categorie supprimer"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 211 554
+msg 132603 return
+  from durationcanvas_ref 132347
+  to durationcanvas_ref 132475
+  yz 628 2015 explicitmsg "categorie non trouver"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 208 617
 end

@@ -33,7 +33,7 @@ classcanvas 130818 class_ref 129026 // proposition
   xyzwh 408 161 2000 141 107
 end
 relationcanvas 128251 relation_ref 134651 // recoit
-  from ref 128123 z 2001 label "recoit" italic max_width 255 xyz 142 135 3000 to ref 128002
+  from ref 128123 z 2001 label "recoit" italic max_width 255 xyz 142 135 2001 to ref 128002
   no_role_a no_role_b
   multiplicity_a_pos 176 151 3000 multiplicity_b_pos 129 152 3000
 end
@@ -51,7 +51,7 @@ end
 relationcanvas 129666 relation_ref 128386 // declares
   decenter_begin 287
   decenter_end 319
-  from ref 128002 z 2001 label "declares" italic max_width 255 xyz 469 77.5 2001 to ref 128130
+  from ref 128002 z 2001 label "declares" italic max_width 255 xyz 469 77 2001 to ref 128130
   no_role_a no_role_b
   multiplicity_a_pos 581 95 3000 multiplicity_b_pos 393 96 3000
 end
