@@ -2,8 +2,5 @@
 	"appId": "io.spik.app",
 	"appName": "spik",
 	"webDir": "www",
-	"bundledWebRuntime": false,
-	"server": {
-		"url": "http://192.168.43.36:8101"
-	}
+	"bundledWebRuntime": false
 }
