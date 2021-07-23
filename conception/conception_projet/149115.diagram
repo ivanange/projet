@@ -1,0 +1,162 @@
+format 224
+
+classinstance 128123 class_ref 129282 // Admin
+  name ""   xyz 118 4 2005 life_line_z 2000
+classinstance 128251 class_ref 135035 // platform
+  name ""   xyz 343 5 2000 life_line_z 2000
+classinstance 128379 class_ref 128002 // User
+  name ""   xyz 618 4 2005 life_line_z 2000
+classinstance 128507 class_ref 128386 // Role
+  name ""   xyz 708 6 2000 life_line_z 2000
+fragment 133115 "alt"
+  xyzwh 120 408 2005 556 291
+  separator 5893
+end
+durationcanvas 128635 classinstance_ref 128123 // :Admin
+  xyzwh 131 81 2010 11 40
+end
+durationcanvas 128763 classinstance_ref 128251 // :platform
+  xyzwh 364 81 2010 11 63
+end
+durationcanvas 129019 classinstance_ref 128379 // :User
+  xyzwh 637 117 2010 11 25
+end
+durationcanvas 129275 classinstance_ref 128379 // :User
+  xyzwh 637 147 2010 11 40
+end
+durationcanvas 129403 classinstance_ref 128251 // :platform
+  xyzwh 364 147 2010 11 25
+end
+durationcanvas 129659 classinstance_ref 128251 // :platform
+  xyzwh 364 183 2010 11 40
+end
+durationcanvas 129787 classinstance_ref 128123 // :Admin
+  xyzwh 131 183 2010 11 25
+end
+durationcanvas 130043 classinstance_ref 128123 // :Admin
+  xyzwh 131 255 2010 11 60
+end
+durationcanvas 130171 classinstance_ref 128251 // :platform
+  xyzwh 364 255 2010 11 25
+end
+durationcanvas 130427 classinstance_ref 128251 // :platform
+  xyzwh 364 304 2010 11 40
+end
+durationcanvas 130683 classinstance_ref 128123 // :Admin
+  xyzwh 131 353 2010 11 40
+end
+durationcanvas 130811 classinstance_ref 128251 // :platform
+  xyzwh 364 353 2010 11 33
+end
+durationcanvas 131067 classinstance_ref 128379 // :User
+  xyzwh 637 365 2010 11 25
+end
+durationcanvas 131323 classinstance_ref 128379 // :User
+  xyzwh 637 421 2010 11 44
+end
+durationcanvas 131451 classinstance_ref 128251 // :platform
+  xyzwh 364 421 2010 11 29
+end
+durationcanvas 131707 classinstance_ref 128251 // :platform
+  xyzwh 364 481 2010 11 40
+end
+durationcanvas 131963 classinstance_ref 128251 // :platform
+  xyzwh 364 537 2010 11 40
+end
+durationcanvas 132091 classinstance_ref 128123 // :Admin
+  xyzwh 131 537 2010 11 25
+end
+durationcanvas 132347 classinstance_ref 128379 // :User
+  xyzwh 637 581 2010 11 40
+end
+durationcanvas 132475 classinstance_ref 128251 // :platform
+  xyzwh 364 581 2010 11 29
+end
+durationcanvas 132731 classinstance_ref 128251 // :platform
+  xyzwh 364 637 2010 11 40
+end
+durationcanvas 132859 classinstance_ref 128123 // :Admin
+  xyzwh 131 637 2010 11 25
+end
+durationcanvas 133243 classinstance_ref 128379 // :User
+  xyzwh 637 508 2010 11 25
+end
+msg 128891 synchronous
+  from durationcanvas_ref 128635
+  to durationcanvas_ref 128763
+  yz 81 2015 explicitmsg "demande tous les utilisteurs"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 158 70
+msg 129147 synchronous
+  from durationcanvas_ref 128763
+  to durationcanvas_ref 129019
+  yz 117 2015 explicitmsg "show user()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 419 106
+msg 129531 return
+  from durationcanvas_ref 129275
+  to durationcanvas_ref 129403
+  yz 147 2015 explicitmsg "utilisateur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 445 136
+msg 129915 return
+  from durationcanvas_ref 129659
+  to durationcanvas_ref 129787
+  yz 183 2015 explicitmsg "liste des utilisateurs"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 177 172
+msg 130299 synchronous
+  from durationcanvas_ref 130043
+  to durationcanvas_ref 130171
+  yz 255 2015 explicitmsg "demande de modification"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 175 244
+msg 130555 return
+  from durationcanvas_ref 130427
+  to durationcanvas_ref 130043
+  yz 304 2015 explicitmsg "envoie du formulaire de modification"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 167 293
+msg 130939 asynchronous
+  from durationcanvas_ref 130683
+  to durationcanvas_ref 130811
+  yz 353 2015 explicitmsg "remplir le formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 205 342
+msg 131195 asynchronous
+  from durationcanvas_ref 130811
+  to durationcanvas_ref 131067
+  yz 365 2015 explicitmsg "modifier(liste de modification)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 437 354
+msg 131579 return
+  from durationcanvas_ref 131323
+  to durationcanvas_ref 131451
+  yz 429 2015 explicitmsg "modification valide"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 462 418
+msg 132219 return
+  from durationcanvas_ref 131963
+  to durationcanvas_ref 132091
+  yz 537 2015 explicitmsg "reussi"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 238 526
+msg 132603 return
+  from durationcanvas_ref 132347
+  to durationcanvas_ref 132475
+  yz 599 2015 explicitmsg "modification non valid"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 455 588
+msg 132987 return
+  from durationcanvas_ref 132731
+  to durationcanvas_ref 132859
+  yz 637 2015 explicitmsg "echec"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 238 626
+msg 133371 asynchronous
+  from durationcanvas_ref 131707
+  to durationcanvas_ref 133243
+  yz 508 2020 explicitmsg "notify(user_id,message)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 449 497
+end

@@ -1,0 +1,70 @@
+format 224
+
+classinstance 128123 class_ref 129154 // user
+  name ""   xyz 60 15 2005 life_line_z 2000
+classinstance 128251 class_ref 135035 // platform
+  name ""   xyz 433 17 2000 life_line_z 2000
+fragment 130683 "alt"
+  xyzwh 37 249 2000 510 212
+  separator 5000
+end
+durationcanvas 128379 classinstance_ref 128123 // :user
+  xyzwh 68 65 2010 11 180
+end
+durationcanvas 128507 classinstance_ref 128251 // :platform
+  xyzwh 454 64 2010 11 74
+end
+durationcanvas 129403 classinstance_ref 128251 // :platform
+  xyzwh 454 159 2010 11 38
+end
+durationcanvas 129659 classinstance_ref 128251 // :platform
+  xyzwh 454 211 2010 11 39
+end
+durationcanvas 129915 classinstance_ref 128251 // :platform
+  xyzwh 454 316 2010 11 40
+end
+durationcanvas 130043 classinstance_ref 128123 // :user
+  xyzwh 68 316 2010 11 25
+end
+durationcanvas 130299 classinstance_ref 128251 // :platform
+  xyzwh 454 387 2010 11 40
+end
+durationcanvas 130427 classinstance_ref 128123 // :user
+  xyzwh 68 387 2010 11 25
+end
+msg 128635 synchronous
+  from durationcanvas_ref 128379
+  to durationcanvas_ref 128507
+  yz 65 2015 explicitmsg "demande d'authentification"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 200 54
+msg 129019 return
+  from durationcanvas_ref 128507
+  to durationcanvas_ref 128379
+  yz 104 2015 explicitmsg "formulaire d'authentification"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 201 93
+msg 129531 synchronous
+  from durationcanvas_ref 128379
+  to durationcanvas_ref 129403
+  yz 159 2015 explicitmsg "remplir le formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 218 148
+reflexivemsg 129787 asynchronous
+  to durationcanvas_ref 129659
+  yz 211 2015 explicitmsg "verification"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 495 216
+msg 130171 return
+  from durationcanvas_ref 129915
+  to durationcanvas_ref 130043
+  yz 316 2015 explicitmsg "authentification validé et ouverture de session"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 158 305
+msg 130555 return
+  from durationcanvas_ref 130299
+  to durationcanvas_ref 130427
+  yz 387 2015 explicitmsg "authentification non valid"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 218 376
+end

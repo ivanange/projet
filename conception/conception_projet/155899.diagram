@@ -1,0 +1,70 @@
+format 224
+
+classinstance 128123 class_ref 135035 // platform
+  name ""   xyz 651 19 2000 life_line_z 2000
+classinstance 128251 class_ref 129154 // user
+  name ""   xyz 224 17 2005 life_line_z 2000
+fragment 130171 "alt"
+  xyzwh 130 271 2005 615 216
+  separator 5000
+end
+durationcanvas 128379 classinstance_ref 128251 // :user
+  xyzwh 232 398 2010 11 25
+end
+durationcanvas 128507 classinstance_ref 128123 // :platform
+  xyzwh 672 80 2010 11 190
+end
+durationcanvas 128635 classinstance_ref 128123 // :platform
+  xyzwh 672 327 2010 11 40
+end
+durationcanvas 128763 classinstance_ref 128123 // :platform
+  xyzwh 672 398 2010 11 40
+end
+durationcanvas 128891 classinstance_ref 128251 // :user
+  xyzwh 232 327 2010 11 25
+end
+durationcanvas 129019 classinstance_ref 128123 // :platform
+  xyzwh 672 189 2010 11 85
+end
+durationcanvas 129147 classinstance_ref 128251 // :user
+  xyzwh 232 78 2010 11 177
+end
+durationcanvas 129275 classinstance_ref 128123 // :platform
+  xyzwh 672 228 2010 11 40
+end
+msg 129403 return
+  from durationcanvas_ref 128507
+  to durationcanvas_ref 129147
+  yz 119 2015 explicitmsg "formulaire d'inscription"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 365 108
+reflexivemsg 129531 asynchronous
+  to durationcanvas_ref 129275
+  yz 229 2015 explicitmsg "envoie l'email  de verification"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 713 234
+msg 129659 synchronous
+  from durationcanvas_ref 129147
+  to durationcanvas_ref 128507
+  yz 80 2015 explicitmsg "demande d'incription"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 364 69
+msg 129787 return
+  from durationcanvas_ref 128635
+  to durationcanvas_ref 128891
+  yz 327 2015 explicitmsg "email verifier et compte creer renvoie a la page d'acceuil"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 322 316
+msg 129915 synchronous
+  from durationcanvas_ref 129147
+  to durationcanvas_ref 129019
+  yz 189 2015 explicitmsg "remplir le formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 382 178
+msg 130043 return
+  from durationcanvas_ref 128763
+  to durationcanvas_ref 128379
+  yz 398 2015 explicitmsg "erreur . renvoie du formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 382 387
+end

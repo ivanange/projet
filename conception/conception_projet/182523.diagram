@@ -1,0 +1,151 @@
+format 224
+
+classinstance 133499 class_ref 129282 // Admin
+  name ""   xyz 85 6 2005 life_line_z 2000
+classinstance 133627 class_ref 135035 // systéme
+  name ""   xyz 464 6 2000 life_line_z 2000
+classinstance 136187 class_ref 128002 // User
+  name ""   xyz 662 4 2005 life_line_z 2000
+fragment 137595 "alt"
+  xyzwh 369 377 2000 436 305
+  separator 2577
+  separator 6384
+end
+textcanvas 141179 "if(warn=0)"
+  xyzwh 407 426 2005 48 11
+textcanvas 141307 "if(warn>5)"
+  xyzwh 422 524 2005 48 11
+textcanvas 141435 "if(warn<5)"
+  xyzwh 421 621 2005 48 11
+durationcanvas 133755 classinstance_ref 133627 // :systéme
+  xyzwh 486 74 2010 11 79
+end
+durationcanvas 133883 classinstance_ref 133499 // :Admin
+  xyzwh 98 72 2010 11 56
+end
+durationcanvas 134011 classinstance_ref 133499 // :Admin
+  xyzwh 98 160 2010 11 40
+end
+durationcanvas 134139 classinstance_ref 133627 // :systéme
+  xyzwh 486 240 2010 11 35
+end
+durationcanvas 134267 classinstance_ref 133627 // :systéme
+  xyzwh 486 172 2010 11 34
+end
+durationcanvas 134523 classinstance_ref 133627 // :systéme
+  xyzwh 486 726 2010 11 25
+end
+durationcanvas 134651 classinstance_ref 133499 // :Admin
+  xyzwh 98 243 2010 11 45
+end
+durationcanvas 134779 classinstance_ref 133627 // :systéme
+  xyzwh 486 310 2010 11 52
+end
+durationcanvas 135035 classinstance_ref 133499 // :Admin
+  xyzwh 98 737 2010 11 28
+end
+durationcanvas 135163 classinstance_ref 133499 // :Admin
+  xyzwh 98 310 2010 11 46
+end
+durationcanvas 136315 classinstance_ref 136187 // :User
+  xyzwh 681 322 2010 11 25
+end
+durationcanvas 136571 classinstance_ref 133627 // :systéme
+  xyzwh 486 403 2010 11 40
+end
+durationcanvas 136699 classinstance_ref 136187 // :User
+  xyzwh 681 403 2010 11 25
+end
+durationcanvas 136955 classinstance_ref 133627 // :systéme
+  xyzwh 486 473 2010 11 40
+end
+durationcanvas 137083 classinstance_ref 136187 // :User
+  xyzwh 681 473 2010 11 25
+end
+durationcanvas 137339 classinstance_ref 133627 // :systéme
+  xyzwh 486 527 2010 11 40
+end
+durationcanvas 137723 classinstance_ref 133627 // :systéme
+  xyzwh 486 598 2010 11 40
+end
+durationcanvas 137851 classinstance_ref 136187 // :User
+  xyzwh 681 598 2010 11 25
+end
+durationcanvas 140795 classinstance_ref 133627 // :systéme
+  xyzwh 486 650 2010 11 26
+end
+durationcanvas 140923 classinstance_ref 136187 // :User
+  xyzwh 681 627 2010 11 34
+end
+msg 135291 return
+  from durationcanvas_ref 134139
+  to durationcanvas_ref 134651
+  yz 253 2015 explicitmsg "utilisteur trouver"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 199 243
+msg 135419 return
+  from durationcanvas_ref 134523
+  to durationcanvas_ref 135035
+  yz 737 2015 explicitmsg "utilisateur non trouver"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 231 727
+msg 135675 synchronous
+  from durationcanvas_ref 134011
+  to durationcanvas_ref 134267
+  yz 172 3005 explicitmsg "rempli le formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 191 162
+msg 135803 synchronous
+  from durationcanvas_ref 135163
+  to durationcanvas_ref 134779
+  yz 310 2015 explicitmsg "avertir utilisateur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 186 300
+msg 135931 synchronous
+  from durationcanvas_ref 133883
+  to durationcanvas_ref 133755
+  yz 74 2015 explicitmsg "demande la recherche d'un utilisateur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 174 55
+msg 136059 return
+  from durationcanvas_ref 133755
+  to durationcanvas_ref 133883
+  yz 105 2015 explicitmsg "formulaire de recherche"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 189 101
+msg 136443 synchronous
+  from durationcanvas_ref 134779
+  to durationcanvas_ref 136315
+  yz 322 2015 explicitmsg "warn(id_usr)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 559 311
+msg 136827 synchronous
+  from durationcanvas_ref 136571
+  to durationcanvas_ref 136699
+  yz 403 2015 explicitmsg "notify(user_id,message)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 532 392
+msg 137211 synchronous
+  from durationcanvas_ref 136955
+  to durationcanvas_ref 137083
+  yz 473 2015 explicitmsg "modifier(user_id,actif = False)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 519 462
+reflexivemsg 137467 asynchronous
+  to durationcanvas_ref 137339
+  yz 528 2015 explicitmsg "envoyer un mail a l'utilisateur conserner"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 517 527
+msg 137979 asynchronous
+  from durationcanvas_ref 137723
+  to durationcanvas_ref 137851
+  yz 598 2015 explicitmsg "update confidence(user_id,confidence)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 498 587
+msg 141051 asynchronous
+  from durationcanvas_ref 140795
+  to durationcanvas_ref 140923
+  yz 650 2015 explicitmsg "notify(user_id,message)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 532 639
+end

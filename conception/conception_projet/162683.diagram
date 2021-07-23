@@ -1,0 +1,22 @@
+format 224
+
+deploymentnodecanvas 129787 deploymentnode_ref 128251 // backend
+  xyzwh 54 366 2000 171 127
+end
+deploymentnodecanvas 129915 deploymentnode_ref 128379 // mobile
+  xyzwh 597 359 2000 207 127
+end
+deploymentnodecanvas 130043 deploymentnode_ref 128123 // server
+  xyzwh 272 108 0 253 165
+end
+artifactcanvas 130171 artifact_ref 128251 // REST service
+  xyz 344 225 2000
+end
+artifactcanvas 130299 artifact_ref 128123 // base de donnée non sql
+  xyz 325 155 2000
+end
+line 130427 ----
+  from ref 129787 z 2001 label "tcp-ip" max_width 255 xyz 242 307 3000 to ref 130043
+line 130555 ----
+  from ref 130043 z 2001 label "tcp-ip" max_width 255 xyz 547.5 304 3000 to ref 129915
+end

@@ -1,7 +1,10 @@
+from django.db.models.aggregates import Count
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
+from rest_framework import generics
 from rest_framework.parsers import FileUploadParser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, DjangoModelPermissions
@@ -30,7 +33,12 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id': user.pk,
             'phone': user.phone
         })
-
+        
+class Logout(APIView):
+    def get(self, request, format=None):
+        # simply delete the token to force a login
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     """Handle creating and updating user profile"""
@@ -43,6 +51,41 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     # filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     # search_fields = ('name', 'email',)
     filterset_fields = ('name',)
+
+class ChangePasswordView(generics.UpdateAPIView):
+        """
+        An endpoint for changing password.
+        """
+        serializer_class = serializers.ChangePasswordSerializer
+        model = models.UserProfile
+        authentication_classes = (TokenAuthentication,)
+        permission_classes = (IsAuthenticated,)
+
+        def get_object(self, queryset=None):
+            obj = self.request.user
+            return obj
+
+        def update(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            serializer = self.get_serializer(data=request.data)
+
+            if serializer.is_valid():
+                # Check old password
+                if not self.object.check_password(serializer.data.get("old_password")):
+                    return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+                # set_password also hashes the password that the user will get
+                self.object.set_password(serializer.data.get("new_password"))
+                self.object.save()
+                response = {
+                    'status': 'success',
+                    'code': status.HTTP_200_OK,
+                    'message': 'Password updated successfully',
+                    'data': []
+                }
+
+                return Response(response)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class IncidentViewSet(viewsets.ModelViewSet):
@@ -62,6 +105,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
         """Sets the user profile to the logged in user"""
 
         serializer.save(user=self.request.user)
+
 
 
 class PropositionViewSet(viewsets.ModelViewSet):
@@ -89,7 +133,7 @@ class NotifViewSet(viewsets.ModelViewSet):
     permission_classes = (
         permissions.UpdateOnlyAdmin,
         IsAuthenticatedOrReadOnly,
-
+       
     )
 
     def get_queryset(self):
@@ -159,10 +203,41 @@ class UserProfileDetail(APIView):
         last = last_month - timedelta(days=30)
         last_data = models.Incident.objects.filter(
             user=user, declared_at__gt=last, declared_at__lt=last_month).count()
-        data["tendance"] = ((data["valeur"] - last_data)/data["valeur"])*100
+
+        data["tendance"] = ((data["valeur"] - last_data)/data["valeur"])*100 if data["valeur"] > 0 else 0
         dict["declarer"] = data
         # dict["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
         return Response(dict)
+
+
+
+
+
+
+
+class  AnaliticsViews(viewsets.ModelViewSet):
+
+    def general_report(self):
+        queryset =  models.Category.objects.values('name').annotate(nombre =Count('name')).order_by()
+        return Response(queryset)
+
+    def specific_report(self,request):
+        
+
+        if request.method == 'POST':
+            data = JSONParser().parse(request)
+            ser =  serializers.AnaliticsSerializer(data)
+            queryset = models.Category.objects.values('name').filter(start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).annotate(nombre =Count('name')).order_by('name')
+            return Response(queryset)
+
+
+    def report_by_category(self,request):
+        if request.method == 'POST':
+            data = JSONParser().parse(request)
+            ser =  serializers.AnaliticsSerializer(data)
+            queryset = models.Category.objects.values('name').filter(start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).annotate(nombre =Count('name')).order_by('name')
+            return Response(queryset)
+
 
 # ===================================================================
 #   			OLD VERSION WITH APIView						    #

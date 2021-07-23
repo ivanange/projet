@@ -1,0 +1,124 @@
+format 224
+
+classinstance 128123 class_ref 129282 // Admin
+  name ""   xyz 62 4 2005 life_line_z 2000
+classinstance 128251 class_ref 135035 // platform
+  name ""   xyz 342 10 2000 life_line_z 2000
+classinstance 128379 class_ref 128642 // Category
+  name ""   xyz 607 15 2000 life_line_z 2000
+fragment 133115 "alt"
+  xyzwh 40 343 2015 655 210
+  separator 5000
+end
+durationcanvas 128507 classinstance_ref 128123 // :Admin
+  xyzwh 75 60 2010 11 140
+end
+durationcanvas 128635 classinstance_ref 128251 // :platform
+  xyzwh 363 60 2010 11 37
+end
+durationcanvas 128891 classinstance_ref 128379 // :Category
+  xyzwh 630 76 2010 11 50
+end
+durationcanvas 129147 classinstance_ref 128251 // :platform
+  xyzwh 363 104 2010 11 27
+end
+durationcanvas 130043 classinstance_ref 128251 // :platform
+  xyzwh 363 168 2010 11 40
+end
+durationcanvas 130299 classinstance_ref 128123 // :Admin
+  xyzwh 75 231 2010 11 88
+end
+durationcanvas 130427 classinstance_ref 128251 // :platform
+  xyzwh 363 227 2010 11 25
+end
+durationcanvas 131067 classinstance_ref 128251 // :platform
+  xyzwh 363 293 2010 11 40
+end
+durationcanvas 131323 classinstance_ref 128123 // :Admin
+  xyzwh 75 352 2010 11 73
+end
+durationcanvas 131451 classinstance_ref 128251 // :platform
+  xyzwh 363 355 2010 11 44
+end
+durationcanvas 131707 classinstance_ref 128379 // :Category
+  xyzwh 630 367 2010 11 32
+end
+durationcanvas 132347 classinstance_ref 128251 // :platform
+  xyzwh 363 430 2010 11 40
+end
+durationcanvas 132475 classinstance_ref 128123 // :Admin
+  xyzwh 75 430 2010 11 25
+end
+durationcanvas 132731 classinstance_ref 128251 // :platform
+  xyzwh 363 497 2010 11 40
+end
+durationcanvas 132859 classinstance_ref 128123 // :Admin
+  xyzwh 75 497 2010 11 25
+end
+msg 128763 synchronous
+  from durationcanvas_ref 128507
+  to durationcanvas_ref 128635
+  yz 60 2015 explicitmsg "Demande l'affichage de toutes les  categories"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 105 49
+msg 129019 synchronous
+  from durationcanvas_ref 128635
+  to durationcanvas_ref 128891
+  yz 76 2020 explicitmsg "show_categorie()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 446 65
+msg 129275 return
+  from durationcanvas_ref 128891
+  to durationcanvas_ref 129147
+  yz 115 2025 explicitmsg "categories"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 462 104
+msg 130171 return
+  from durationcanvas_ref 130043
+  to durationcanvas_ref 128507
+  yz 168 2015 explicitmsg "affiche toutes les categories"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 99 157
+msg 130555 synchronous
+  from durationcanvas_ref 130299
+  to durationcanvas_ref 130427
+  yz 231 2015 explicitmsg "demande le creation d'une categorie"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 128 220
+msg 131195 return
+  from durationcanvas_ref 131067
+  to durationcanvas_ref 130299
+  yz 293 2015 explicitmsg "formulaire de creation  de categorie"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 140 282
+msg 131579 synchronous
+  from durationcanvas_ref 131323
+  to durationcanvas_ref 131451
+  yz 367 2015 explicitmsg "remplie le formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 175 356
+msg 131835 synchronous
+  from durationcanvas_ref 131451
+  to durationcanvas_ref 131707
+  yz 368 2015 explicitmsg "creer_categorie(nom,decription)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 427 357
+msg 131963 return
+  from durationcanvas_ref 131707
+  to durationcanvas_ref 131451
+  yz 388 2015 explicitmsg "categorie créé"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 468 377
+msg 132603 return
+  from durationcanvas_ref 132347
+  to durationcanvas_ref 132475
+  yz 430 2015 explicitmsg "categorie crée"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 190 419
+msg 132987 return
+  from durationcanvas_ref 132731
+  to durationcanvas_ref 132859
+  yz 497 2015 explicitmsg "erreur .renvoie du formulaire"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 156 486
+end
