@@ -218,7 +218,7 @@ class UserProfileDetail(APIView):
 class  AnaliticsViews(viewsets.ModelViewSet):
 
     def general_report(self):
-        queryset =  models.Category.objects.values('name').annotate(dcount =Count('name')).order_by()
+        queryset =  models.Category.objects.values('name').annotate(nombre =Count('name')).order_by()
         return Response(queryset)
 
     def specific_report(self,request):
@@ -227,10 +227,16 @@ class  AnaliticsViews(viewsets.ModelViewSet):
         if request.method == 'POST':
             data = JSONParser().parse(request)
             ser =  serializers.AnaliticsSerializer(data)
-            queryset = models.Category.objects.filter(name=ser.category,start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).order_by('name')
+            queryset = models.Category.objects.values('name').filter(start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).annotate(nombre =Count('name')).order_by('name')
             return Response(queryset)
 
 
+    def report_by_category(self,request):
+        if request.method == 'POST':
+            data = JSONParser().parse(request)
+            ser =  serializers.AnaliticsSerializer(data)
+            queryset = models.Category.objects.values('name').filter(start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).annotate(nombre =Count('name')).order_by('name')
+            return Response(queryset)
 
 
 # ===================================================================
