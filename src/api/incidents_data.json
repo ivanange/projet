@@ -1,21 +1,80 @@
-[
-    "Tenor's road accident ",
-    "vol à mokolo" , 
-    "accident de circulation à ngoussou", 
-    "viol sur mineur" , 
-    "accident de circulation à obala", 
-    "vol à main armée" , 
-    "agression à main armé" , 
-    "Incendie volontaire", 
-    "Voyeurisme" ,   
-    "accident de circulation à ngoussou", 
-    "Incendie volontaire marché central" ,  
-    "Incendie marché nsam", 
-    "Exhibition sexuelle" , 
-    "Voyeurisme", 
-    "Voyeurisme" , 
-    "Abus de biens sociaux", 
-    "L’homicide",
-    "17 people were killed in protests following the declaration of independence",
-    "17 people were killed in protests following the declaration of independence",
-]
+{
+    "categories": {
+        "Violence contre civils": [
+            "17 people were killed in protests following the declaration of independence",
+            "Député molester par des policiers"
+
+        ],
+
+        "Conflits armés": [
+            "Taillade à mokolo",
+            "Attaques térorriste Kumba"
+
+        ],
+
+        "Protestations": [
+            "17 people were killed in protests following the declaration of independence",
+            "Protestation des étudiants pour leur PBs"
+
+        ],
+
+        "Explosions": [
+            "Explosion bombe artisanale Nsam",
+            "Explosion d'un depot de gas Dvan"
+        ],
+
+        "Vols": [
+            "vol à mokolo",
+            "vol à main armée",
+            "Vol a mains armées à Mvogada"
+
+        ],
+
+        "Accident circulation": [
+            "Tenor's road accident ",
+            "accident de circulation à ngoussou",
+            "accident de circulation à obala",
+            "accident de circulation à ngoussou"
+
+        ],
+
+        "Agression": [
+            "viol sur mineur",
+            "agression à main armé"
+
+        ],
+
+        "Incendie": [
+            "Incendie volontaire",
+            "Incendie volontaire marché central",
+            "Incendie marché nsam",
+            "Incendie géant à Nkolmeseng"
+
+        ],
+
+        "Destruction/Dégradation d'installations électriques": [
+            "Haute tension écrouller au centre ville",
+            "Pauteau électrique éfondrer par un camion",
+            "Explosion transformateur à Oyomabang"
+        ],
+
+        "Destruction/Dégradation d'installation d'eaux": [
+            "Efondrement d'un chateau d'eau à Ngoakele",
+            "Panne réseau d'eau"
+        ],
+
+        "trouble à l'ordre publique": [
+            "Voyeurisme",
+            "Exhibition sexuelle",
+            "Voyeurisme",
+            "Abus de biens sociaux"
+
+        ],
+
+        "Meutre": [
+            "L’homicide",
+            "Suicide de la fille du colonel"
+
+        ]
+    }
+}
