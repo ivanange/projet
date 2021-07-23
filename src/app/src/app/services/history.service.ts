@@ -18,9 +18,9 @@ export class HistoryService {
   }
 
   back(): void {
-    this.history.pop();
-    if (this.history.length > 0) {
-      this.location.back();
+    const url = this.history.pop();
+    if (this.history.length > 1) {
+      this.router.navigate([url]);
     } else {
       App.exitApp();
     }
