@@ -133,7 +133,7 @@ class NotifViewSet(viewsets.ModelViewSet):
     permission_classes = (
         permissions.UpdateOnlyAdmin,
         IsAuthenticatedOrReadOnly,
-        serializers.DateField()
+       
     )
 
     def get_queryset(self):
