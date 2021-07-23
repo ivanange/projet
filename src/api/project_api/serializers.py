@@ -13,20 +13,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super(UserProfileSerializer, self).__init__(*args, **kwargs)
-        if self.context['request'].method == "PUT":
-            self.fields.pop('password')
+        if self.context["request"].method == "PUT":
+            self.fields.pop("password")
 
     class Meta:
 
         model = models.UserProfile
-        fields = '__all__'
+        fields = "__all__"
         extra_kwargs = {
-            'password': {
-                'write_only': True,
-                'style': {
-                    'input_type': 'password'
-                }
-            }
+            "password": {"write_only": True, "style": {"input_type": "password"}}
         }
 
     def validate_email(self, value):
@@ -38,21 +33,19 @@ class UserProfileSerializer(serializers.ModelSerializer):
             lower_email = None
         return lower_email
 
-
-
     def create(self, validated_data):
         """create the return new user"""
 
-
         user = models.UserProfile.objects.create_user(
             # email=validated_data['email'] ,
-            name=validated_data['name'],
-            password=validated_data['password'],
-            phone=validated_data['phone'],
-            avatar=validated_data['avatar'] ,
+            name=validated_data["name"],
+            password=validated_data["password"],
+            phone=validated_data["phone"],
+            # avatar=validated_data['avatar'] ,
         )
 
         return user
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     model = models.UserProfile
@@ -64,18 +57,13 @@ class ChangePasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(required=True)
 
 
-
 class IncidentSerializer(serializers.ModelSerializer):
     """Serializes Incident"""
 
     class Meta:
         model = models.Incident
-        fields = '__all__'
-        extra_kwargs = {
-            'user': {
-                'read_only': True
-            }
-        }
+        fields = "__all__"
+        extra_kwargs = {"user": {"read_only": True}}
 
 
 class PropositionSerializer(serializers.ModelSerializer):
@@ -83,12 +71,9 @@ class PropositionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Proposition
-        fields = '__all__'
+        fields = "__all__"
         extra_kwargs = {
-            'person': {
-                'read_only': True
-            },
-
+            "person": {"read_only": True},
         }
 
 
@@ -97,12 +82,9 @@ class NotifSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.notif
-        fields = '__all__'
+        fields = "__all__"
         extra_kwargs = {
-            'from_user': {
-                'read_only': True
-            },
-
+            "from_user": {"read_only": True},
         }
 
 
@@ -111,20 +93,17 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Category
-        fields = '__all__'
+        fields = "__all__"
         extra_kwargs = {
-            'by_admin': {
-                'read_only': True
-            },
-
+            "by_admin": {"read_only": True},
         }
 
 
 class AnaliticsSerializer(serializers.Serializer):
 
-    category = serializers.CharField(max_length = 255)
+    category = serializers.CharField(max_length=255)
     date_debut = serializers.DateTimeField()
     date_fin = serializers.DateTimeField()
-    region = serializers.CharField(max_length = 255)
-    ville =serializers.CharField(max_length = 255)
-    quartier = serializers.CharField(max_length = 255)
+    region = serializers.CharField(max_length=255)
+    ville = serializers.CharField(max_length=255)
+    quartier = serializers.CharField(max_length=255)

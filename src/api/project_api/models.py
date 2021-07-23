@@ -13,22 +13,22 @@ from jsonfield import JSONField
 class UserProfileManager(BaseUserManager):
     """manager for user profiles"""
 
-    def create_user(self, name, phone, password=None, avatar=None):
+    def create_user(self, name, phone, password=None):
         """create the new user profile"""
         if not phone:
             raise ValueError("User most have an phone adresse")
 
         # email = self.normalize_email(email)
-        user = self.model(name=name, phone=phone,  avatar=avatar)
+        user = self.model(name=name, phone=phone)
 
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, name, phone, password, avatar=None):
+    def create_superuser(self, name, phone, password):
         """create and save superuser with given detail"""
-        user = self.create_user(name, phone,  password, avatar)
+        user = self.create_user(name, phone, password)
 
         user.is_superuser = True
         user.is_staff = True
