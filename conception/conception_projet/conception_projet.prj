@@ -1,7 +1,7 @@
 format 224
 "conception_projet"
-  revision 26
-  modified_by 123 "mleandra"
+  revision 27
+  modified_by 99 "lenovo"
 
 
   
@@ -80,7 +80,7 @@ format 224
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 128002 "name"
+      attribute 128002 "last_name"
 	private explicit_type "string"
 	cpp_decl ""
 	java_decl ""
@@ -91,7 +91,7 @@ format 224
 	MysqlColumn
       end
 
-      attribute 128130 "surname"
+      attribute 128130 "first_name"
 	private explicit_type "string"
 	cpp_decl ""
 	java_decl ""

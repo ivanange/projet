@@ -34,6 +34,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         if lower_email != "":
             if models.UserProfile.objects.filter(email__iexact=lower_email).exists():
                 raise serializers.ValidationError("Duplicate")
+        if lower_email == "":
+            lower_email = None
         return lower_email
 
 
@@ -43,7 +45,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
         user = models.UserProfile.objects.create_user(
-            email=validated_data['email'] ,
+            # email=validated_data['email'] ,
             name=validated_data['name'],
             password=validated_data['password'],
             phone=validated_data['phone'],
@@ -126,5 +128,3 @@ class AnaliticsSerializer(serializers.Serializer):
     region = serializers.CharField(max_length = 255)
     ville =serializers.CharField(max_length = 255)
     quartier = serializers.CharField(max_length = 255)
-
-

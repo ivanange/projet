@@ -31,7 +31,7 @@
 *Migration initiale
 *REVIEW
 *websocket pour Notifications
-
+* category required in Incident
 
 
 
