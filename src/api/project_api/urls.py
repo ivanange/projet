@@ -17,6 +17,7 @@ router.register('incident', views.IncidentViewSet)
 router.register('proposition', views.PropositionViewSet)
 router.register('notification', views.NotifViewSet, basename='notification')
 router.register('category', views.CategoryViewSet)
+#router.register('analyse', views.AnaliticsViews)
 
 
 urlpatterns = [
@@ -27,6 +28,7 @@ urlpatterns = [
     # path('login', views.UserLoginApiView.as_view()),
     path('api-token-auth/', views.CustomAuthToken.as_view()),
     path('change-password/', views.ChangePasswordView.as_view()),
+    path('analyse/', views.AnaliticsViews),
     # path('api-token-auth/' , V.obtain_auth_token),
 
     # path('docs/', schema_view),

@@ -12,6 +12,8 @@ from rest_framework.settings import api_settings
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 import django_filters.rest_framework
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 from project_api import serializers
 from project_api import models
@@ -215,11 +217,11 @@ class UserProfileDetail(APIView):
 
 
 
-class  AnaliticsViews(viewsets.ModelViewSet):
-
-    def general_report(self):
-        queryset =  models.Category.objects.values('name').annotate(nombre =Count('name')).order_by()
-        return Response(queryset)
+class  AnaliticsViews(APIView):
+    
+    def get(self,request):
+        queryset = models.Category.objects.values('name').annotate(nombre =Count('name')).order_by()
+        return render(queryset)
 
     def specific_report(self,request):
         
@@ -227,7 +229,7 @@ class  AnaliticsViews(viewsets.ModelViewSet):
         if request.method == 'POST':
             data = JSONParser().parse(request)
             ser =  serializers.AnaliticsSerializer(data)
-            queryset = models.Category.objects.values('name').filter(start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).annotate(nombre =Count('name')).order_by('name')
+            queryset = serializers.serialize('json', models.Category.objects.values('name').filter(start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).annotate(nombre =Count('name')).order_by('name'))
             return Response(queryset)
 
 
