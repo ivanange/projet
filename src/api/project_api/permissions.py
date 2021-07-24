@@ -2,19 +2,27 @@ from rest_framework import permissions
 
 
 class UpdateOwnProfile(permissions.BasePermission):
-	"""docstring for UpdateOwnProfile."""
+    """docstring for UpdateOwnProfile."""
 
-	def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj):
 
-		if request.method in permissions.SAFE_METHODS:
-			return True
+        if request.method in permissions.SAFE_METHODS:
+            return True
 
-		return request.user.id == obj.id
+        return request.user.id == obj.id
 
+
+class ViewOwnProfile(permissions.BasePermission):
+    """docstring for UpdateOwnProfile."""
+
+    def has_permission(self, request, view):
+
+        print(request.user.id, view.kwargs)
+
+        return request.user.id == view.kwargs["id"]
 
 
 class UpdateOWnStatus(permissions.BasePermission):
-
     def has_object_permission(self, request, view, obj):
 
         if request.method in permissions.SAFE_METHODS:
@@ -24,7 +32,6 @@ class UpdateOWnStatus(permissions.BasePermission):
 
 
 class UpdateOWnConfirmStatus(permissions.BasePermission):
-
     def has_object_permission(self, request, view, obj):
 
         if request.method in permissions.SAFE_METHODS:
@@ -34,20 +41,15 @@ class UpdateOWnConfirmStatus(permissions.BasePermission):
 
 
 class UpdateOnlyAdmin(permissions.BasePermission):
-
     def has_object_permission(self, request, view, obj):
 
-        if request.method in permissions.SAFE_METHODS :
+        if request.method in permissions.SAFE_METHODS:
             return request.user == obj.from_user
 
-        return (request.user.is_staff == True)
+        return request.user.is_staff == True
 
         # if request.user.is_staff:
         #     return True
         # return obj.from_user == request.user
-
-
-
-
 
         # return request.user and request.user.is_authenticated
