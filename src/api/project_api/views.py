@@ -7,7 +7,12 @@ from rest_framework import status, viewsets, filters
 from rest_framework import generics
 from rest_framework.parsers import FileUploadParser
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, DjangoModelPermissions
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAdminUser,
+    IsAuthenticatedOrReadOnly,
+    DjangoModelPermissions,
+)
 from rest_framework.settings import api_settings
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -23,24 +28,25 @@ from datetime import timedelta
 
 
 class CustomAuthToken(ObtainAuthToken):
-
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
+        user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'phone': user.phone
-        })
-        
+        return Response({"token": token.key, "user_id": user.pk, "phone": user.phone})
+
+
 class Logout(APIView):
-    def get(self, request, format=None):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def delete(self, request, format=None):
         # simply delete the token to force a login
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     """Handle creating and updating user profile"""
@@ -52,42 +58,47 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.UpdateOwnProfile,)
     # filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     # search_fields = ('name', 'email',)
-    filterset_fields = ('name',)
+    filterset_fields = ("name",)
+
 
 class ChangePasswordView(generics.UpdateAPIView):
-        """
-        An endpoint for changing password.
-        """
-        serializer_class = serializers.ChangePasswordSerializer
-        model = models.UserProfile
-        authentication_classes = (TokenAuthentication,)
-        permission_classes = (IsAuthenticated,)
+    """
+    An endpoint for changing password.
+    """
 
-        def get_object(self, queryset=None):
-            obj = self.request.user
-            return obj
+    serializer_class = serializers.ChangePasswordSerializer
+    model = models.UserProfile
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
-        def update(self, request, *args, **kwargs):
-            self.object = self.get_object()
-            serializer = self.get_serializer(data=request.data)
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
 
-            if serializer.is_valid():
-                # Check old password
-                if not self.object.check_password(serializer.data.get("old_password")):
-                    return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
-                # set_password also hashes the password that the user will get
-                self.object.set_password(serializer.data.get("new_password"))
-                self.object.save()
-                response = {
-                    'status': 'success',
-                    'code': status.HTTP_200_OK,
-                    'message': 'Password updated successfully',
-                    'data': []
-                }
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
 
-                return Response(response)
+        if serializer.is_valid():
+            # Check old password
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response(
+                    {"old_password": ["Wrong password."]},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            response = {
+                "status": "success",
+                "code": status.HTTP_200_OK,
+                "message": "Password updated successfully",
+                "data": [],
+            }
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(response)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class IncidentViewSet(viewsets.ModelViewSet):
@@ -99,15 +110,13 @@ class IncidentViewSet(viewsets.ModelViewSet):
     permission_classes = (
         permissions.UpdateOWnStatus,
         IsAuthenticatedOrReadOnly,
-
     )
-    filterset_fields = ('category',)
+    filterset_fields = ("category",)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
 
         serializer.save(user=self.request.user)
-
 
 
 class PropositionViewSet(viewsets.ModelViewSet):
@@ -118,7 +127,6 @@ class PropositionViewSet(viewsets.ModelViewSet):
     permission_classes = (
         permissions.UpdateOWnConfirmStatus,
         IsAuthenticatedOrReadOnly,
-
     )
 
     def perform_create(self, serializer):
@@ -135,7 +143,6 @@ class NotifViewSet(viewsets.ModelViewSet):
     permission_classes = (
         permissions.UpdateOnlyAdmin,
         IsAuthenticatedOrReadOnly,
-       
     )
 
     def get_queryset(self):
@@ -160,9 +167,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
-    permission_classes = (DjangoModelPermissions,
-
-                          )
+    permission_classes = (DjangoModelPermissions,)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
@@ -174,8 +179,8 @@ class UserProfileDetail(APIView):
     """docstring for UserProfileDetail."""
 
     serializer_class = serializers.UserProfileDetailSerializer
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (DjangoModelPermissions,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     # filter_backends = (filters.SearchFilter,)
     # search_fields = ('name', 'email',)
 
@@ -185,28 +190,38 @@ class UserProfileDetail(APIView):
         except models.UserProfile.DoesNotExist:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request, id):
+    def get(
+        self,
+        request,
+    ):
         dict = {}
-        user = self.get_user(id)
+        user = self.get_user(request.user.id)
         dict["phone"] = user.phone
         dict["name"] = user.name
         dict["email"] = user.email
-        dict["total_declarer"] = models.Incident.objects.filter(
-            user=user).count()
+        dict["total_declarer"] = models.Incident.objects.filter(user=user).count()
         dict["total_confirmer"] = models.Proposition.objects.filter(
-            person=user, decision="CNF").count()
+            person=user, decision="CNF"
+        ).count()
         dict["total_infirmer"] = models.Proposition.objects.filter(
-            person=user, decision="INF").count()
+            person=user, decision="INF"
+        ).count()
         now = datetime.now()
         last_month = now - timedelta(days=30)
         data = {}
         data["valeur"] = models.Incident.objects.filter(
-            user=user, declared_at__gt=last_month).count()
+            user=user, declared_at__gt=last_month
+        ).count()
         last = last_month - timedelta(days=30)
         last_data = models.Incident.objects.filter(
-            user=user, declared_at__gt=last, declared_at__lt=last_month).count()
+            user=user, declared_at__gt=last, declared_at__lt=last_month
+        ).count()
 
-        data["tendance"] = ((data["valeur"] - last_data)/data["valeur"])*100 if data["valeur"] > 0 else 0
+        data["tendance"] = (
+            ((data["valeur"] - last_data) / data["valeur"]) * 100
+            if data["valeur"] > 0
+            else 0
+        )
         dict["declarer"] = data
         # dict["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
         return Response(dict)
@@ -223,21 +238,24 @@ class  AnaliticsViews(APIView):
         queryset = models.Category.objects.values('name').annotate(nombre =Count('name')).order_by()
         return render(queryset)
 
-    def specific_report(self,request):
-        
+    def specific_report(self, request):
 
-        if request.method == 'POST':
+        if request.method == "POST":
             data = JSONParser().parse(request)
             ser =  serializers.AnaliticsSerializer(data)
             queryset = serializers.serialize('json', models.Category.objects.values('name').filter(start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).annotate(nombre =Count('name')).order_by('name'))
             return Response(queryset)
 
-
-    def report_by_category(self,request):
-        if request.method == 'POST':
+    def report_by_category(self, request):
+        if request.method == "POST":
             data = JSONParser().parse(request)
-            ser =  serializers.AnaliticsSerializer(data)
-            queryset = models.Category.objects.values('name').filter(start_date__lte = ser.date_debut, end_date__gte = ser.date_fin).annotate(nombre =Count('name')).order_by('name')
+            ser = serializers.AnaliticsSerializer(data)
+            queryset = (
+                models.Category.objects.values("name")
+                .filter(start_date__lte=ser.date_debut, end_date__gte=ser.date_fin)
+                .annotate(nombre=Count("name"))
+                .order_by("name")
+            )
             return Response(queryset)
 
 
@@ -301,6 +319,7 @@ class UserProfileAPIView(APIView):
 # 			return Response(serializer.data)
 # 		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 #
+
 
 class UserLoginApiView(ObtainAuthToken):
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Photo } from '@capacitor/camera';
-import { MediaFile } from '@ionic-native/media-capture/ngx';
+import { Camera, CameraResultType, Photo } from '@capacitor/camera';
+import { CaptureError, MediaFile } from '@ionic-native/media-capture/ngx';
 import { UnregisteredIncident } from 'src/app/models/Incident';
 import { MediaService } from 'src/app/services/media.service';
 import { App } from '@capacitor/app';
@@ -14,29 +14,59 @@ export class CreatingComponent implements OnInit {
 
   public incident = new UnregisteredIncident();
   public now: string = new Date().toISOString();
-  public photos: Photo[] = [];
+  public photo: Photo = undefined;
   public images: MediaFile[] = [];
   public videos: MediaFile[] = [];
   public audios: MediaFile[] = [];
+  public data = {};
 
-  constructor(private route: ActivatedRoute, private media: MediaService) {
-    App.addListener('appStateChange', ({ isActive }) => {
-      console.log('App state changed. Is active?', isActive);
-    });
+  constructor(private route: ActivatedRoute, private media: MediaService,) {
+    // App.addListener('appStateChange', ({ isActive }) => {
+    //   // console.log('App state changed. Is active?', isActive);
+    //   this.data = {
+    //     ...this.data,
+    //     active: isActive
+    //   };
+    // });
 
-    App.addListener('appUrlOpen', data => {
-      console.log('App opened with URL:', data);
-    });
+    // App.addListener('appUrlOpen', data => {
+    //   this.data = {
+    //     ...this.data,
+    //     url: data.url
+    //   };
+    // });
 
-    App.addListener('appRestoredResult', data => {
-      console.log('Restored state:', data);
-    });
+    // App.addListener('appRestoredResult', data => {
+    //   this.data = {
+    //     ...this.data,
+    //     ...data
+    //   };
+    //   if (data.pluginId === 'Media Capture') {
+    //     //check for errors
+    //     switch (data.methodName) {
+    //       case 'captureImage':
+    //         this.addSnaps(data.data as MediaFile[]);
+    //         break;
+    //       case 'captureVideo':
+    //         this.addCaptures(data.data as MediaFile[]);
+    //         break;
+    //       case 'captureAudio':
+    //         this.addRecordings(data.data as MediaFile[]);
+    //         break;
+    //       default:
+    //         break;
+    //     }
+    //   }
+    //   // alert('Restored state:' + data);
+    // });
 
-    const checkAppLaunchUrl = async () => {
-      const { url } = await App.getLaunchUrl();
+    // const checkAppLaunchUrl = async () => {
+    //   const { url } = await App.getLaunchUrl();
 
-      alert('App opened with URL: ' + url);
-    };
+    //   alert('App opened with URL: ' + url);
+    // };
+
+    document.addEventListener('pendingcaptureresult', this.addSnaps as () => any);
   }
 
   ngOnInit() {
@@ -55,8 +85,28 @@ export class CreatingComponent implements OnInit {
 
   next() { }
 
+  async getPhoto() {
+    this.photo = await Camera.getPhoto({
+      resultType: CameraResultType.Uri
+    });
+  }
+
   snap() {
-    this.media.captureImage();
+    this.media.captureImage().then(files => {
+      this.data = {
+        ...this.data,
+        files,
+      };
+      console.log(files);
+      this.addSnaps(files as MediaFile[]);
+    },
+      (err: CaptureError) => {
+        this.data = {
+          ...this.data,
+          err,
+        };
+        console.error(err);
+      });
   }
 
   addSnaps(files: MediaFile[]) {
@@ -64,7 +114,21 @@ export class CreatingComponent implements OnInit {
   }
 
   capture() {
-    this.media.captureVideo();
+    this.media.captureVideo().then(files => {
+      this.data = {
+        ...this.data,
+        files,
+      };
+      console.log(files);
+      this.addCaptures(files as MediaFile[]);
+    },
+      (err: CaptureError) => {
+        this.data = {
+          ...this.data,
+          err,
+        };
+        console.error(err);
+      });
   }
 
   addCaptures(files: MediaFile[]) {
@@ -72,7 +136,21 @@ export class CreatingComponent implements OnInit {
   }
 
   record() {
-    this.media.captureAudio();
+    this.media.captureAudio().then(files => {
+      this.data = {
+        ...this.data,
+        files,
+      };
+      console.log(files);
+      this.addRecordings(files as MediaFile[]);
+    },
+      (err: CaptureError) => {
+        this.data = {
+          ...this.data,
+          err,
+        };
+        console.error(err);
+      });
   }
 
   addRecordings(files: MediaFile[]) {

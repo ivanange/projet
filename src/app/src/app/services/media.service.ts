@@ -15,6 +15,7 @@ export interface Photo {
 export class MediaService {
 
   public photos: Photo[] = [];
+
   public videoCaptureOptions = {
     limit: 1,
     highquality: true,
@@ -30,7 +31,12 @@ export class MediaService {
     highquality: true,
   };
 
-  constructor(private media: MediaCapture) { }
+  constructor(private media: MediaCapture) {
+    console.log(MediaCapture.pluginName);
+    media.onPendingCaptureResult().subscribe(
+      (res) => console.log(res)
+    );
+  }
 
   public async addNewToGallery() {
     // Take a photo
