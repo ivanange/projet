@@ -27,6 +27,7 @@ urlpatterns = [
     # path('login', views.UserLoginApiView.as_view()),
     path('api-token-auth/', views.CustomAuthToken.as_view()),
     path('change-password/', views.ChangePasswordView.as_view()),
+    path('logout/', views.Logout.as_view()),
     # path('api-token-auth/' , V.obtain_auth_token),
 
     # path('docs/', schema_view),
