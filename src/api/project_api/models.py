@@ -101,8 +101,8 @@ class Category(models.Model):
     """docstring forCategory."""
 
     by_admin = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
-    name = models.CharField(max_length=20)
-    description = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -128,9 +128,9 @@ class Incident(models.Model):
         through_fields=("incident", "person"),
     )
     textual_description = models.TextField(max_length=100, blank=True, null=True)
-    video = models.FileField(upload_to="videos/%Y/%m/%d", blank=True, null=True)
-    audio = models.FileField(upload_to="audio/%Y/%m/%d", blank=True, null=True)
-    image = models.FileField(upload_to="images/%Y/%m/%d", blank=True, null=True)
+    videos = models.FileField(upload_to="videos/%Y/%m/%d", blank=True, null=True)
+    audios = models.FileField(upload_to="audio/%Y/%m/%d", blank=True, null=True)
+    images = models.FileField(upload_to="images/%Y/%m/%d", blank=True, null=True)
     confidence = models.IntegerField(default=0)
 
     def __str__(self):

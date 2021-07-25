@@ -110,11 +110,11 @@ class IncidentViewSet(viewsets.ModelViewSet):
         IsAuthenticatedOrReadOnly,
     )
     filterset_fields = ("category",)
-
-    def perform_create(self, serializer):
-        """Sets the user profile to the logged in user"""
-
-        serializer.save(user=self.request.user)
+# =================test================
+    # def perform_create(self, serializer):
+    #     """Sets the user profile to the logged in user"""
+    #
+    #     serializer.save(user=self.request.user)
 
 
 class PropositionViewSet(viewsets.ModelViewSet):
@@ -166,6 +166,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
     permission_classes = (DjangoModelPermissions,)
+    filterset_fields = ("name",)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
