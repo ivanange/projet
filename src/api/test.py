@@ -33,6 +33,6 @@ print(r.status_code)
 print('----------------')
 print(r.reason)
 print('----------------')
-print(r.text)
+print(r.json()['results'])
 
 
