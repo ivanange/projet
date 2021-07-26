@@ -125,10 +125,10 @@ class IncidentViewSet(viewsets.ModelViewSet):
 
 
 # =================test================
-    # def perform_create(self, serializer):
-    #     """Sets the user profile to the logged in user"""
-    #
-    #     serializer.save(user=self.request.user)
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+
+        serializer.save(user=self.request.user)
 
 
 class PropositionViewSet(viewsets.ModelViewSet):
