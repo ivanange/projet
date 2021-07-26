@@ -1,90 +1,44 @@
-import { Incident } from './Incident';
 // import { DateTime } from 'luxon';
-import { Role } from './Role';
+export class Credentials {
+  public password: string;
+  public _phone?: string;
 
-// export class UnregisteredUser {
-//   public name: string;
-//   public email: string;
-//   public password: string;
-//   public confirmed?: boolean;
-//   public gender?: string;
-//   public birth?: string;
-//   public is_enterprise?: boolean;
-//   public phone?: string;
-//   public address?: string;
-//   public nic_image?: FileList;
-//   public nic?: string;
-//   public siren?: string;
-//   public picture?: File;
-//   public profession?: string;
-// }
+  get phone(): string {
+    // eslint-disable-next-line no-underscore-dangle
+    return this._phone.replace(/(\+?237)?(\d+)/, '+237$2');
+  }
+}
+export class UnregisteredUser extends Credentials {
+  public first_name: string;
+  public last_name: string;
+  public confirmed?: boolean;
 
-// export class User extends UnregisteredUser {
-//   public id: string;
-//   public created_at: string;
-//   public updated_at: string;
-//   public object?: string;
-//   public nic_images?: string[];
-//   public avatar?: string;
-//   public projects?: { data: Project[] };
-//   public roles?: { data: Role[] };
-//   public notification_categories: string[];
+  get name(): string {
+    return this.first_name + ' ' + this.last_name;
+  }
 
-//   get readableBirth(): string {
-//     return this.birth
-//       ? DateTime.fromISO(this.birth).toLocaleString(
-//         DateTime.DATE_MED_WITH_WEEKDAY
-//       )
-//       : undefined;
-//   }
+}
 
-//   get addresses(): Adress {
-//     const addresses: string[] = (this.address || ',,')
-//       .split(',')
-//       .map((address) => address.trim());
-//     return {
-//       postalCode: addresses[0],
-//       city: addresses[1],
-//       country: addresses[2],
-//     };
-//   }
+export class User extends UnregisteredUser {
+  public id: number;
+  public last_login: string;
+  public confidence: number;
+  public email?: string;
+  public address?: string;
+  public settings?: string;
 
-//   set addresses(address: Adress) {
-//     // tslint:disable-next-line: max-line-length
-//     this.address = `${address.postalCode || ''} ${address.city ? ',' + address.city : ''} ${address.country ? ',' + address.country : ''}`.trim();
-//   }
+}
 
+export interface UserDetail extends User {
+  total_declarer: number;
+  total_confirmer: number;
+  total_infirmer: number;
+  declarer: {
+    valeur: number,
+    tendance: number
+  }
+}
 
-//   get filledPersonalInfos(): boolean {
-//     return ['name', 'gender', 'birth', 'phone', 'profession', 'address']
-//       .concat(this.is_enterprise ? ['siren'] : ['nic']).filter(key => !this[key]).length === 0;
-//   }
-
-//   get filledDocuments(): boolean {
-//     return ['avatar', 'nic_images'].filter(key => !this[key]).length === 0;
-//   }
-
-//   get filledAll(): boolean {
-//     return this.filledDocuments && this.filledPersonalInfos;
-//   }
-
-//   get verified(): boolean {
-//     return this.roles.data.find((role) => role.name === 'verified') ? true : false;
-//   }
-
-//   get waiting(): boolean {
-//     return this.roles.data.find((role) => role.name === 'waiting_verification') ? true : false;
-//   }
-
-//   get admin(): boolean {
-//     return this.roles.data.find((role) => role.name === 'admin') ? true : false;
-//   }
-
-// }
-
-// export interface UserResponse extends Response {
-//   data: User;
-// }
 
 // export interface UserAllResponse extends Response {
 //   data: User[];

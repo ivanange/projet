@@ -6,13 +6,16 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { HttpClientModule } from '@angular/common/http';
+import { httpInterceptorProviders } from './http-interceptors';
+
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, CommonModule,],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, CommonModule, HttpClientModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    MediaCapture
+    MediaCapture,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent],
 })

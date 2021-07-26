@@ -7,15 +7,15 @@ import {
 } from '@angular/router';
 import { User } from '../models/User';
 import { BackendService } from '../services/backend.service';
-import { NotificationService } from '../services/notification.service';
+import { ToastNotificationService } from '../services/toast-notification.service';
 import { map, retry, catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UserResolver implements Resolve<User> {
   constructor(
     private backend: BackendService,
-    private notifications: NotificationService
-  ) {}
+    private notifications: ToastNotificationService
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -29,9 +29,7 @@ export class UserResolver implements Resolve<User> {
         });
         return of(err);
       }),
-      map((user) => {
-        return Object.assign(new User(), user);
-      })
+      map((user) => Object.assign(new User(), user))
     );
   }
 }

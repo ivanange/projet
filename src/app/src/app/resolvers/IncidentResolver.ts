@@ -6,34 +6,34 @@ import {
   RouterStateSnapshot,
   Router,
 } from '@angular/router';
-import { Project } from '../models/Incident';
+import { Incident } from '../models/Incident';
 import { BackendService } from '../services/backend.service';
-import { NotificationService } from '../services/notification.service';
+import { ToastNotificationService } from '../services/toast-notification.service';
 import { map, retry, catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
-export class ProjectResolver implements Resolve<Project> {
+export class IncidentResolver implements Resolve<Incident> {
   constructor(
     private backend: BackendService,
-    private notifications: NotificationService,
+    private notifications: ToastNotificationService,
     private router: Router
   ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Project> | Promise<Project> | Project {
-    return this.backend.projects.get(route.paramMap.get('id')).pipe(
+  ): Observable<Incident> | Promise<Incident> | Incident {
+    return this.backend.incidents.get(route.paramMap.get('id')).pipe(
       retry(3),
       catchError((err, cuaght) => {
         this.notifications.add({
           title: 'Impossible de trouver ce projet',
           message: 'Verifiez votre connexion internet et réessayer',
         });
-        this.router.navigate(['/projects']);
+        this.router.navigate(['/index']);
         return of(err);
       }),
-      map((res) => Object.assign(new Project(), res.data))
+      map((res) => Object.assign(new Incident(), res.data))
     );
   }
 }

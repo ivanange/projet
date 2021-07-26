@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../services/notification.service';
+import { ToastNotificationService } from '../services/toast-notification.service';
 
 @Component({
   selector: 'app-service-notification',
@@ -7,7 +7,7 @@ import { NotificationService } from '../services/notification.service';
   styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent implements OnInit {
-  constructor(public notificationService: NotificationService) {}
+  constructor(public notificationService: ToastNotificationService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

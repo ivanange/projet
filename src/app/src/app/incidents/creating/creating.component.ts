@@ -41,7 +41,7 @@ export class CreatingComponent implements OnInit {
     //     ...this.data,
     //     ...data
     //   };
-    //   if (data.pluginId === 'Media Capture') {
+    //   if (data.pluginId === 'MediaCapture') {
     //     //check for errors
     //     switch (data.methodName) {
     //       case 'captureImage':
@@ -74,7 +74,7 @@ export class CreatingComponent implements OnInit {
       this.incident.title = params.name;
     });
 
-    this.incident.date = this.now;
+    this.incident.start_date = this.now;
   }
 
   create() {

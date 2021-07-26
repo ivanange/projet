@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/backend.service/auth.service';
 import { isArray } from 'rxjs/internal/util/isArray';
 import { catchError, first, map } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
-  public baseUrl = 'http://api.pecunia.test/v1';
+  public baseUrl = 'http://127.0.0.1:8000/api/';
   private refreshTokenInProgress = false;
   // Refresh Token Subject tracks the current token, or is null if no token is currently
   // available (e.g. refresh pending).
@@ -22,8 +22,7 @@ export class APIInterceptor implements HttpInterceptor {
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
-  )
-    : Observable<HttpEvent<any>> {
+  ): Observable<HttpEvent<any>> {
 
     // send cloned req with header to the next handler.
     const authReq = this.format(req);
@@ -90,7 +89,7 @@ export class APIInterceptor implements HttpInterceptor {
   }
 
   // tslint:disable-next-line: typedef
-  public format(req) {
+  public format(req: HttpRequest<any>) {
     // Get the auth token from the service.
     const authToken = this.auth.authorizationToken;
 
@@ -112,7 +111,7 @@ export class APIInterceptor implements HttpInterceptor {
         } else if (isArray(value)) {
           if ((value[0] || undefined) instanceof File) {
             // tslint:disable-next-line: no-shadowed-variable
-            value.forEach(file => body.append(key + '[]', file, file.name));
+            value.forEach(formfile => body.append(key + '[]', formfile, formfile.name));
           } else {
             value.forEach(val => body.append(key + '[]', val));
           }
@@ -127,10 +126,12 @@ export class APIInterceptor implements HttpInterceptor {
     }
 
     return req.clone({
-      url: `${this.baseUrl}/${req.url}`,
-      headers: ['register', 'clients/web/admin/login'].indexOf(req.url) !== -1 ?
-        req.headers :
-        req.headers.set('Authorization', `Bearer ${authToken}`),
+      url: `${this.baseUrl}${req.url}`,
+      headers:
+        (req.url).includes('api-token-auth') ||
+          ((req.url).includes('profile') && (req.method).toLowerCase() === 'post') ?
+          req.headers :
+          req.headers.set('Authorization', `Token ${authToken}`),
       body,
     });
 

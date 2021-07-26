@@ -9,54 +9,20 @@
       </svg>
     </button>
   </form>
-  <a [routerLink]="'/show'" class="rounded-md shadow-md overflow-hidden mb-6 flex-shrink-0">
-    <div class="w-full">
-      <img class="w-full h-auto max-h-64 object-scale-down"
-        src="https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg"
-        alt="Man looking at item at a store">
-    </div>
-    <div class="pt-4 pb-4 px-3 space-y-1">
-      <h1 class="block text-lg leading-tight font-semibold text-black">
-        Car accident with Tenor
-      </h1>
-      <div class="uppercase tracking-wide text-xs text-gray-400 font-semibold mt-1">Accident</div>
-      <p class="pt-1 text-gray-500 text-sm">
-        Reports say the car crushed an electric pole and caught fire instantly. The young girl was projected from the
-        back seat where she was through the front screen...
-      </p>
-      <div class="flex justify-between items-center pt-1">
-        <p class="flex text-gray-500 items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span class="pl-1 text-gray-400 text-xs">Jul 13, 2021 - Today</span>
-        </p>
-        <p class="flex text-gray-500 items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <span class="pl-1 text-gray-400 text-xs">Ndokoti, Douala</span>
-        </p>
-      </div>
-    </div>
-  </a>
-  <a [routerLink]="'/show'" class="rounded-md shadow-md overflow-hidden mb-6 flex-shrink-0">
-    <div class="md:flex">
-      <div class="md:flex-shrink-0">
-        <img class="w-full h-auto max-h-64 object-scale-down"
-          src="https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg"
+  <div *ngIf="incidents.length > 0; else empty">
+    <a *ngFor="let incident of incidents" [routerLink]="['/show', incident.id]"
+      class="rounded-md shadow-md overflow-hidden mb-6 flex-shrink-0">
+      <div *ngIf="incident.images.length > 0" class="w-full">
+        <img class="w-full h-auto max-h-64 object-scale-down" [src]="incident.images[0]"
           alt="Man looking at item at a store">
       </div>
       <div class="pt-4 pb-4 px-3 space-y-1">
         <h1 class="block text-lg leading-tight font-semibold text-black">
-          Car accident with Tenor
+          {{incident.title }}
         </h1>
-        <div class="uppercase tracking-wide text-xs text-gray-400 font-semibold mt-1">Accident</div>
+        <div class="uppercase tracking-wide text-xs text-gray-400 font-semibold mt-1">{{incident.category.name}}</div>
         <p class="pt-1 text-gray-500 text-sm">
+          {{incident.textual_description | truncate}}
           Reports say the car crushed an electric pole and caught fire instantly. The young girl was projected from the
           back seat where she was through the front screen...
         </p>
@@ -67,7 +33,10 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span class="pl-1 text-gray-400 text-xs">Jul 13, 2021 - Today</span>
+            <span class="pl-1 text-gray-400 text-xs">
+              {{incident.start_date | date:'medium'}}
+              <span *ngIf="incident.end_date"> - {{ incident.end_date | date:'medium'}}</span>
+            </span>
           </p>
           <p class="flex text-gray-500 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -77,10 +46,13 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span class="pl-1 text-gray-400 text-xs">Ndokoti, Douala</span>
+            <span class="pl-1 text-gray-400 text-xs">{{incident.place.address}}, {{incident.place.city}}</span>
           </p>
         </div>
       </div>
-    </div>
-  </a>
+    </a>
+  </div>
+  <ng-template #empty>
+    <h2 class="text-lg font-bold text-black">No races</h2>
+  </ng-template>
 </div>

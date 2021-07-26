@@ -8,6 +8,7 @@ import { IncidentsRoutingModule } from './incidents-routing.module';
 import { CreatingComponent } from './creating/creating.component';
 import { IndexComponent } from './index/index.component';
 import { ShowComponent } from './show/show.component';
+import { TruncatePipe } from '../pipes/truncate.pipe';
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { ShowComponent } from './show/show.component';
     IonicModule,
     IncidentsRoutingModule,
   ],
-  declarations: [CreateComponent, CreatingComponent, IndexComponent, ShowComponent]
+  declarations: [CreateComponent, CreatingComponent, IndexComponent, ShowComponent, TruncatePipe]
 })
 export class IncidentsModule {
 
