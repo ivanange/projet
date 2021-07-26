@@ -29,14 +29,17 @@ export class User extends UnregisteredUser {
 
 }
 
+export interface Details {
+  valeur: number;
+  tendance: number;
+}
 export class UserDetail extends User {
   total_declarer: number;
   total_confirmer: number;
   total_infirmer: number;
-  declarer: {
-    valeur: number,
-    tendance: number
-  }
+  declarer: Details;
+  infirmer: Details;
+  confirmer: Details;
 }
 
 

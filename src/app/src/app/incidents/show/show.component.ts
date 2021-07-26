@@ -1,6 +1,6 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Incident } from 'src/app/models/Incident';
 import { HistoryService } from 'src/app/services/history.service';
 @Component({
   selector: 'app-show',
@@ -13,12 +13,11 @@ export class ShowComponent implements OnInit {
     autoHeight: true,
   };
 
-  public images = [
-    'https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg',
-    'https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg'
-  ];
+  public incident: Incident;
 
-  constructor(private router: Router, public history: HistoryService) { }
+  constructor(private route: ActivatedRoute, public history: HistoryService) {
+    this.incident = this.route.snapshot.data.incident;
+  }
 
   ngOnInit() { }
 

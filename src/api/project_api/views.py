@@ -24,13 +24,16 @@ from project_api import models
 from project_api import permissions
 from datetime import datetime
 from datetime import timedelta
+from django.conf import settings
+import json
+
+# from project_api.serializers import FileSerializer
 
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 100
-    page_size_query_param = 'page_size'
+    page_size_query_param = "page_size"
     max_page_size = 1000
-
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -120,11 +123,27 @@ class IncidentViewSet(viewsets.ModelViewSet):
         IsAuthenticatedOrReadOnly,
     )
     filterset_fields = ("category",)
+
+    def create(self, request, *args, **kwargs):
+        for key in ["audios", "images", "videos"]:
+            data = []
+            for file in request.FILES.getlist(key):
+                url = key + "/" + file.name
+                with open(settings.MEDIA_ROOT + "/" + url, "wb+") as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
+                data.append(request.build_absolute_uri(settings.MEDIA_URL + url))
+            request.data[key] = json.dumps(data)
+
+        request.data["user"] = request.user.id
+        return super().create(request, *args, **kwargs)
+
+
 # =================test================
-    # def perform_create(self, serializer):
-    #     """Sets the user profile to the logged in user"""
-    #
-    #     serializer.save(user=self.request.user)
+# def perform_create(self, serializer):
+#     """Sets the user profile to the logged in user"""
+
+#     serializer.save(user=self.request.user)
 
 
 class PropositionViewSet(viewsets.ModelViewSet):
@@ -203,27 +222,31 @@ class UserProfileDetail(APIView):
         self,
         request,
     ):
-        dict = {}
-        user = self.get_user(request.user.id)
-        dict["phone"] = user.phone
-        dict["name"] = user.name
-        dict["email"] = user.email
-        dict["total_declarer"] = models.Incident.objects.filter(user=user).count()
-        dict["total_confirmer"] = models.Proposition.objects.filter(
-            person=user, decision="CNF"
+        user = vars(self.get_user(request.user.id))
+        user.pop("_state")
+        user.pop("password")
+
+        # print("user: ", user)
+        # total
+        user["total_declarer"] = models.Incident.objects.filter(user=user["id"]).count()
+        user["total_confirmer"] = models.Proposition.objects.filter(
+            person=user["id"], decision="CNF"
         ).count()
-        dict["total_infirmer"] = models.Proposition.objects.filter(
-            person=user, decision="INF"
+        user["total_infirmer"] = models.Proposition.objects.filter(
+            person=user["id"], decision="INF"
         ).count()
+
         now = datetime.now()
         last_month = now - timedelta(days=30)
+        last = last_month - timedelta(days=30)
+
+        # declarer
         data = {}
         data["valeur"] = models.Incident.objects.filter(
-            user=user, declared_at__gt=last_month
+            user=user["id"], declared_at__gt=last_month
         ).count()
-        last = last_month - timedelta(days=30)
         last_data = models.Incident.objects.filter(
-            user=user, declared_at__gt=last, declared_at__lt=last_month
+            user=user["id"], declared_at__gt=last, declared_at__lt=last_month
         ).count()
 
         data["tendance"] = (
@@ -231,9 +254,47 @@ class UserProfileDetail(APIView):
             if data["valeur"] > 0
             else 0
         )
-        dict["declarer"] = data
-        # dict["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
-        return Response(dict)
+        user["declarer"] = data
+
+        # infirmer
+        data = {}
+        data["valeur"] = models.Proposition.objects.filter(
+            person=user["id"], decision="INF", created_at__gt=last_month
+        ).count()
+        last_data = models.Proposition.objects.filter(
+            person=user["id"],
+            decision="INF",
+            created_at__gt=last,
+            created_at__lt=last_month,
+        ).count()
+
+        data["tendance"] = (
+            ((data["valeur"] - last_data) / data["valeur"]) * 100
+            if data["valeur"] > 0
+            else 0
+        )
+        user["infirmer"] = data
+
+        # confirmer
+        data = {}
+        data["valeur"] = models.Proposition.objects.filter(
+            person=user["id"], decision="CNF", created_at__gt=last_month
+        ).count()
+        last_data = models.Proposition.objects.filter(
+            person=user["id"],
+            decision="CNF",
+            created_at__gt=last,
+            created_at__lt=last_month,
+        ).count()
+
+        data["tendance"] = (
+            ((data["valeur"] - last_data) / data["valeur"]) * 100
+            if data["valeur"] > 0
+            else 0
+        )
+        user["confirmer"] = data
+        # user["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
+        return Response(user)
 
 
 class AnaliticsViews(viewsets.ModelViewSet):

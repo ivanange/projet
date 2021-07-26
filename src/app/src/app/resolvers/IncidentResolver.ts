@@ -9,7 +9,7 @@ import {
 import { Incident } from '../models/Incident';
 import { BackendService } from '../services/backend.service';
 import { ToastNotificationService } from '../services/toast-notification.service';
-import { map, retry, catchError } from 'rxjs/operators';
+import { map, retry, catchError, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class IncidentResolver implements Resolve<Incident> {
@@ -30,7 +30,8 @@ export class IncidentResolver implements Resolve<Incident> {
         this.router.navigate(['/index']);
         return of(err);
       }),
-      map((res) => Object.assign(new Incident(), res.data))
+      map((res) => Object.assign(new Incident(), res)),
+      tap(h => console.log(h))
     );
   }
 }

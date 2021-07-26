@@ -128,9 +128,9 @@ class Incident(models.Model):
         through_fields=("incident", "person"),
     )
     textual_description = models.TextField(max_length=100, blank=True, null=True)
-    videos = models.FileField(upload_to="videos/%Y/%m/%d", blank=True, null=True)
-    audios = models.FileField(upload_to="audio/%Y/%m/%d", blank=True, null=True)
-    images = models.FileField(upload_to="images/%Y/%m/%d", blank=True, null=True)
+    videos = models.JSONField(max_length=1055, blank=True, null=True)
+    audios = models.JSONField(max_length=1055, blank=True, null=True)
+    images = models.JSONField(max_length=1055, blank=True, null=True)
     confidence = models.IntegerField(default=0)
 
     def __str__(self):

@@ -10,26 +10,17 @@
   <div class="w-full h-full flex flex-col overflow-auto">
     <div class="">
       <ion-slides [options]="slideOptions">
-        <ion-slide>
-          <img class="w-full h-full max-h-96 object-cover"
-            src="https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg"
-            alt="Man looking at item at a store">
-        </ion-slide>
-        <ion-slide>
-          <img class="w-full h-full max-h-96 object-cover"
-            src="https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg"
-            alt="Man looking at item at a store">
-        </ion-slide>
-        <ion-slide>
-          <video class="w-full h-full max-h-96 object-cover" controls
-            src="assets/videos/Vidéo de l'accident de l'artiste Tenor à Douala.mp4"
-            alt="Man looking at item at a store"></video>
-        </ion-slide>
+        <ng-template *ngIf="incident.photos.length > 0">
+          <ion-slide *ngFor="let photo of incident.photos">
+            <img class="w-full h-full max-h-96 object-cover" [src]="photo" alt="Man looking at item at a store">
+          </ion-slide>
+        </ng-template>
+
       </ion-slides>
     </div>
     <div class="bg-white pt-4 px-4 space-y-2 rounded-t-2xl relative z-10 -top-3 flex-grow">
       <h1 class="block text-xl leading-tight font-semibold text-black capitalize">
-        Car accident with Tenor
+        {{incident.title}}
       </h1>
       <div class="uppercase tracking-wide text-sm text-gray-500 font-semibold mt-1">Accident</div>
       <div class="flex flex-col justify-center pt-1">

@@ -1,7 +1,14 @@
 from datetime import date
 from rest_framework import serializers
-
 from project_api import models
+
+
+class FileSerializer(serializers.Serializer):
+    file = serializers.FileField(
+        max_length=None,
+        allow_empty_file=False,
+        # upload_to=settings.MEDIA_URL + "incidents/",
+    )
 
 
 class UserProfileDetailSerializer(serializers.Serializer):
