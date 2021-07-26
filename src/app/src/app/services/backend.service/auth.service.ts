@@ -18,7 +18,7 @@ export class AuthService {
 
   // tslint:disable-next-line: typedef
   signIn(phone: string, password: string) {
-    console.log(password);
+    // console.log(password);
     return this.http
       .post<LoginResponse>('api-token-auth/', {
         username: phone,

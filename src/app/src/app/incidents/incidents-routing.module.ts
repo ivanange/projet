@@ -29,7 +29,7 @@ const routes: Routes = [
         component: IndexComponent,
       },
       {
-        path: 'show',
+        path: 'show/:id',
         canActivate: [HideBarGuard],
         component: ShowComponent,
       },

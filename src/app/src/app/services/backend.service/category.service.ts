@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Category } from '../../models/Category';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class CategoryService {
   }
 
   all(params?): Observable<Category[]> {
-    return this.categories ? from([this.categories]) : this.http
+    return this.categories ? of(this.categories) : this.http
       .get<Category[]>(
         'category/',
         params

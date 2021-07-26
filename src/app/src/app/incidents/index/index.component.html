@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center w-full h-full mt-14 px-4 pb-4 overflow-auto">
   <form class="w-full relative mb-4" (submit)="search()">
-    <input type="text" name="name" id="name" [(ngModel)]="name" required
+    <input type="text" name="name" id="name" [(ngModel)]="query" required #input (keyup)="trigger()"
       class="focus:ring-black focus:border-black block w-full pl-7 sm:text-sm shadow-sm border-gray-300 rounded-3xl placeholder-gray-400"
       placeholder="Search">
     <button type="submit" class="absolute top-0 right-0 text-gray-500 p-2 focus:outline-none">
@@ -53,6 +53,6 @@
     </a>
   </div>
   <ng-template #empty>
-    <h2 class="text-lg font-bold text-black">No races</h2>
+    <h2 class="text-lg font-bold text-black">No Results</h2>
   </ng-template>
 </div>

@@ -17,7 +17,7 @@ export class AuthenticatedGuard implements CanActivate {
     this.toolbar.open(); // display appbar
     this.toolbar.add(); // display tabs
 
-    // return true
+    // return true;
     if (this.backend.auth.connected) {
       this.backend.categories.all().subscribe(categories => this.backend.categories.categories = categories);
       return true;

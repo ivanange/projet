@@ -5,31 +5,27 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
-import { User } from '../models/User';
+import { UserDetail } from '../models/User';
 import { BackendService } from '../services/backend.service';
 import { ToastNotificationService } from '../services/toast-notification.service';
-import { map, retry, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
-export class UserResolver implements Resolve<User> {
+export class UserResolver implements Resolve<UserDetail> {
   constructor(
     private backend: BackendService,
-    private notifications: ToastNotificationService
+    private toaster: ToastNotificationService
   ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<User> | Promise<User> | User {
+  ): Observable<UserDetail> | Promise<UserDetail> | UserDetail {
     return this.backend.users.user().pipe(
       catchError((err, cuaght) => {
-        this.notifications.add({
-          title: 'Impossible recupérer vos infos',
-          message: 'Verifiez votre connexion internet et réessayer',
-        });
+        this.toaster.add('Impossible to retrieve your information, check your internet connection');
         return of(err);
       }),
-      map((user) => Object.assign(new User(), user))
     );
   }
 }
