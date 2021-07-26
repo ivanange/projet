@@ -16,6 +16,7 @@ from rest_framework.permissions import (
 from rest_framework.settings import api_settings
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from rest_framework.pagination import PageNumberPagination
 import django_filters.rest_framework
 
 from project_api import serializers
@@ -23,6 +24,13 @@ from project_api import models
 from project_api import permissions
 from datetime import datetime
 from datetime import timedelta
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -105,16 +113,18 @@ class IncidentViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.IncidentSerializer
     queryset = models.Incident.objects.all()
+    # commenter la ligne suivante si jamais in veut enlever la pagination et vvç
+    pagination_class = StandardResultsSetPagination
     permission_classes = (
         permissions.UpdateOWnStatus,
         IsAuthenticatedOrReadOnly,
     )
     filterset_fields = ("category",)
-
-    def perform_create(self, serializer):
-        """Sets the user profile to the logged in user"""
-
-        serializer.save(user=self.request.user)
+# =================test================
+    # def perform_create(self, serializer):
+    #     """Sets the user profile to the logged in user"""
+    #
+    #     serializer.save(user=self.request.user)
 
 
 class PropositionViewSet(viewsets.ModelViewSet):
@@ -166,6 +176,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
     permission_classes = (DjangoModelPermissions,)
+    filterset_fields = ("name",)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""

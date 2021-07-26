@@ -63,7 +63,7 @@ class IncidentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Incident
         fields = "__all__"
-        extra_kwargs = {"user": {"read_only": True}}
+        # extra_kwargs = {"user": {"read_only": True}}
 
 
 class PropositionSerializer(serializers.ModelSerializer):

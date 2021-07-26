@@ -39,7 +39,7 @@ def buildPhone():
 userlist = []
 
 
-for i in range(10):
+for i in range(100):
     user = {}
     first = names.get_first_name().lower()
     last = names.get_last_name().lower()
