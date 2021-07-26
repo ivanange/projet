@@ -120,6 +120,8 @@ class IncidentViewSet(viewsets.ModelViewSet):
         IsAuthenticatedOrReadOnly,
     )
     filterset_fields = ("category",)
+
+    
 # =================test================
     # def perform_create(self, serializer):
     #     """Sets the user profile to the logged in user"""

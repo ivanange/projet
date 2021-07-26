@@ -56,13 +56,24 @@ class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
 
+class CategorySerializer(serializers.ModelSerializer):
+    """Serializes Incident"""
+    class Meta:
+        model = models.Category
+        fields = "__all__"
+        extra_kwargs = {
+            "by_admin": {"read_only": True},
+        }
+
 
 class IncidentSerializer(serializers.ModelSerializer):
     """Serializes Incident"""
 
+
     class Meta:
         model = models.Incident
         fields = "__all__"
+        depth = 1
         # extra_kwargs = {"user": {"read_only": True}}
 
 
@@ -90,7 +101,6 @@ class NotifSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     """Serializes Incident"""
-
     class Meta:
         model = models.Category
         fields = "__all__"
