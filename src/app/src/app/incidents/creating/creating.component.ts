@@ -5,6 +5,8 @@ import { CaptureError, MediaFile } from '@ionic-native/media-capture/ngx';
 import { UnregisteredIncident } from 'src/app/models/Incident';
 import { MediaService } from 'src/app/services/media.service';
 import { App } from '@capacitor/app';
+import { Category } from 'src/app/models/Category';
+import { BackendService } from 'src/app/services/backend.service';
 @Component({
   selector: 'app-creating',
   templateUrl: './creating.component.html',
@@ -19,8 +21,10 @@ export class CreatingComponent implements OnInit {
   public videos: MediaFile[] = [];
   public audios: MediaFile[] = [];
   public data = {};
+  categories: Category[];
 
-  constructor(private route: ActivatedRoute, private media: MediaService,) {
+  constructor(private route: ActivatedRoute, private media: MediaService, private backend: BackendService) {
+    this.backend.categories.all().subscribe(categories => this.categories = categories);
     // App.addListener('appStateChange', ({ isActive }) => {
     //   // console.log('App state changed. Is active?', isActive);
     //   this.data = {

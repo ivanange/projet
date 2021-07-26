@@ -35,6 +35,7 @@ export class SignupComponent implements OnInit {
 
   signup(e: Event) {
     e.preventDefault();
+
     if (this.validate()) {
       this.backend.users.create(this.user).subscribe(
         () => this.router.navigate(['index']),

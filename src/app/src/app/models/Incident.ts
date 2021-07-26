@@ -14,7 +14,7 @@ export class UnregisteredIncident {
   public title: string;
   public textual_description: string;
   public category_id: number;
-  public location: string;
+  public locations: string;
   public start_date: string;
   public end_date: string;
   public videos: string[];
@@ -23,7 +23,7 @@ export class UnregisteredIncident {
   public category: Category;
 
   get place(): Location {
-    return JSON.parse(this.location);
+    return JSON.parse(this.locations);
   }
 
   set place(place: Location) {
@@ -42,7 +42,10 @@ export class Incident extends UnregisteredIncident {
 //   data: Incident;
 // }
 
-// export interface IncidentAllResponse extends Response {
-//   data: Incident[];
-// }
+export interface IncidentAllResponse extends Response {
+  count: number;
+  previous: number | null;
+  next: number | null;
+  results: Incident[];
+}
 

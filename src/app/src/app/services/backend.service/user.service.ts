@@ -3,16 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { UnregisteredUser, User, UserDetail } from '../../models/User';
 import { LoginResponse } from '../../models/Response';
 import { Observable, of } from 'rxjs';
-import { retry, switchMap, take } from 'rxjs/operators';
+import { catchError, map, retry, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { ToastNotificationService } from '../toast-notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private currentUser: User;
+  private currentUser: UserDetail;
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService, private toaster: ToastNotificationService) { }
 
   create(user: UnregisteredUser): Observable<LoginResponse> {
 
@@ -34,9 +35,13 @@ export class UserService {
       .pipe(retry(3));
   }
 
-  user(): Observable<User> {
-    return this.http
-      .get<UserDetail>('user/detail/');
+  user(): Observable<UserDetail> {
+    return this.currentUser ? of(this.currentUser) : this.http
+      .get<UserDetail>('user/detail/').pipe(
+        retry(3),
+        map((user) => Object.assign(new UserDetail(), user)),
+        tap(user => this.currentUser = user)
+      );
   }
 
   update(user: User): Observable<User> {

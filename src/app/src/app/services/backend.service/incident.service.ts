@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Incident, UnregisteredIncident } from '../../models/Incident';
+import { Incident, IncidentAllResponse, UnregisteredIncident } from '../../models/Incident';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +14,9 @@ export class IncidentService {
     return this.http.post<Incident>('incident/', incident);
   }
 
-  all(params?): Observable<Incident[]> {
+  all(params?): Observable<IncidentAllResponse> {
     return this.http
-      .get<Incident[]>(
+      .get<IncidentAllResponse>(
         `incident/`,
         {
           params,
@@ -24,7 +24,10 @@ export class IncidentService {
       )
       .pipe(
         retry(3),
-        map(objects => objects.map(object => Object.assign(new Incident(), object)))
+        map(res => ({
+          ...res,
+          results: res.results.map(object => Object.assign(new Incident(), object)),
+        }))
       );
   }
 

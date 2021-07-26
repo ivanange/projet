@@ -2,36 +2,54 @@
   <ion-menu side="start" content-id="main-content">
     <ion-header>
       <ion-toolbar translucent>
-        <ion-title>Menu</ion-title>
+        <ion-title>Spik</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-icon name="mail" slot="start"></ion-icon>
-          <ion-label>Inbox</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="paper-plane" slot="start"></ion-icon>
-          <ion-label>Outbox</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="heart" slot="start"></ion-icon>
-          <ion-label>Favorites</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="archive" slot="start"></ion-icon>
-          <ion-label>Archived</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="trash" slot="start"></ion-icon>
-          <ion-label>Trash</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="warning" slot="start"></ion-icon>
-          <ion-label>Spam</ion-label>
-        </ion-item>
-      </ion-list>
+      <ul class="mt-12 px-4 space-y-">
+        <li
+          class="flex w-full justify-between cursor-pointer items-center py-4 border-b focus:bg-black focus:bg-opacity-20">
+          <a [routerLink]="['/dashboard']" class="text-gray-700 text-lg font-semibold flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+            </svg>
+            <span class="ml-2 text-gray-900">Dashboard</span>
+          </a>
+        </li>
+        <li class="flex w-full justify-between cursor-pointer items-center py-4 border-b">
+          <a [routerLink]="['/profile']" class="text-gray-700 text-lg font-semibold flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+            <span class="ml-2 text-gray-900">Profile & Settings</span>
+          </a>
+        </li>
+        <li class="flex w-full justify-between cursor-pointer items-center py-4 border-b">
+          <a [routerLink]="['/incidents']" class="text-gray-700 text-lg font-semibold flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+            </svg>
+            <span class="ml-2 text-gray-900">Incidents</span>
+          </a>
+        </li>
+        <li class="flex w-full justify-between cursor-pointer items-center py-4 border-b">
+          <a [routerLink]="['/notifications']" class="text-gray-700 text-lg font-semibold flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <span class="ml-2 text-gray-900">Notifications</span>
+          </a>
+        </li>
+
+      </ul>
     </ion-content>
   </ion-menu>
   <ion-header *ngIf="toolbar.show">
@@ -42,7 +60,7 @@
           <div class="w-5 h-1 bg-black rounded-full"></div>
         </button>
       </ion-buttons>
-      {{data|json}}
+      {{ data|json }}
     </ion-toolbar>
   </ion-header>
   <div class="ion-page w-full h-full" id="main-content">

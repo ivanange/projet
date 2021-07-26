@@ -15,7 +15,7 @@ import { map, retry, catchError } from 'rxjs/operators';
 export class IncidentResolver implements Resolve<Incident> {
   constructor(
     private backend: BackendService,
-    private notifications: ToastNotificationService,
+    private toaster: ToastNotificationService,
     private router: Router
   ) { }
 
@@ -26,10 +26,7 @@ export class IncidentResolver implements Resolve<Incident> {
     return this.backend.incidents.get(route.paramMap.get('id')).pipe(
       retry(3),
       catchError((err, cuaght) => {
-        this.notifications.add({
-          title: 'Impossible de trouver ce projet',
-          message: 'Verifiez votre connexion internet et réessayer',
-        });
+        this.toaster.add('Impossible de l\'incidents, Verifiez votre connexion internet et réessayer');
         this.router.navigate(['/index']);
         return of(err);
       }),

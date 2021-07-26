@@ -29,7 +29,7 @@ export class User extends UnregisteredUser {
 
 }
 
-export interface UserDetail extends User {
+export class UserDetail extends User {
   total_declarer: number;
   total_confirmer: number;
   total_infirmer: number;
