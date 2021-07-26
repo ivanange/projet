@@ -51,7 +51,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, models.Model):
     created_at = models.DateTimeField("date created", blank=True, null=True)
     updated_at = models.DateTimeField("date uplated", blank=True, null=True)
     deleted_at = models.DateTimeField("date deleted", blank=True, null=True)
-    confidence = models.IntegerField(default=0)
+    confidence = models.IntegerField(default=50)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -155,7 +155,7 @@ class Proposition(models.Model):
     decision = models.CharField(
         max_length=3, choices=Decision.choices, default=Decision.DEFAULT
     )
-    proposition = models.JSONField(max_length=1055, blank=True, default = "{}")
+    proposition = models.JSONField(max_length=1055, blank=True, null=True)
     created_at = models.DateTimeField("date created", blank=True, null=True)
     updated_at = models.DateTimeField("date uplated", blank=True, null=True)
     deleted_at = models.DateTimeField("date deleted", blank=True, null=True)

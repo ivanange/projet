@@ -122,6 +122,8 @@ class IncidentViewSet(viewsets.ModelViewSet):
     filterset_fields = ("category__name","title")
 
 
+
+
 # =================test================
     # def perform_create(self, serializer):
     #     """Sets the user profile to the logged in user"""
@@ -138,6 +140,25 @@ class PropositionViewSet(viewsets.ModelViewSet):
         permissions.UpdateOWnConfirmStatus,
         IsAuthenticatedOrReadOnly,
     )
+
+    def create(self, request, *args, **kwargs):
+
+        print(request.data)
+        id_incident = request.data[ 'incident']
+        print(request.user.name)
+        decision = request.data['decision']
+        incident = models.Incident.objects.get(id=id_incident)
+        print(incident.title)
+        if decision == "CNF":
+            incident.confidence = incident.confidence + request.user.confidence
+            incident.save()
+        if decision == "INF":
+            incident.confidence = incident.confidence - request.user.confidence
+            if incident.confidence < 0:
+                incident.confidence = 0
+            incident.save()
+        return super().create(request, *args, **kwargs)
+
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""

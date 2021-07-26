@@ -27,12 +27,15 @@ data = {
 # r = requests.post("http://127.0.0.1:8000/api/profile/" ,  data=multipart_data,
 #                   headers={'Content-Type': multipart_data.content_type} )
 
-r = requests.get("http://127.0.0.1:8000/api/incident", headers = headers, data = data)
+r = requests.get("http://127.0.0.1:8000/api/category/?name=Conflits armés" , headers = headers, data = data)
 
 print(r.status_code)
 print('----------------')
 print(r.reason)
 print('----------------')
-print(r.json()['results'])
+for i in r.json():
+	id2 = i["id"]
+
+print(id2 + 1)
 
 
