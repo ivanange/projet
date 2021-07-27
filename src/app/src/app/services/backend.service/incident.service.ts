@@ -32,14 +32,14 @@ export class IncidentService {
   }
 
   get(id): Observable<Incident> {
-    return this.http.get<Incident>(`incident/${id}`);
+    return this.http.get<Incident>(`incident/${id}/`);
   }
 
   update(incident: Incident): Observable<Incident> {
-    return this.http.post<Incident>(`incident/${incident.id}`, incident);
+    return this.http.put<Incident>(`incident/${incident.id}/`, incident);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete<any>(`incident/${id}`);
+    return this.http.delete<any>(`incident/${id}/`);
   }
 }

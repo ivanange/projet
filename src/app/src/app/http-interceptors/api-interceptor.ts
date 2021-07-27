@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
-  public baseUrl = 'http://127.0.0.1:8000/api/';
+  // public baseUrl = 'http://127.0.0.1:8000/api/';
+  public baseUrl = 'http://192.168.43.36:8000/api/';
   private refreshTokenInProgress = false;
   // Refresh Token Subject tracks the current token, or is null if no token is currently
   // available (e.g. refresh pending).
@@ -26,6 +27,7 @@ export class APIInterceptor implements HttpInterceptor {
 
     // send cloned req with header to the next handler.
     const authReq = this.format(req);
+    console.log(req);
     return next.handle(authReq).pipe(
       catchError(
         (error) => {
@@ -33,14 +35,14 @@ export class APIInterceptor implements HttpInterceptor {
           // So we verify url and we throw an error if it's the case
           if (
             authReq.url.includes('refresh') ||
-            authReq.url.includes('login') || error.status !== 401
+            authReq.url.includes('api-token-auth') || error.status !== 401
           ) {
             // We do another check to see if refresh token failed
             // In this case we want to logout user and to redirect it to login page
 
             if (authReq.url.includes('refresh')) {
               this.auth.deleteCredentials();
-              this.router.navigate(['/connexion']);
+              this.router.navigate(['/signin']);
             }
 
             return throwError(error);
@@ -68,7 +70,7 @@ export class APIInterceptor implements HttpInterceptor {
                   (err) => {
                     this.refreshTokenInProgress = false;
                     this.auth.deleteCredentials();
-                    this.router.navigate(['/connexion']);
+                    this.router.navigate(['/signin']);
                     return throwError(err);
                   }
                 ),
@@ -126,10 +128,10 @@ export class APIInterceptor implements HttpInterceptor {
     }
 
     return req.clone({
-      url: `${this.baseUrl}${req.url}`,
+      url: req.url.includes('http') ? req.url : `${this.baseUrl}${req.url}`,
       headers:
-        (req.url).includes('api-token-auth') ||
-          ((req.url).includes('profile') && (req.method).toLowerCase() === 'post') ?
+        req.url.includes('api-token-auth') ||
+          (req.url.includes('profile') && req.method.toLowerCase().includes('post')) ?
           req.headers :
           req.headers.set('Authorization', `Token ${authToken}`),
       body,

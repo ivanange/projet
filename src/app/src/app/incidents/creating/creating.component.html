@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center w-full h-full mt-14 px-4 pb-4 overflow-auto">
   <form class="w-full space-y-5" (submit)="create()">
-    {{data|json}}
-    {{images|json}}
+    <!-- {{data|json}}
+    {{images|json}} -->
     <h1 class="text-black text-xl font-semibold">Tell us more about the incident</h1>
     <div>
       <label for="title" class="sr-only">Title</label>
@@ -23,6 +23,15 @@
               focus:z-10
             " placeholder="Title" />
       <small v-if="error.data.password" class="text-red-500"></small>
+    </div>
+    <div>
+      <ion-select [value]="incident.category" (ionChange)="incident.category = $event.target.value"
+        [interfaceOptions]="{ header: 'Categories', translucent: true }" id="categories" name="categories" class="rounded-md mt-1 focus:outline-none border border-gray-300
+    focus:ring-black focus:border-black placeholder-gray-500" placeholder="Select Categories">
+        <ion-select-option *ngFor="let category of categories" [value]="category.id">
+          {{category.name}}
+        </ion-select-option>
+      </ion-select>
     </div>
     <div>
       <label for="textual_description" class="sr-only">Textual_description</label>
@@ -130,7 +139,7 @@
     <div>
       <h2 for="date" class="text-gray-900 font-semibold pb-1 w-full">Where</h2>
       <label for="location" class="sr-only">Location</label>
-      <input [(ngModel)]="incident.location" rows="6" id="location" name="location" type="text"
+      <input [(ngModel)]="incident.locations" rows="6" id="location" name="location" type="text"
         autocomplete="current-location" class="
               appearance-none
               relative

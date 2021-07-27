@@ -29,13 +29,29 @@ export class UnregisteredUser extends Credentials {
 
 }
 
+export interface Settings {
+  min_conf: number;
+  categories: number[];
+}
 export class User extends UnregisteredUser {
   public id: number;
+  public avatar: string;
   public last_login: string;
   public confidence: number;
   public email?: string;
   public address?: string;
   public settings?: string;
+
+  get config(): Settings {
+    return JSON.parse(this.settings) || {
+      min_conf: 0,
+      categories: [0],
+    };
+  }
+
+  set config(config: Settings) {
+    this.settings = JSON.stringify(config);
+  }
 
 }
 
