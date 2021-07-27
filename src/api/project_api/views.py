@@ -631,15 +631,10 @@ class AnaliticsViews(APIView):
         if "group" in data.keys() and "category" in data.keys():
             dico = {}
             query = list(
-                models.Incident.objects.values("category","locations").filter(category=data["category"])
-            )
+                models.Incident.objects.values("category","locations").filter(category=data["category"]))
             for i in query:
-                i["locations"] = json.loads(
-                    i["locations"] if i["locations"] != None else "{}"
-                )
-                i["locations"] = json.loads(
-                    i["locations"] if i["locations"] != None else "{}"
-                )
+                
+                
                 number = 0
                 if data["group"] in i["locations"].keys():
 
@@ -700,7 +695,7 @@ class AnaliticsViews(APIView):
         return Response(serializers.FilterSerializer(result, many=True))
 
 
-class FilterAnalyse(viewsets.ViewSet):
+class FilterAnalyse(APIView):
 
     def get(self,request,):
         result = []
@@ -729,13 +724,13 @@ class FilterAnalyse(viewsets.ViewSet):
         start =datetime.strptime(data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S")
         final_end = datetime.strptime(data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S")
         dic[ "category"] =data["category"]
-        if data["interval"] == "week" :
+        if data["period"] == "week" :
             max = 7  
             while start < final_end :
 
                 dic["date_debut"] = start
                 end =dic["date_fin"]  = start + timedelta(days= max)
-                dic["number"]  = models.Incident.objects.values("category").filter( start_date__gte=datetime.strptime(start, "%d/%m/%y %H:%M:%S")).filter(start_date__lte=datetime.strptime(end, "%d/%m/%y %H:%M:%S")).filter(category=data["category"]).count()
+                dic["number"]  = models.Incident.objects.values("category").filter( start_date__gte=start).filter(start_date__lte=end).filter(category=data["category"]).count()
                 result.append(dic.copy())
                 start =end
 
