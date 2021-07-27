@@ -231,6 +231,7 @@ class UserProfileDetail(APIView):
     """docstring for UserProfileDetail."""
 
     serializer_class = serializers.UserProfileDetailSerializer
+    serializer_class_2 = serializers.IncidentSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     # filter_backends = (filters.SearchFilter,)
@@ -318,6 +319,28 @@ class UserProfileDetail(APIView):
         )
         user["confirmer"] = data
         # user["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
+        #notificationnotif
+        data={}
+        notifs_data = []
+        notif_user = models.notif.objects.filter(
+            to_user__id = user["id"]
+        )
+        for notif in notif_user:
+        	data["message"] = notif.message
+        	data["sent_at"] = notif.sent_at
+        	data["receive_at"] = notif.receive_at
+        	data["from_user"] = notif.from_user.id
+        	notifs_data.append(data)
+
+        user["notiication"] = notifs_data
+        # incident declarées
+        incident_data = []
+        incident_user = models.Incident.objects.filter(
+            user__id = user["id"]
+        )
+        serializer = self.serializer_class_2(incident_user, many=True)
+        
+        user["incident"] = serializer.data
         return Response(user)
 
 
