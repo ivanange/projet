@@ -69,11 +69,12 @@ class CategorySerializer(serializers.ModelSerializer):
 class IncidentSerializer(serializers.ModelSerializer):
     """Serializes Incident"""
 
+    # category = serializers.RelatedField(read_only= True)
 
     class Meta:
         model = models.Incident
         fields = "__all__"
-        depth = 1
+        # depth = 1
         # extra_kwargs = {"user": {"read_only": True}}
 
 
