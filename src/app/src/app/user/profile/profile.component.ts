@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MenuController } from '@ionic/angular';
+import { UserDetail } from 'src/app/models/User';
 import { MediaService } from 'src/app/services/media.service';
 
 @Component({
@@ -8,10 +11,14 @@ import { MediaService } from 'src/app/services/media.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(public media: MediaService) { }
+  user: UserDetail;
+
+  constructor(private route: ActivatedRoute, private menu: MenuController, public media: MediaService) {
+  }
 
   ngOnInit() {
-
+    this.menu.close();
+    this.user = this.route.snapshot.data.user;
   }
 
 

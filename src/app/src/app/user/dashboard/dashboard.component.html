@@ -48,13 +48,20 @@
             </h3>
             <p class="flex">
               <span class="inline-block mr-2">
-                150
+                {{user.confirmer.valeur}}
               </span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+              <svg *ngIf="user.confirmer.tendance > 0; else downconfirmer" xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
+              <ng-template #downconfirmer>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-700" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                </svg>
+              </ng-template>
             </p>
           </div>
           <div>
@@ -63,13 +70,20 @@
             </h3>
             <p class="flex">
               <span class="inline-block mr-2">
-                43
+                {{user.infirmer.valeur}}
               </span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-700" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+              <svg *ngIf="user.infirmer.tendance > 0; else downinfirmer" xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
+              <ng-template #downinfirmer>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-700" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                </svg>
+              </ng-template>
             </p>
           </div>
         </div>
@@ -92,7 +106,7 @@
         <div>
           <div class="flex items-center text-gray-700 dark:text-gray-100 text-4xl text-left font-bold">
             <span class="block mr-2">
-              169
+              {{ user.confidence }}
             </span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none" viewBox="0 0 24 24"
               stroke="currentColor">

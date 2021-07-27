@@ -8,7 +8,7 @@ with open("incident.json", "r", encoding="UTF-8") as handle:
     parsed = json.load(handle)
 incident_data = parsed
 
-api_key = "Token 3de789b352044c91150dfc327c689176ab2be915"
+api_key = "Token b6487050f2f794e32cc30df7bfde0e28595f04ec"
 
 headers = {
     "Authorization": api_key,
@@ -21,7 +21,7 @@ for incident in incident_data:
         headers=headers,
     )
     for d in r.json():
-        print(d)
+        # print(d)
         id = d["id"]
     data = {
         "user": random.randint(1, 100),
@@ -34,4 +34,5 @@ for incident in incident_data:
     #
     r = requests.post("http://127.0.0.1:8000/api/incident/", data=data, headers=headers)
     print("Add ", j, "with statut code : ", r.status_code)
+    print(r.reason)
     j = j + 1

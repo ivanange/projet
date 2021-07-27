@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthenticatedGuard } from '../guards/authenticated.guard';
 import { HideBarGuard } from '../guards/hide-bar.guard';
 import { ShowBarGuard } from '../guards/show-bar.guard';
+import { IncidentResolver } from '../resolvers/IncidentResolver';
 import { CreateComponent } from './create/create.component';
 import { CreatingComponent } from './creating/creating.component';
 import { IndexComponent } from './index/index.component';
@@ -30,6 +31,9 @@ const routes: Routes = [
       },
       {
         path: 'show/:id',
+        resolve: {
+          incident: IncidentResolver
+        },
         canActivate: [HideBarGuard],
         component: ShowComponent,
       },

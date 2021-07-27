@@ -1,8 +1,14 @@
-
 from rest_framework import serializers
 from rest_framework.fields import JSONField
-
 from project_api import models
+
+
+class FileSerializer(serializers.Serializer):
+    file = serializers.FileField(
+        max_length=None,
+        allow_empty_file=False,
+        # upload_to=settings.MEDIA_URL + "incidents/",
+    )
 
 
 class UserProfileDetailSerializer(serializers.Serializer):
@@ -57,8 +63,10 @@ class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
 
+
 class CategorySerializer(serializers.ModelSerializer):
     """Serializes Incident"""
+
     class Meta:
         model = models.Category
         fields = "__all__"
@@ -70,11 +78,12 @@ class CategorySerializer(serializers.ModelSerializer):
 class IncidentSerializer(serializers.ModelSerializer):
     """Serializes Incident"""
 
+    # category = serializers.RelatedField(read_only= True)
 
     class Meta:
         model = models.Incident
         fields = "__all__"
-        depth = 1
+        # depth = 1
         # extra_kwargs = {"user": {"read_only": True}}
 
 
@@ -102,6 +111,7 @@ class NotifSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     """Serializes Incident"""
+
     class Meta:
         model = models.Category
         fields = "__all__"
@@ -112,16 +122,18 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class FilterSerializer(serializers.Serializer):
 
-    category = serializers.CharField(max_length=255,required = False)
-    #data = JSONField()
-    #zone = JSONField()
-    date_debut = serializers.DateTimeField(required = False)
-    date_fin = serializers.DateTimeField(required = False)
-    region = serializers.CharField(max_length=255,required = False)
-    city = serializers.CharField(max_length=255,required = False)
-    country = serializers.CharField(max_length=255,required = False)
-    address = serializers.CharField(max_length=255,required = False)
+    category = serializers.CharField(max_length=255, required=False)
+    # data = JSONField()
+    # zone = JSONField()
+    date_debut = serializers.DateTimeField(required=False)
+    date_fin = serializers.DateTimeField(required=False)
+    region = serializers.CharField(max_length=255, required=False)
+    city = serializers.CharField(max_length=255, required=False)
+    country = serializers.CharField(max_length=255, required=False)
+    address = serializers.CharField(max_length=255, required=False)
     number = serializers.IntegerField()
+
+
 class AnaliticsSerializer(serializers.Serializer):
 
     name = serializers.CharField(max_length=255)

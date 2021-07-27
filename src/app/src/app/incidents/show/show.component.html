@@ -9,27 +9,19 @@
   </ion-fab>
   <div class="w-full h-full flex flex-col overflow-auto">
     <div class="">
-      <ion-slides [options]="slideOptions">
-        <ion-slide>
-          <img class="w-full h-full max-h-96 object-cover"
-            src="https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg"
-            alt="Man looking at item at a store">
+      <ion-slides [options]="slideOptions" (slideChange)="pauseClips()">
+        <ion-slide *ngFor="let photo of incident.photos">
+          <img class="w-full h-full max-h-96 object-cover" [src]="photo" alt="Man looking at item at a store">
         </ion-slide>
-        <ion-slide>
-          <img class="w-full h-full max-h-96 object-cover"
-            src="https://www.journalducameroun.com/en/wp-content/uploads/2021/07/Tenor-erica-780x440.jpg"
-            alt="Man looking at item at a store">
-        </ion-slide>
-        <ion-slide>
-          <video class="w-full h-full max-h-96 object-cover" controls
-            src="assets/videos/Vidéo de l'accident de l'artiste Tenor à Douala.mp4"
+        <ion-slide *ngFor="let video of incident.clips; index as i">
+          <video [id]="'video'+i" class="w-full h-full max-h-96 object-cover" [src]="video"
             alt="Man looking at item at a store"></video>
         </ion-slide>
       </ion-slides>
     </div>
     <div class="bg-white pt-4 px-4 space-y-2 rounded-t-2xl relative z-10 -top-3 flex-grow">
       <h1 class="block text-xl leading-tight font-semibold text-black capitalize">
-        Car accident with Tenor
+        {{incident.title}}
       </h1>
       <div class="uppercase tracking-wide text-sm text-gray-500 font-semibold mt-1">Accident</div>
       <div class="flex flex-col justify-center pt-1">
@@ -38,7 +30,10 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <span class="pl-1 text-gray-400 text-sm">Jul 13, 2021 - Today</span>
+          <span class="pl-1 text-gray-400 text-sm">
+            {{incident.start_date | date:'medium'}}
+            <span *ngIf="incident.end_date"> - {{ incident.end_date | date:'medium' }}</span>
+          </span>
         </p>
         <p class="flex text-gray-500 items-center mt-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,13 +42,13 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <span class="pl-1 text-gray-400 text-sm">Ndokoti, Douala</span>
+          <span class="pl-1 text-gray-400 text-sm">{{ incident.place.address }}, {{ incident.place.city}}</span>
         </p>
         <p class="flex text-gray-500 items-center mt-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          <span class="pl-1 text-gray-400 text-sm">50 Trust points</span>
+          <span class="pl-1 text-gray-400 text-sm">{{incident.confidence}} Trust points</span>
         </p>
       </div>
       <div class="pt-4">
@@ -64,29 +59,7 @@
       <div class="pt-1 pb-6 text-gray-500 space-y-2">
 
         <p>
-          Reports say the car crushed an electric pole and caught fire instantly. The young girl was projected from the
-          back
-          seat where she was through the front screen, on to the road where she hit her head violently and died on the
-          spot.
-        </p>
-
-        <p>
-          The driver is said to be on the run. Meanwhile, Tenor and the other victim onboard sustained severe injuries
-          and
-          were transported to the Laquintinie hospital. Reports say the rapper is in a critical condition.
-        </p>
-        <p>
-          Local sources say the car kept burning even after the victims were rescued, until the the fire was put out by
-          inhabitants of the neighborhood.
-        </p>
-
-        <p>
-          The family of Erica who are yet to come to terms with her sudden and tragic departure stormed the Laquinitine
-          hospital this morning crying and demanding explanations as to what happened to their daughter.
-        </p>
-
-        <p>
-          Erika was a year I student at the St Jerome Catholic University of Douala, dormitory section.
+          {{incident.textual_description}}
         </p>
 
         <div

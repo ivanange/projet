@@ -1,7 +1,6 @@
-// eslint-disable @typescript-eslint/naming-convention
 // import { Duration, DateTime } from 'luxon';
 
-import { Category } from "./Category";
+import { Category } from './Category';
 
 export interface Location {
   address: string;
@@ -17,17 +16,35 @@ export class UnregisteredIncident {
   public locations: string;
   public start_date: string;
   public end_date: string;
-  public videos: string[];
-  public audios: string[];
-  public images: string[];
+  public videos: string;
+  public audios: string;
+  public images: string;
   public category: Category;
+  public confidence: number;
 
   get place(): Location {
-    return JSON.parse(this.locations);
+    return JSON.parse(this.locations) || {
+      country: '',
+      region: '',
+      city: '',
+      address: '',
+    };
   }
 
   set place(place: Location) {
     JSON.stringify(place);
+  }
+
+  get photos(): string[] {
+    return JSON.parse(this.images) || [];
+  }
+
+  get music(): string[] {
+    return JSON.parse(this.audios) || [];
+  }
+
+  get clips(): string[] {
+    return JSON.parse(this.videos) || [];
   }
 }
 

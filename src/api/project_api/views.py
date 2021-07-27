@@ -1,4 +1,3 @@
-
 from django.contrib.auth.models import Group
 from django.db.models import query
 from django.db.models.aggregates import Count
@@ -31,13 +30,16 @@ from project_api import models
 from project_api import permissions
 from datetime import date, datetime
 from datetime import timedelta
+from django.conf import settings
+import json
+
+# from project_api.serializers import FileSerializer
 
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 100
-    page_size_query_param = 'page_size'
+    page_size_query_param = "page_size"
     max_page_size = 1000
-
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -126,12 +128,24 @@ class IncidentViewSet(viewsets.ModelViewSet):
         permissions.UpdateOWnStatus,
         IsAuthenticatedOrReadOnly,
     )
-    filterset_fields = ("category__name","title")
 
+    filterset_fields = ("category__name", "title")
 
+    def create(self, request, *args, **kwargs):
+        for key in ["audios", "images", "videos"]:
+            data = []
+            for file in request.FILES.getlist(key):
+                url = key + "/" + file.name
+                with open(settings.MEDIA_ROOT + "/" + url, "wb+") as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
+                data.append(request.build_absolute_uri(settings.MEDIA_URL + url))
+            request.data[key] = json.dumps(data)
 
+        request.data["user"] = request.user.id
+        return super().create(request, *args, **kwargs)
 
-# =================test================
+    # =================test================
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
 
@@ -151,9 +165,9 @@ class PropositionViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
 
         print(request.data)
-        id_incident = request.data[ 'incident']
+        id_incident = request.data["incident"]
         print(request.user.name)
-        decision = request.data['decision']
+        decision = request.data["decision"]
         incident = models.Incident.objects.get(id=id_incident)
         print(incident.title)
         if decision == "CNF":
@@ -165,7 +179,6 @@ class PropositionViewSet(viewsets.ModelViewSet):
                 incident.confidence = 0
             incident.save()
         return super().create(request, *args, **kwargs)
-
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
@@ -229,28 +242,35 @@ class UserProfileDetail(APIView):
         except models.UserProfile.DoesNotExist:
             return HttpResponseBadRequest(status=status.HTTP_404_NOT_FOUND)
 
-    def get(self,request,):
-        dict = {}
-        user = self.get_user(request.user.id)
-        dict["phone"] = user.phone
-        dict["name"] = user.name
-        dict["email"] = user.email
-        dict["total_declarer"] = models.Incident.objects.filter(user=user).count()
-        dict["total_confirmer"] = models.Proposition.objects.filter(
-            person=user, decision="CNF"
+    def get(
+        self,
+        request,
+    ):
+        user = vars(self.get_user(request.user.id))
+        user.pop("_state")
+        user.pop("password")
+
+        # print("user: ", user)
+        # total
+        user["total_declarer"] = models.Incident.objects.filter(user=user["id"]).count()
+        user["total_confirmer"] = models.Proposition.objects.filter(
+            person=user["id"], decision="CNF"
         ).count()
-        dict["total_infirmer"] = models.Proposition.objects.filter(
-            person=user, decision="INF"
+        user["total_infirmer"] = models.Proposition.objects.filter(
+            person=user["id"], decision="INF"
         ).count()
+
         now = datetime.now()
         last_month = now - timedelta(days=30)
+        last = last_month - timedelta(days=30)
+
+        # declarer
         data = {}
         data["valeur"] = models.Incident.objects.filter(
-            user=user, declared_at__gt=last_month
+            user=user["id"], declared_at__gt=last_month
         ).count()
-        last = last_month - timedelta(days=30)
         last_data = models.Incident.objects.filter(
-            user=user, declared_at__gt=last, declared_at__lt=last_month
+            user=user["id"], declared_at__gt=last, declared_at__lt=last_month
         ).count()
 
         data["tendance"] = (
@@ -258,220 +278,396 @@ class UserProfileDetail(APIView):
             if data["valeur"] > 0
             else 0
         )
-        dict["declarer"] = data
-        # dict["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
-        return Response(dict)
+        user["declarer"] = data
+
+        # infirmer
+        data = {}
+        data["valeur"] = models.Proposition.objects.filter(
+            person=user["id"], decision="INF", created_at__gt=last_month
+        ).count()
+        last_data = models.Proposition.objects.filter(
+            person=user["id"],
+            decision="INF",
+            created_at__gt=last,
+            created_at__lt=last_month,
+        ).count()
+
+        data["tendance"] = (
+            ((data["valeur"] - last_data) / data["valeur"]) * 100
+            if data["valeur"] > 0
+            else 0
+        )
+        user["infirmer"] = data
+
+        # confirmer
+        data = {}
+        data["valeur"] = models.Proposition.objects.filter(
+            person=user["id"], decision="CNF", created_at__gt=last_month
+        ).count()
+        last_data = models.Proposition.objects.filter(
+            person=user["id"],
+            decision="CNF",
+            created_at__gt=last,
+            created_at__lt=last_month,
+        ).count()
+
+        data["tendance"] = (
+            ((data["valeur"] - last_data) / data["valeur"]) * 100
+            if data["valeur"] > 0
+            else 0
+        )
+        user["confirmer"] = data
+        # user["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
+        return Response(user)
 
 
+class AnaliticsViews(APIView):
+    def get(
+        self,
+        request,
+    ):
+        result = []
+        dic = {}
 
-
-
-
-
-class  AnaliticsViews(APIView):
-
-    def get(self,request,):
-        result =[]
-        dic ={}
-        
-        query =list(models.Category.objects.values('id','name').all())
+        query = list(models.Category.objects.values("id", "name").all())
         if query:
-            for i  in query :
-                dic['name'] = i['name']
-                number =list( models.Incident.objects.values('category').annotate(number =Count('category')).filter(category=i['id']))
-                dic['number'] = 0 if not number else number[0]['number']
-                result.append(dic.copy())    
+            for i in query:
+                dic["name"] = i["name"]
+                number = list(
+                    models.Incident.objects.values("category")
+                    .annotate(number=Count("category"))
+                    .filter(category=i["id"])
+                )
+                dic["number"] = 0 if not number else number[0]["number"]
+                result.append(dic.copy())
 
-    
-
-        data = serializers.AnaliticsSerializer(result,many = True)
+        data = serializers.AnaliticsSerializer(result, many=True)
         return Response(data.data)
 
-        
-    def post(self,request):
+    def post(self, request):
 
-        data = request.data 
+        data = request.data
         dic = {}
-        result =[]
-        number = 0 
-        if 'category' in data.keys() and'interval' in data.keys() and 'zone' in data.keys()  : 
-            #all
-            dic["category"]=list(models.Category.objects.values('name').filter(pk=data['category']))[0]['name']
-            dic["date_debut"] = datetime.strptime(data["interval"]["date_debut"],'%d/%m/%y %H:%M:%S')
-            dic["date_fin"] = datetime.strptime(data["interval"]["date_fin"],'%d/%m/%y %H:%M:%S')
+        result = []
+        number = 0
+        if (
+            "category" in data.keys()
+            and "interval" in data.keys()
+            and "zone" in data.keys()
+        ):
+            # all
+            dic["category"] = list(
+                models.Category.objects.values("name").filter(pk=data["category"])
+            )[0]["name"]
+            dic["date_debut"] = datetime.strptime(
+                data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S"
+            )
+            dic["date_fin"] = datetime.strptime(
+                data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S"
+            )
             for i in data["zone"].keys():
-                dic[i] =data["zone"][i]
+                dic[i] = data["zone"][i]
                 lieu = i
-            res_q =list(models.Incident.objects.values("locations").filter(start_date__gte =datetime.strptime( data['interval']['date_debut'],'%d/%m/%y %H:%M:%S')).filter(start_date__lte =datetime.strptime( data['interval']['date_fin'],'%d/%m/%y %H:%M:%S')).filter(category=data["category"]) )   
-            for i in  res_q :
-                if i["locations"][lieu]   == data["zone"][lieu] : 
-                    number = number+1
-            dic['number']= number
+            res_q = list(
+                models.Incident.objects.values("locations")
+                .filter(
+                    start_date__gte=datetime.strptime(
+                        data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S"
+                    )
+                )
+                .filter(
+                    start_date__lte=datetime.strptime(
+                        data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S"
+                    )
+                )
+                .filter(category=data["category"])
+            )
+            for i in res_q:
+                if i["locations"][lieu] == data["zone"][lieu]:
+                    number = number + 1
+            dic["number"] = number
             return Response(dic)
 
-        if 'category' not  in data.keys() and'interval' not in data.keys() and 'zone' in data.keys()  : 
-            #zone only
+        if (
+            "category" not in data.keys()
+            and "interval" not in data.keys()
+            and "zone" in data.keys()
+        ):
+            # zone only
             for i in data["zone"].keys():
-                dic[i] =data["zone"][i]
+                dic[i] = data["zone"][i]
                 lieu = i
-            
-            res_q =list(models.Incident.objects.values("locations","category").annotate(number = Count("category")))
-            for i in  res_q :
-                if i['locations'][lieu] == data["zone"][lieu] :
-                    dic['category'] =list(models.Category.objects.values('name').filter(pk=i['category']))[0]['name']
-                    print("ddd --------->",type(dic["category"]))
+
+            res_q = list(
+                models.Incident.objects.values("locations", "category").annotate(
+                    number=Count("category")
+                )
+            )
+            for i in res_q:
+                if i["locations"][lieu] == data["zone"][lieu]:
+                    dic["category"] = list(
+                        models.Category.objects.values("name").filter(pk=i["category"])
+                    )[0]["name"]
+                    print("ddd --------->", type(dic["category"]))
                     dic["number"] = i["number"]
                     result.append(dic.copy())
 
-            print("ddd --------->",dic)
-                   
-            quer =serializers.FilterSerializer(result,many =True,partial=True)
+            print("ddd --------->", dic)
+
+            quer = serializers.FilterSerializer(result, many=True, partial=True)
             return Response(quer.data)
 
-        if 'category' not  in data.keys() and 'interval' in data.keys() and 'zone' in data.keys()  : 
-            #zone and interval
-            dic["date_debut"] = datetime.strptime(data["interval"]["date_debut"],'%d/%m/%y %H:%M:%S')
-            dic["date_fin"] = datetime.strptime(data["interval"]["date_fin"],'%d/%m/%y %H:%M:%S')
+        if (
+            "category" not in data.keys()
+            and "interval" in data.keys()
+            and "zone" in data.keys()
+        ):
+            # zone and interval
+            dic["date_debut"] = datetime.strptime(
+                data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S"
+            )
+            dic["date_fin"] = datetime.strptime(
+                data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S"
+            )
             for i in data["zone"].keys():
-                dic[i] =data["zone"][i]
+                dic[i] = data["zone"][i]
                 lieu = i
-            res_q =list(models.Incident.objects.values("locations","category").filter(start_date__gte =datetime.strptime( data['interval']['date_debut'],'%d/%m/%y %H:%M:%S')).filter(start_date__lte =datetime.strptime( data['interval']['date_fin'],'%d/%m/%y %H:%M:%S')).annotate(number=Count("category")))
-            for i in  res_q :
-                if i['locations'][lieu]   == data["zone"][lieu] : 
-                    dic['category'] =list(models.Category.objects.values('name').filter(pk=i['category']))[0]['name']
-                    print("ddd --------->",type(dic["category"]))
+            res_q = list(
+                models.Incident.objects.values("locations", "category")
+                .filter(
+                    start_date__gte=datetime.strptime(
+                        data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S"
+                    )
+                )
+                .filter(
+                    start_date__lte=datetime.strptime(
+                        data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S"
+                    )
+                )
+                .annotate(number=Count("category"))
+            )
+            for i in res_q:
+                if i["locations"][lieu] == data["zone"][lieu]:
+                    dic["category"] = list(
+                        models.Category.objects.values("name").filter(pk=i["category"])
+                    )[0]["name"]
+                    print("ddd --------->", type(dic["category"]))
                     dic["number"] = i["number"]
                     result.append(dic.copy())
-            quer =serializers.FilterSerializer(result,many =True,partial=True)
+            quer = serializers.FilterSerializer(result, many=True, partial=True)
             return Response(quer.data)
 
-        if 'category' not  in data.keys() and 'interval' in data.keys() and 'zone' not in data.keys()  : 
-            #interval only
-            dic["date_debut"] = datetime.strptime(data["interval"]["date_debut"],'%d/%m/%y %H:%M:%S')
-            dic["date_fin"] = datetime.strptime(data["interval"]["date_fin"],'%d/%m/%y %H:%M:%S')
-            res_q = list(models.Incident.objects.values("category").filter(start_date__gte = datetime.strptime (data['interval']['date_debut'],'%d/%m/%y %H:%M:%S')).filter(start_date__lte = datetime.strptime(data['interval']['date_fin'],'%d/%m/%y %H:%M:%S')).annotate(number= Count("category")))
-            for i in  res_q :
-                dic['category'] =list(models.Category.objects.values('name').filter(pk=i['category']))[0]['name']
-                #print("ddd --------->",type(dic["category"]))
+        if (
+            "category" not in data.keys()
+            and "interval" in data.keys()
+            and "zone" not in data.keys()
+        ):
+            # interval only
+            dic["date_debut"] = datetime.strptime(
+                data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S"
+            )
+            dic["date_fin"] = datetime.strptime(
+                data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S"
+            )
+            res_q = list(
+                models.Incident.objects.values("category")
+                .filter(
+                    start_date__gte=datetime.strptime(
+                        data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S"
+                    )
+                )
+                .filter(
+                    start_date__lte=datetime.strptime(
+                        data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S"
+                    )
+                )
+                .annotate(number=Count("category"))
+            )
+            for i in res_q:
+                dic["category"] = list(
+                    models.Category.objects.values("name").filter(pk=i["category"])
+                )[0]["name"]
+                # print("ddd --------->",type(dic["category"]))
                 dic["number"] = i["number"]
                 result.append(dic.copy())
-            quer =serializers.FilterSerializer(result,many =True,partial=True)
+            quer = serializers.FilterSerializer(result, many=True, partial=True)
             return Response(quer.data)
 
-        if 'category' in data.keys() and 'interval'not in data.keys() and 'zone' in data.keys()  : 
-            #category and zone
-            dic["category"]=list(models.Category.objects.values('name').filter(pk=data['category']))[0]['name']
+        if (
+            "category" in data.keys()
+            and "interval" not in data.keys()
+            and "zone" in data.keys()
+        ):
+            # category and zone
+            dic["category"] = list(
+                models.Category.objects.values("name").filter(pk=data["category"])
+            )[0]["name"]
             for i in data["zone"].keys():
-                dic[i] =data["zone"][i]
+                dic[i] = data["zone"][i]
                 lieu = i
-            res_q =list(models.Incident.objects.values("locations").filter(category = data['category']))
-            for i in  res_q :
-                print("teste------------->",i)
-                if i['locations'][lieu] == data["zone"][lieu] : 
-                    number = number+1
-            dic['number']= number
+            res_q = list(
+                models.Incident.objects.values("locations").filter(
+                    category=data["category"]
+                )
+            )
+            for i in res_q:
+                print("teste------------->", i)
+                if i["locations"][lieu] == data["zone"][lieu]:
+                    number = number + 1
+            dic["number"] = number
             return Response(dic)
 
-        if 'category' in data.keys() and 'interval'in data.keys() and 'zone' not in data.keys()  :
-            #category and interval
-            dic["category"]=list(models.Category.objects.values('name').filter(pk=data['category']))[0]['name']
-            dic["date_debut"] = datetime.strptime(data["interval"]["date_debut"],'%d/%m/%y %H:%M:%S')
-            dic["date_fin"] = datetime.strptime(data["interval"]["date_fin"],'%d/%m/%y %H:%M:%S')
-            dic['number']= models.Incident.objects.filter(start_date__gte = datetime.strptime(data['interval']['date_debut'],'%d/%m/%y %H:%M:%S')).filter(start_date__lte =  datetime.strptime(data['interval']['date_fin'],'%d/%m/%y %H:%M:%S')).filter(category=data["category"]).count()
+        if (
+            "category" in data.keys()
+            and "interval" in data.keys()
+            and "zone" not in data.keys()
+        ):
+            # category and interval
+            dic["category"] = list(
+                models.Category.objects.values("name").filter(pk=data["category"])
+            )[0]["name"]
+            dic["date_debut"] = datetime.strptime(
+                data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S"
+            )
+            dic["date_fin"] = datetime.strptime(
+                data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S"
+            )
+            dic["number"] = (
+                models.Incident.objects.filter(
+                    start_date__gte=datetime.strptime(
+                        data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S"
+                    )
+                )
+                .filter(
+                    start_date__lte=datetime.strptime(
+                        data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S"
+                    )
+                )
+                .filter(category=data["category"])
+                .count()
+            )
             return Response(dic)
 
-        if 'category' in data.keys() and 'interval' not in data.keys() and 'zone' not in data.keys()  :
-            #category only
-            print(list(models.Category.objects.values('name').filter(pk=data['category']))[0]['name'])
-            dic["category"]=list(models.Category.objects.values('name').filter(pk=data['category']))[0]['name']
-            dic['number']= models.Incident.objects.filter(category=data["category"]).count()
+        if (
+            "category" in data.keys()
+            and "interval" not in data.keys()
+            and "zone" not in data.keys()
+        ):
+            # category only
+            print(
+                list(
+                    models.Category.objects.values("name").filter(pk=data["category"])
+                )[0]["name"]
+            )
+            dic["category"] = list(
+                models.Category.objects.values("name").filter(pk=data["category"])
+            )[0]["name"]
+            dic["number"] = models.Incident.objects.filter(
+                category=data["category"]
+            ).count()
             return Response(dic)
 
-
-        if "group" in data.keys() :
-            dico ={}
-            query = list(models.Incident.objects.values("category","locations").annotate(number=Count("category")).all())
-            for i in query :
+        if "group" in data.keys():
+            dico = {}
+            query = list(
+                models.Incident.objects.values("category", "locations")
+                .annotate(number=Count("category"))
+                .all()
+            )
+            for i in query:
                 if data["group"] in i["locations"].keys():
                     dico[i["locations"][data["group"]]] = []
-                #dic["number"] = i["number"]
-            print("-----------",query)
-            for i in query :
-                number =0
+                # dic["number"] = i["number"]
+            print("-----------", query)
+            for i in query:
+                number = 0
                 if data["group"] in i["locations"].keys():
-                    
-                    dic["category"]=list(models.Category.objects.values('name').filter(pk=i['category']))[0]['name']
+
+                    dic["category"] = list(
+                        models.Category.objects.values("name").filter(pk=i["category"])
+                    )[0]["name"]
                     for j in query:
                         if data["group"] in j["locations"].keys():
-                            if j["locations"][data["group"]] ==i["locations"][data["group"]]  and i["category"]==j["category"]:
-                                number = number+1
-                        else:  
+                            if (
+                                j["locations"][data["group"]]
+                                == i["locations"][data["group"]]
+                                and i["category"] == j["category"]
+                            ):
+                                number = number + 1
+                        else:
                             continue
-                    
+
                     dic["number"] = number
                     dico[i["locations"][data["group"]]].append(dic.copy())
                 else:
                     continue
-            
-            
 
-            
-                   
-            #quer =serializers.FilterSerializer(result,many =True,partial=True)
+            # quer =serializers.FilterSerializer(result,many =True,partial=True)
             return Response(dico)
-                                
 
-                        
-
-                    
-
-
-            
     def report_by_region(self, request):
         if request.method == "POST":
             data = request.data
-            
+
             dic = {}
             result = []
-            #dic["category"] = list(models.Category.objects.values("name").filter(pk=data['category']))[0]["name"]
-            #dic["ville"] = models.Incident.objects.filter(location__region = data)
-            if "data_debut"  in data.keys()  and "data_fin" in data.keys():
-                dic["date_debut"]=data.date_debut
-                dic["date_fin"]=data.date_fin
-                query=list( models.Incident.objects.values("category").annotate(number =Count('category')).filter(start_date__lte = data.date_debut).filter(start_date__gte = data.date_fin).filter(location__region=data["region"]))
+            # dic["category"] = list(models.Category.objects.values("name").filter(pk=data['category']))[0]["name"]
+            # dic["ville"] = models.Incident.objects.filter(location__region = data)
+            if "data_debut" in data.keys() and "data_fin" in data.keys():
+                dic["date_debut"] = data.date_debut
+                dic["date_fin"] = data.date_fin
+                query = list(
+                    models.Incident.objects.values("category")
+                    .annotate(number=Count("category"))
+                    .filter(start_date__lte=data.date_debut)
+                    .filter(start_date__gte=data.date_fin)
+                    .filter(location__region=data["region"])
+                )
             else:
-                query =list(models.Incident.objects.values("category").annotate(number =Count('category')).filter(category=data["category"]).filter(location__region=data["region"]))
-            for i in  query : 
-                dic['category'] =  list(models.Category.objects.values("name").filter(pk= i[0]["category"]))[0]["name"]
+                query = list(
+                    models.Incident.objects.values("category")
+                    .annotate(number=Count("category"))
+                    .filter(category=data["category"])
+                    .filter(location__region=data["region"])
+                )
+            for i in query:
+                dic["category"] = list(
+                    models.Category.objects.values("name").filter(pk=i[0]["category"])
+                )[0]["name"]
                 dic["number"] = i[1]["number"]
             result.append(dic.copy())
 
-
-        return Response(serializers.FilterSerializer(result,many=True))
-
+        return Response(serializers.FilterSerializer(result, many=True))
 
 
 class FilterAnalyse(viewsets.ViewSet):
-
-    def category_by_date(self, request,):
+    def category_by_date(
+        self,
+        request,
+    ):
         """
-            category
-            start, end date
-            region
-            ville
-            filtre + -
+        category
+        start, end date
+        region
+        ville
+        filtre + -
         """
         data = JSONParser().parse(request)
-        #ser =  serializers.FilterSerializer(data)
+        # ser =  serializers.FilterSerializer(data)
         dic = {}
-        dic["category"] = list(models.Category.objects.filter(pk=data.category))[0]['name']
-        dic["date_debut"]=data.date_debut
-        dic["date_fin"]=data.date_fin
-        queryset = models.Incident.objects.filter(category=data.category).filter(start_date__lte = data.date_debut).filter(start_date__gte = data.date_fin).count()
-        
-        return Response(queryset)
+        dic["category"] = list(models.Category.objects.filter(pk=data.category))[0][
+            "name"
+        ]
+        dic["date_debut"] = data.date_debut
+        dic["date_fin"] = data.date_fin
+        queryset = (
+            models.Incident.objects.filter(category=data.category)
+            .filter(start_date__lte=data.date_debut)
+            .filter(start_date__gte=data.date_fin)
+            .count()
+        )
 
-    
+        return Response(queryset)
 
 
 # ===================================================================
