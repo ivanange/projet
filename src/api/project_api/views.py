@@ -240,7 +240,6 @@ class UserProfileDetail(APIView):
     """docstring for UserProfileDetail."""
 
     serializer_class = serializers.UserProfileDetailSerializer
-    serializer_class_2 = serializers.IncidentSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     # filter_backends = (filters.SearchFilter,)
@@ -548,6 +547,9 @@ class AnaliticsViews(APIView):
                 )
             )
             for i in res_q:
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
                 print("teste------------->", i)
                 if i["locations"][lieu] == data["zone"][lieu]:
                     number = number + 1
@@ -622,6 +624,9 @@ class AnaliticsViews(APIView):
                 # dic["number"] = i["number"]
             print("-----------", query)
             for i in query:
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
                 number = 0
                 if data["group"] in i["locations"].keys():
 
@@ -658,6 +663,7 @@ class AnaliticsViews(APIView):
                 )
             )
             for i in query:
+
                 i["locations"] = json.loads(
                     i["locations"] if i["locations"] != None else "{}"
                 )
@@ -722,7 +728,7 @@ class AnaliticsViews(APIView):
         return Response(serializers.FilterSerializer(result, many=True))
 
 
-class FilterAnalyse(viewsets.ViewSet):
+class FilterAnalyse(APIView):
     def get(
         self,
         request,
@@ -753,7 +759,7 @@ class FilterAnalyse(viewsets.ViewSet):
         start = datetime.strptime(data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S")
         final_end = datetime.strptime(data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S")
         dic["category"] = data["category"]
-        if data["interval"] == "week":
+        if data["period"] == "week":
             max = 7
             while start < final_end:
 
@@ -761,10 +767,8 @@ class FilterAnalyse(viewsets.ViewSet):
                 end = dic["date_fin"] = start + timedelta(days=max)
                 dic["number"] = (
                     models.Incident.objects.values("category")
-                    .filter(
-                        start_date__gte=datetime.strptime(start, "%d/%m/%y %H:%M:%S")
-                    )
-                    .filter(start_date__lte=datetime.strptime(end, "%d/%m/%y %H:%M:%S"))
+                    .filter(start_date__gte=start)
+                    .filter(start_date__lte=end)
                     .filter(category=data["category"])
                     .count()
                 )
