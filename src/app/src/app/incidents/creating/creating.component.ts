@@ -101,6 +101,7 @@ export class CreatingComponent implements OnInit {
     });
     this.backend.incidents.create(this.incident).subscribe(
       (incident) => {
+        this.backend.users.currentUser = undefined;
         this.toaster.add('Saved Incident');
         this.router.navigate(['/show', incident.id]);
       }
