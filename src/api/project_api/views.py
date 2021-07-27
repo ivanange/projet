@@ -413,6 +413,9 @@ class  AnaliticsViews(APIView):
                 else:
                     continue
             
+            
+
+            
                    
             #quer =serializers.FilterSerializer(result,many =True,partial=True)
             return Response(dico)
