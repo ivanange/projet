@@ -389,6 +389,9 @@ class AnaliticsViews(APIView):
                 .filter(category=data["category"])
             )
             for i in res_q:
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
                 if i["locations"][lieu] == data["zone"][lieu]:
                     number = number + 1
             dic["number"] = number
@@ -410,6 +413,9 @@ class AnaliticsViews(APIView):
                 )
             )
             for i in res_q:
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
                 if i["locations"][lieu] == data["zone"][lieu]:
                     dic["category"] = list(
                         models.Category.objects.values("name").filter(pk=i["category"])
@@ -453,6 +459,9 @@ class AnaliticsViews(APIView):
                 .annotate(number=Count("category"))
             )
             for i in res_q:
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
                 if i["locations"][lieu] == data["zone"][lieu]:
                     dic["category"] = list(
                         models.Category.objects.values("name").filter(pk=i["category"])
@@ -598,6 +607,9 @@ class AnaliticsViews(APIView):
                         models.Category.objects.values("name").filter(pk=i["category"])
                     )[0]["name"]
                     for j in query:
+                        j["locations"] = json.loads(
+                        j["locations"] if j["locations"] != None else "{}"
+                )
                         if data["group"] in j["locations"].keys():
                             if (
                                 j["locations"][data["group"]]
@@ -622,6 +634,12 @@ class AnaliticsViews(APIView):
                 models.Incident.objects.values("category","locations").filter(category=data["category"])
             )
             for i in query:
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
                 number = 0
                 if data["group"] in i["locations"].keys():
 
@@ -629,6 +647,7 @@ class AnaliticsViews(APIView):
                         models.Category.objects.values("name").filter(pk=i["category"])
                     )[0]["name"]
                     for j in query:
+                        j["locations"] = json.loads(j["locations"] if j["locations"] != None else "{}")
                         if data["group"] in j["locations"].keys():
                             if (
                                 j["locations"][data["group"]]
