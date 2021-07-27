@@ -62,7 +62,7 @@ export class Incident extends UnregisteredIncident {
 export interface IncidentAllResponse extends Response {
   count: number;
   previous: number | null;
-  next: number | null;
+  next: string | null;
   results: Incident[];
 }
 

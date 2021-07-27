@@ -48,7 +48,7 @@ export class AppComponent {
       history.back();
     });
 
-    router.navigate(['/dashboard']);
+    router.navigate(['/index']);
   }
 
   async openMenu() {

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IncidentsComponent } from './incidents/incidents.component';
@@ -10,7 +11,7 @@ import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   declarations: [ProfileComponent, NotificationsComponent, IncidentsComponent, DashboardComponent],
-  imports: [UserRoutingModule, CommonModule],
+  imports: [UserRoutingModule, CommonModule, FormsModule],
   exports: [RouterModule]
 })
 export class UserModule { }

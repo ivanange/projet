@@ -41,7 +41,7 @@ export class MediaService {
   public async addNewToGallery() {
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
+      resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera,
       quality: 100
     });
@@ -52,9 +52,9 @@ export class MediaService {
     });
   }
 
-  public async getImage() {
+  public getImage() {
     // Take a photo
-    return await Camera.getPhoto({
+    return Camera.getPhoto({
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Prompt,
       direction: CameraDirection.Rear,
