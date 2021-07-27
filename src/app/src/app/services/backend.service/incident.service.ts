@@ -3,15 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { map, retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Incident, IncidentAllResponse, UnregisteredIncident } from '../../models/Incident';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IncidentService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private users: UserService) { }
 
   create(incident: UnregisteredIncident): Observable<Incident> {
-    return this.http.post<Incident>('incident/', incident);
+    return this.http.post<Incident>('incident/', incident).pipe(
+      () => this.users.currentUser = undefined
+    );
   }
 
   all(params?): Observable<IncidentAllResponse> {

@@ -328,33 +328,32 @@ class UserProfileDetail(APIView):
         )
         user["confirmer"] = data
         # user["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
-        #notificationnotif
-        data={}
+        # notificationnotif
+        data = {}
         notifs_data = []
-        notif_user = models.notif.objects.filter(
-            to_user__id = user["id"]
-        )
+        notif_user = models.notif.objects.filter(to_user__id=user["id"])
         for notif in notif_user:
-        	data["message"] = notif.message
-        	data["sent_at"] = notif.sent_at
-        	data["receive_at"] = notif.receive_at
-        	data["from_user"] = notif.from_user.id
-        	notifs_data.append(data)
+            data["message"] = notif.message
+            data["sent_at"] = notif.sent_at
+            data["receive_at"] = notif.receive_at
+            data["from_user"] = notif.from_user.id
+            notifs_data.append(data)
 
         user["notiication"] = notifs_data
         # incident declarées
         incident_data = []
-        incident_user = models.Incident.objects.filter(
-            user__id = user["id"]
-        )
+        incident_user = models.Incident.objects.filter(user__id=user["id"])
         serializer = self.serializer_class_2(incident_user, many=True)
-        
+
         user["incident"] = serializer.data
         return Response(user)
 
 
 class AnaliticsViews(APIView):
-    def get(self,request,):
+    def get(
+        self,
+        request,
+    ):
         result = []
         dic = {}
 
@@ -606,7 +605,7 @@ class AnaliticsViews(APIView):
             ).count()
             return Response(dic)
 
-        if "group" in data.keys()and  "category" not in data.keys():
+        if "group" in data.keys() and "category" not in data.keys():
             dico = {}
             query = list(
                 models.Incident.objects.values("category", "locations")
@@ -631,8 +630,8 @@ class AnaliticsViews(APIView):
                     )[0]["name"]
                     for j in query:
                         j["locations"] = json.loads(
-                        j["locations"] if j["locations"] != None else "{}"
-                )
+                            j["locations"] if j["locations"] != None else "{}"
+                        )
                         if data["group"] in j["locations"].keys():
                             if (
                                 j["locations"][data["group"]]
@@ -654,12 +653,11 @@ class AnaliticsViews(APIView):
         if "group" in data.keys() and "category" in data.keys():
             dico = {}
             query = list(
-                models.Incident.objects.values("category","locations").filter(category=data["category"])
+                models.Incident.objects.values("category", "locations").filter(
+                    category=data["category"]
+                )
             )
             for i in query:
-                i["locations"] = json.loads(
-                    i["locations"] if i["locations"] != None else "{}"
-                )
                 i["locations"] = json.loads(
                     i["locations"] if i["locations"] != None else "{}"
                 )
@@ -670,7 +668,9 @@ class AnaliticsViews(APIView):
                         models.Category.objects.values("name").filter(pk=i["category"])
                     )[0]["name"]
                     for j in query:
-                        j["locations"] = json.loads(j["locations"] if j["locations"] != None else "{}")
+                        j["locations"] = json.loads(
+                            j["locations"] if j["locations"] != None else "{}"
+                        )
                         if data["group"] in j["locations"].keys():
                             if (
                                 j["locations"][data["group"]]
@@ -686,7 +686,6 @@ class AnaliticsViews(APIView):
                 else:
                     continue
             return Response(dico)
-
 
     def report_by_region(self, request):
         if request.method == "POST":
@@ -724,8 +723,10 @@ class AnaliticsViews(APIView):
 
 
 class FilterAnalyse(viewsets.ViewSet):
-
-    def get(self,request,):
+    def get(
+        self,
+        request,
+    ):
         result = []
         dic = {}
 
@@ -749,32 +750,29 @@ class FilterAnalyse(viewsets.ViewSet):
         data = request.data
         dic = {}
         result = []
-        start =datetime.strptime(data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S")
+        start = datetime.strptime(data["interval"]["date_debut"], "%d/%m/%y %H:%M:%S")
         final_end = datetime.strptime(data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S")
-        dic[ "category"] =data["category"]
-        if data["interval"] == "week" :
-            max = 7  
-            while start < final_end :
+        dic["category"] = data["category"]
+        if data["interval"] == "week":
+            max = 7
+            while start < final_end:
 
                 dic["date_debut"] = start
-                end =dic["date_fin"]  = start + timedelta(days= max)
-                dic["number"]  = models.Incident.objects.values("category").filter( start_date__gte=datetime.strptime(start, "%d/%m/%y %H:%M:%S")).filter(start_date__lte=datetime.strptime(end, "%d/%m/%y %H:%M:%S")).filter(category=data["category"]).count()
+                end = dic["date_fin"] = start + timedelta(days=max)
+                dic["number"] = (
+                    models.Incident.objects.values("category")
+                    .filter(
+                        start_date__gte=datetime.strptime(start, "%d/%m/%y %H:%M:%S")
+                    )
+                    .filter(start_date__lte=datetime.strptime(end, "%d/%m/%y %H:%M:%S"))
+                    .filter(category=data["category"])
+                    .count()
+                )
                 result.append(dic.copy())
-                start =end
+                start = end
 
-            query = serializers.TendanceSerializer(result ,many =True)
+            query = serializers.TendanceSerializer(result, many=True)
             return Response(query.data)
-            
-
-            
-
-
-
-
-
-
-
-        
 
 
 # ===================================================================
