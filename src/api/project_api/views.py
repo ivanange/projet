@@ -241,6 +241,7 @@ class UserProfileDetail(APIView):
 
     serializer_class = serializers.UserProfileDetailSerializer
     serializer_class_2 = serializers.IncidentSerializer
+    serializer_class_3 = serializers.PropositionSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     # filter_backends = (filters.SearchFilter,)
@@ -328,7 +329,7 @@ class UserProfileDetail(APIView):
         )
         user["confirmer"] = data
         # user["total_declarer_dernier_30d"] = models.Incident.objects.filter(user = user, declared_at__gt = last_month).count()
-        #notificationnotif
+        #notification
         data={}
         notifs_data = []
         notif_user = models.notif.objects.filter(
@@ -350,6 +351,13 @@ class UserProfileDetail(APIView):
         serializer = self.serializer_class_2(incident_user, many=True)
 
         user["incident"] = serializer.data
+        # Proposition
+        proposition_user = models.Proposition.objects.filter(
+            person__id = user["id"]
+        )
+        serializer = self.serializer_class_3(proposition_user, many = True)
+
+        user["proposition"] = serializer.data
         return Response(user)
 
 
