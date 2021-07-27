@@ -17,7 +17,7 @@ router.register("incident", views.IncidentViewSet)
 router.register("proposition", views.PropositionViewSet)
 router.register("notification", views.NotifViewSet, basename="notification")
 router.register("category", views.CategoryViewSet)
-#router.register("analyse", views.AnaliticsViews.get,basename ="analyse")
+# router.register("analyse", views.AnaliticsViews.get,basename ="analyse")
 
 
 urlpatterns = [

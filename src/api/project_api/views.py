@@ -526,6 +526,7 @@ class AnaliticsViews(APIView):
                 )
             )
             for i in res_q:
+                i["locations"] = json.loads(i["locations"] if i["locations"] != None else "{}")
                 print("teste------------->", i)
                 if i["locations"][lieu] == data["zone"][lieu]:
                     number = number + 1
@@ -600,6 +601,9 @@ class AnaliticsViews(APIView):
                 # dic["number"] = i["number"]
             print("-----------", query)
             for i in query:
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
                 number = 0
                 if data["group"] in i["locations"].keys():
 
@@ -634,7 +638,9 @@ class AnaliticsViews(APIView):
                 models.Incident.objects.values("category","locations").filter(category=data["category"]))
             for i in query:
                 
-                
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
                 number = 0
                 if data["group"] in i["locations"].keys():
 
@@ -738,14 +744,7 @@ class FilterAnalyse(APIView):
             return Response(query.data)
             
 
-            
-
-
-
-
-
-
-
+    
         
 
 

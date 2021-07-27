@@ -1,0 +1,9 @@
+$base-color: rgb(248, 225, 225);
+@for $i from 1 through 10 {
+  .heat-#{$i} {
+    fill: darken($base-color, $i * 10%);
+    stroke: darken($base-color, $i * 10%);
+    background-color: darken($base-color, $i * 10%);
+    color: darken($base-color, $i * 10%);
+  }
+}
