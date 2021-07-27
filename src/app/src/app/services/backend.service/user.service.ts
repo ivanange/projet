@@ -11,7 +11,7 @@ import { ToastNotificationService } from '../toast-notification.service';
   providedIn: 'root',
 })
 export class UserService {
-  private currentUser: UserDetail;
+  public currentUser: UserDetail;
 
   constructor(private http: HttpClient, private auth: AuthService, private toaster: ToastNotificationService) { }
 
