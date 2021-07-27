@@ -17,7 +17,7 @@ router.register("incident", views.IncidentViewSet)
 router.register("proposition", views.PropositionViewSet)
 router.register("notification", views.NotifViewSet, basename="notification")
 router.register("category", views.CategoryViewSet)
-#router.register("analyse", views.AnaliticsViews.get,basename ="analyse")
+# router.register("analyse", views.AnaliticsViews.get,basename ="analyse")
 
 
 urlpatterns = [
@@ -28,7 +28,7 @@ urlpatterns = [
     path("api-token-auth/", views.CustomAuthToken.as_view()),
     path("change-password/", views.ChangePasswordView.as_view()),
     path("logout/", views.Logout.as_view()),
-    #path("analyse/", views.AnaliticsViews.as_view()),
+    path("analyse1/", views.FilterAnalyse.as_view()),
     path("analyse/", views.AnaliticsViews.as_view()),
     # path('api-token-auth/' , V.obtain_auth_token),
     # path('docs/', schema_view),
