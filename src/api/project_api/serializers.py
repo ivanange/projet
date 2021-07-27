@@ -63,8 +63,10 @@ class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
 
+
 class CategorySerializer(serializers.ModelSerializer):
     """Serializes Incident"""
+
     class Meta:
         model = models.Category
         fields = "__all__"
@@ -75,7 +77,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class IncidentSerializer(serializers.ModelSerializer):
     """Serializes Incident"""
-
 
     class Meta:
         model = models.Incident
@@ -108,6 +109,7 @@ class NotifSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     """Serializes Incident"""
+
     class Meta:
         model = models.Category
         fields = "__all__"

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-incidents',
@@ -8,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class IncidentsComponent implements OnInit {
 
   public declarations = true;
-  constructor() { }
 
-  ngOnInit() { }
+  constructor(private menu: MenuController) {
+  }
+
+  ngOnInit() {
+    this.menu.close();
+
+  }
 
   switch(e) {
     // console.log('Segment changed', e);

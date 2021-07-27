@@ -1,7 +1,6 @@
-// eslint-disable @typescript-eslint/naming-convention
 // import { Duration, DateTime } from 'luxon';
 
-import { Category } from "./Category";
+import { Category } from './Category';
 
 export interface Location {
   address: string;
@@ -21,6 +20,7 @@ export class UnregisteredIncident {
   public audios: string;
   public images: string;
   public category: Category;
+  public confidence: number;
 
   get place(): Location {
     return JSON.parse(this.locations) || {

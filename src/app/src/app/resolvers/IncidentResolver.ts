@@ -31,7 +31,6 @@ export class IncidentResolver implements Resolve<Incident> {
         return of(err);
       }),
       map((res) => Object.assign(new Incident(), res)),
-      tap(h => console.log(h))
     );
   }
 }

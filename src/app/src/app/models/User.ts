@@ -1,11 +1,17 @@
 // import { DateTime } from 'luxon';
 export class Credentials {
   public password: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   public _phone?: string;
 
   get phone(): string {
     // eslint-disable-next-line no-underscore-dangle
     return this._phone.replace(/(\+?237)?(\d+)/, '+237$2');
+  }
+
+  set phone(phone: string) {
+    // eslint-disable-next-line no-underscore-dangle
+    this._phone = phone.replace(/(\+?237)?(\d+)/, '+237$2');
   }
 }
 export class UnregisteredUser extends Credentials {
@@ -15,6 +21,10 @@ export class UnregisteredUser extends Credentials {
 
   get name(): string {
     return this.first_name + ' ' + this.last_name;
+  }
+
+  set name(name: string) {
+    [this.first_name, this.last_name] = name.split(' ');
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { UserDetail } from 'src/app/models/User';
 
 @Component({
@@ -11,8 +12,10 @@ export class DashboardComponent implements OnInit {
 
   user: UserDetail;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private menu: MenuController) {
+  }
   ngOnInit() {
+    this.menu.close();
     this.user = this.route.snapshot.data.user;
   }
 
