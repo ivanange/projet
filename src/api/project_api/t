@@ -32,7 +32,7 @@
     {    "category" :1,
         "zone":{"region":"center"},
         "interval":{
-        "date_debut": "12/02/20 08:45:00",
+        "date_debut": "120220 084500",
         "date_fin": "27/07/21 00:00:00"
     }
     }
