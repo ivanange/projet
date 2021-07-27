@@ -584,6 +584,10 @@ class AnaliticsViews(APIView):
                 .all()
             )
             for i in query:
+                i["locations"] = json.loads(
+                    i["locations"] if i["locations"] != None else "{}"
+                )
+                # print("locate:", type(i["locations"]))
                 if data["group"] in i["locations"].keys():
                     dico[i["locations"][data["group"]]] = []
                 # dic["number"] = i["number"]
