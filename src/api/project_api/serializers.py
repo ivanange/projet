@@ -142,3 +142,11 @@ class AnaliticsSerializer(serializers.Serializer):
 
     name = serializers.CharField(max_length=255)
     number = serializers.IntegerField()
+
+
+class TendanceSerializer(serializers.Serializer):
+    category = serializers.CharField(max_length=255, required=False)
+    date_debut = serializers.DateTimeField(required=False)
+    date_fin = serializers.DateTimeField(required=False)
+    number = serializers.IntegerField()
+    
