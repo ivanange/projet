@@ -1,5 +1,6 @@
-from datetime import date
+
 from rest_framework import serializers
+from rest_framework.fields import JSONField
 
 from project_api import models
 
@@ -110,11 +111,19 @@ class CategorySerializer(serializers.ModelSerializer):
         }
 
 
+class FilterSerializer(serializers.Serializer):
+
+    category = serializers.CharField(max_length=255,required = False)
+    #data = JSONField()
+    #zone = JSONField()
+    date_debut = serializers.DateTimeField(required = False)
+    date_fin = serializers.DateTimeField(required = False)
+    region = serializers.CharField(max_length=255,required = False)
+    city = serializers.CharField(max_length=255,required = False)
+    country = serializers.CharField(max_length=255,required = False)
+    address = serializers.CharField(max_length=255,required = False)
+    number = serializers.IntegerField()
 class AnaliticsSerializer(serializers.Serializer):
 
-    category = serializers.CharField(max_length=255)
-    date_debut = serializers.DateTimeField()
-    date_fin = serializers.DateTimeField()
-    region = serializers.CharField(max_length=255)
-    ville = serializers.CharField(max_length=255)
-    quartier = serializers.CharField(max_length=255)
+    name = serializers.CharField(max_length=255)
+    number = serializers.IntegerField()
