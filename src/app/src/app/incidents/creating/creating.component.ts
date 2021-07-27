@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType, Photo } from '@capacitor/camera';
 import { CaptureError, MediaFile } from '@ionic-native/media-capture/ngx';
 import { UnregisteredIncident } from 'src/app/models/Incident';
@@ -7,12 +7,14 @@ import { MediaService } from 'src/app/services/media.service';
 import { App } from '@capacitor/app';
 import { Category } from 'src/app/models/Category';
 import { BackendService } from 'src/app/services/backend.service';
+import { ToastNotificationService } from 'src/app/services/toast-notification.service';
 @Component({
   selector: 'app-creating',
   templateUrl: './creating.component.html',
   styleUrls: ['./creating.component.scss'],
 })
 export class CreatingComponent implements OnInit {
+
 
   public incident = new UnregisteredIncident();
   public now: string = new Date().toISOString();
@@ -23,8 +25,13 @@ export class CreatingComponent implements OnInit {
   public data = {};
   categories: Category[];
 
-  constructor(private route: ActivatedRoute, private media: MediaService, private backend: BackendService) {
-    this.backend.categories.all().subscribe(categories => this.categories = categories);
+  constructor(
+    private route: ActivatedRoute,
+    private media: MediaService,
+    private backend: BackendService,
+    private toaster: ToastNotificationService,
+    private router: Router
+  ) {
     // App.addListener('appStateChange', ({ isActive }) => {
     //   // console.log('App state changed. Is active?', isActive);
     //   this.data = {
@@ -70,10 +77,11 @@ export class CreatingComponent implements OnInit {
     //   alert('App opened with URL: ' + url);
     // };
 
-    document.addEventListener('pendingcaptureresult', this.addSnaps as () => any);
+    // document.addEventListener('pendingcaptureresult', this.addSnaps as () => any);
   }
 
   ngOnInit() {
+    this.backend.categories.all().subscribe(categories => this.categories = categories);
     this.route.queryParams.subscribe(params => {
       this.incident.title = params.name;
     });
@@ -85,9 +93,21 @@ export class CreatingComponent implements OnInit {
     // create incident
     // attach files
     // toast success
+
+    const [address, city] = this.incident.locations.split(/(\s|,|-)+/);
+    this.incident.locations = JSON.stringify({
+      address,
+      city,
+    });
+    this.backend.incidents.create(this.incident).subscribe(
+      (incident) => {
+        this.toaster.add('Saved Incident');
+        this.router.navigate(['/show', incident.id]);
+      }
+    );
   }
 
-  next() { }
+  save() { }
 
   async getPhoto() {
     this.photo = await Camera.getPhoto({

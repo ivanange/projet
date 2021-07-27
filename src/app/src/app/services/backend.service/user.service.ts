@@ -45,10 +45,12 @@ export class UserService {
   }
 
   update(user: User): Observable<User> {
-    return this.http.post<User>(`profile/${user.id}`, { ...user, name: user.name, phone: user.phone });
+    console.log(user);
+    return this.http.put<User>(`profile/${user.id}/`,
+      { ...user, name: user.name, phone: user.phone, avatar: user.avatar ? user.avatar : undefined });
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete<any>(`profile/${id}`);
+    return this.http.delete<any>(`profile/${id}/`);
   }
 }

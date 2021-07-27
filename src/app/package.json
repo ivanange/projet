@@ -36,6 +36,7 @@
     "@ionic/pwa-elements": "^3.0.2",
     "@tailwindcss/forms": "^0.3.3",
     "angular2-multiselect-dropdown": "^5.0.4",
+    "chart.js": "^3.5.0",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-media-capture": "^3.0.3",
     "rxjs": "~6.6.0",

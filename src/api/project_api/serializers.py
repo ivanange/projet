@@ -32,13 +32,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
         }
 
     def validate_email(self, value):
-        lower_email = value.lower()
-        if lower_email != "":
-            if models.UserProfile.objects.filter(email__iexact=lower_email).exists():
-                raise serializers.ValidationError("Duplicate")
-        if lower_email == "":
-            lower_email = None
-        return lower_email
+        if value:
+            lower_email = value.lower()
+            if lower_email != "":
+                if models.UserProfile.objects.filter(
+                    email__iexact=lower_email
+                ).exists():
+                    raise serializers.ValidationError("Duplicate")
+            if lower_email == "":
+                lower_email = None
+            return lower_email
+        return value
 
     def create(self, validated_data):
         """create the return new user"""

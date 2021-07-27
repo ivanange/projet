@@ -1,4 +1,4 @@
-<div class="py-5">
+<div class="mt-16 overflow-auto">
   <div class="">
     <div class="px-4">
       <h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
@@ -14,12 +14,16 @@
           </label>
           <div class="mt-2 flex flex-col justify-center items-center">
             <span class="inline-block h-32 w-32 rounded-full overflow-hidden bg-gray-100">
-              <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="!user.avatar; else image" class="h-full w-full text-gray-300" fill="currentColor"
+                viewBox="0 0 24 24">
                 <path
                   d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
+              <ng-template #image>
+                <img [src]="user.avatar" alt="" srcset="">
+              </ng-template>
             </span>
-            <button type="button" (click)="media.getImage()"
+            <button type="button" (click)="saveFile()"
               class="mt-3 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
               Change
             </button>
@@ -43,7 +47,7 @@
       </p>
     </div>
     <div class="mt-5">
-      <form class="space-y-6 px-4" action="#" method="POST">
+      <form class="space-y-6 px-4" action="#" method="POST" (submit)="saveData($event)">
         <div class="flex">
           <div class="w-1/2 pr-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
@@ -117,7 +121,7 @@
               class="absolute inset-y-0 left-0 px-3 border-r border-l-0 flex items-center pointer-events-none bg-gray-100 text-white rounded-l-md">
               <span class="text-gray-500">+237</span>
             </div>
-            <input type="text" name="phone" id="phone" required readonly
+            <input [value]="user.phone.replace('+237', '')" type="text" name="phone" id="phone" required readonly
               class="bg-gray-50 tracking-wider block w-full pl-20 pr-12 border-gray-100 focus:border-gray-100 rounded-md outline-none ring-0 focus:outline-none focus:ring-transparent"
               placeholder="698298873">
           </div>
@@ -125,7 +129,8 @@
 
         <div class="col-span-6">
           <label for="street-address" class="block text-sm font-medium text-gray-700">Address</label>
-          <input type="text" name="street-address" id="street-address" autocomplete="street-address"
+          <input [(ngModel)]="user.address" type="text" name="street-address" id="street-address"
+            autocomplete="street-address"
             class="mt-1 focus:ring-black focus:border-black block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
         </div>
         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -152,23 +157,23 @@
       </p>
     </div>
     <div class="mt-5 md:mt-0 md:col-span-2">
-      <form action="#" method="POST">
+      <form action="#" method="POST" (submit)="saveConfig($event)">
         <div class="">
           <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
             <fieldset>
               <label for="categories" class="text-base font-medium text-gray-700">Subscribed Categories
               </label>
-              <ion-select [interfaceOptions]="{ header: 'Categories', translucent: true }" id="categories"
-                name="categories" class="rounded-md mt-1 focus:outline-none border border-gray-300
+              <ion-select [value]="config.categories" (ionChange)="config.categories = $event.target.value"
+                [interfaceOptions]="{ header: 'Categories', translucent: true }" id="categories" name="categories"
+                class="rounded-md mt-1 focus:outline-none border border-gray-300
                 focus:ring-black focus:border-black placeholder-gray-500" placeholder="Select Categories" multiple>
-                <ion-select-option value="1">Incendie</ion-select-option>
-                <ion-select-option value="2">Vol</ion-select-option>
-                <ion-select-option value="3">Viol</ion-select-option>
-                <ion-select-option value="4">Grève</ion-select-option>
+                <ion-select-option *ngFor="let category of categories" [value]="category.id">
+                  {{category.name}}
+                </ion-select-option>
               </ion-select>
               <div class="mt-4">
                 <label for="first-name" class="block text-base font-medium text-gray-700">Min Trust</label>
-                <input id="min_conf" name="min_conf" type="number" min="0" required class="
+                <input [(ngModel)]="config.min_conf" id="min_conf" name="min_conf" type="number" min="0" required class="
                         appearance-none
                         relative
                         block
@@ -185,7 +190,8 @@
                         focus:z-10
                         mt-1
                       " placeholder="min_conf" />
-                <span class="block mt-1 text-xs text-gray-500">Configure the minimum confidence of
+                <span class="block mt-1 text-xs text-gray-500">
+                  Configure the minimum confidence of
                   incidents
                   you
                   are notified

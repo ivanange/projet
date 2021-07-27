@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
-import { Incident } from 'src/app/models/Incident';
+import { Incident, IncidentAllResponse } from 'src/app/models/Incident';
 import { BackendService } from 'src/app/services/backend.service';
 import { ToastNotificationService } from 'src/app/services/toast-notification.service';
-
+import { IonInfiniteScroll } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-index',
@@ -13,12 +14,13 @@ import { ToastNotificationService } from 'src/app/services/toast-notification.se
 })
 export class IndexComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('input') input: ElementRef;
   public query: string;
   incidents: Incident[] = [];
-  next: number;
+  next: string = null;
 
-  constructor(private backend: BackendService, private toaster: ToastNotificationService) {
+  constructor(private backend: BackendService, private toaster: ToastNotificationService, private http: HttpClient) {
     this.search();
   }
 
@@ -45,22 +47,34 @@ export class IndexComponent implements OnInit, AfterViewInit {
   search() {
     const query = {} as any;
     if (this.query) {
-      query.title = this.query;
+      // query.title = this.query;
       query.category = this.query;
+      this.next = null;
     }
 
     if (this.next) {
-      query.next = this.next ? this.next++ : undefined;
+      // query.next = this.next ? this.next++ : undefined;
+      this.http.get<IncidentAllResponse>(this.next).subscribe(
+        (res) => {
+          this.incidents = this.incidents.concat(res.results);
+          this.next = res.next;
+        },
+        (err) => {
+          this.toaster.add(err.message);
+        });
+    }
+    else {
+      this.backend.incidents.all(query).subscribe(
+        (res) => {
+          this.incidents = this.incidents.concat(res.results);
+          this.next = res.next;
+        },
+        (err) => {
+          this.toaster.add(err.message);
+        },
+      );
     }
 
-    this.backend.incidents.all(query).subscribe(
-      (res) => {
-        this.incidents = res.results;
-        this.next = res.next;
-      },
-      (err) => {
-        this.toaster.add(err.message);
-      },
-    );
+
   }
 }

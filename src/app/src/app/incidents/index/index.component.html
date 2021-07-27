@@ -1,57 +1,65 @@
-<div class="flex flex-col items-center w-full h-full mt-14 px-4 pb-4 overflow-auto">
-  <form class="w-full relative mb-4" (submit)="search()">
-    <input type="text" name="name" id="name" [(ngModel)]="query" required #input (keyup)="trigger()"
-      class="focus:ring-black focus:border-black block w-full pl-7 sm:text-sm shadow-sm border-gray-300 rounded-3xl placeholder-gray-400"
-      placeholder="Search">
-    <button type="submit" class="absolute top-0 right-0 text-gray-500 p-2 focus:outline-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-      </svg>
-    </button>
-  </form>
-  <div *ngIf="incidents.length > 0; else empty">
-    <a *ngFor="let incident of incidents" [routerLink]="['/show', incident.id]"
-      class="block rounded-md shadow-md overflow-hidden mb-6 flex-shrink-0">
-      <div *ngIf="incident.photos.length > 0" class="w-full">
-        <img class="w-full h-auto max-h-64 object-scale- rounded-t-md" [src]="incident.photos[0]"
-          alt="Man looking at item at a store">
-      </div>
-      <div class="pt-4 pb-4 px-3 space-y-1">
-        <h1 class="block text-lg leading-tight font-semibold text-black capitalize">
-          {{ incident.title }}
-        </h1>
-        <div class="uppercase tracking-wide text-xs text-gray-400 font-semibold mt-1">{{'accident' ||
-          incident.category.name}}</div>
-        <p class="pt-1 text-gray-500 text-sm">
-          {{ incident.textual_description | truncate }}
-        </p>
-        <div class="flex justify-between items-center pt-1">
-          <p class="flex text-gray-500 items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span class="pl-1 text-gray-400 text-xs">
-              {{incident.start_date | date:'medium'}}
-              <span *ngIf="incident.end_date"> - {{ incident.end_date | date:'medium' }}</span>
-            </span>
-          </p>
-          <p class="flex text-gray-500 items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span class="pl-1 text-gray-400 text-xs">{{ incident.place.address }}, {{ incident.place.city}}</span>
-          </p>
+<ion-content>
+  <div class="flex flex-col items-center w-full h-full mt-14 px-4 pb-4 overflow-auto">
+    <form class="w-full relative mb-4" (submit)="search()">
+      <input type="text" name="name" id="name" [(ngModel)]="query" required #input (keyup)="trigger()"
+        class="focus:ring-black focus:border-black block w-full pl-7 sm:text-sm shadow-sm border-gray-300 rounded-3xl placeholder-gray-400"
+        placeholder="Search">
+      <button type="submit" class="absolute top-0 right-0 text-gray-500 p-2 focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </button>
+    </form>
+
+    <ion-infinite-scroll (ionInfinite)="search()">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        <div *ngIf="incidents.length > 0; else empty">
+          <a *ngFor="let incident of incidents" [routerLink]="['/show', incident.id]"
+            class="block rounded-md shadow-md overflow-hidden mb-6 flex-shrink-0 text-left">
+            <div *ngIf="incident.photos.length > 0" class="w-full">
+              <img class="w-full h-auto max-h-64 object-scale- rounded-t-md" [src]="incident.photos[0]"
+                alt="Man looking at item at a store">
+            </div>
+            <div class="pt-4 pb-4 px-3 space-y-1">
+              <h1 class="block text-lg leading-tight font-semibold text-black capitalize">
+                {{ incident.title }}
+              </h1>
+              <div class="uppercase tracking-wide text-xs text-gray-400 font-semibold mt-1">{{'accident' ||
+                incident.category.name}}</div>
+              <p class="pt-1 text-gray-500 text-sm">
+                {{ incident.textual_description | truncate }}
+              </p>
+              <div class="flex justify-between items-center pt-1">
+                <p class="flex text-gray-500 items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span class="pl-1 text-gray-400 text-xs">
+                    {{incident.start_date | date:'medium'}}
+                    <span *ngIf="incident.end_date"> - {{ incident.end_date | date:'medium' }}</span>
+                  </span>
+                </p>
+                <p class="flex text-gray-500 items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span class="pl-1 text-gray-400 text-xs">{{ incident.place.address }}, {{ incident.place.city}}</span>
+                </p>
+              </div>
+            </div>
+          </a>
         </div>
-      </div>
-    </a>
+        <ng-template #empty>
+          <h2 class="text-lg font-bold text-black">No Results</h2>
+        </ng-template>
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
   </div>
-  <ng-template #empty>
-    <h2 class="text-lg font-bold text-black">No Results</h2>
-  </ng-template>
-</div>
+</ion-content>

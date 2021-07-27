@@ -37,7 +37,7 @@ import json
 
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 100
+    page_size = 10
     page_size_query_param = "page_size"
     max_page_size = 1000
 
@@ -132,6 +132,8 @@ class IncidentViewSet(viewsets.ModelViewSet):
     filterset_fields = ("category__name", "title")
 
     def create(self, request, *args, **kwargs):
+        requestData = request.data.copy()
+
         for key in ["audios", "images", "videos"]:
             data = []
             for file in request.FILES.getlist(key):
@@ -140,10 +142,17 @@ class IncidentViewSet(viewsets.ModelViewSet):
                     for chunk in file.chunks():
                         destination.write(chunk)
                 data.append(request.build_absolute_uri(settings.MEDIA_URL + url))
-            request.data[key] = json.dumps(data)
+            requestData[key] = json.dumps(data)
 
-        request.data["user"] = request.user.id
-        return super().create(request, *args, **kwargs)
+        requestData["user"] = request.user.id
+        serializer = self.get_serializer(data=requestData)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
+        # return super().create(request, *args, **kwargs)
 
     # =================test================
     def perform_create(self, serializer):
