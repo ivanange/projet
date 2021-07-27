@@ -731,7 +731,7 @@ class AnaliticsViews(APIView):
         return Response(serializers.FilterSerializer(result, many=True))
 
 
-class FilterAnalyse(viewsets.ViewSet):
+class FilterAnalyse(APIView):
 
     def get(self,request,):
         result = []
