@@ -16,8 +16,7 @@ export interface Meta {
 }
 
 export interface LoginResponse {
-  token_type: string;
-  expires_in: number;
-  access_token: string;
-  refresh_token: string;
+  token: string;
+  user_id: number;
+  phone: string;
 }

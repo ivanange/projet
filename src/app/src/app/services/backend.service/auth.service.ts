@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap, retry } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { LoginResponse } from '../models/Response';
+import { LoginResponse } from '../../models/Response';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -17,10 +17,11 @@ export class AuthService {
   }
 
   // tslint:disable-next-line: typedef
-  signIn(email: string, password: string) {
+  signIn(phone: string, password: string) {
+    // console.log(password);
     return this.http
-      .post<LoginResponse>('clients/web/admin/login', {
-        email,
+      .post<LoginResponse>('api-token-auth/', {
+        username: phone,
         password,
       })
       .pipe(
@@ -32,7 +33,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.signOut().subscribe(() => this.router.navigate(['/']));
+    this.signOut().subscribe(() => this.router.navigate(['/index']));
   }
 
   // tslint:disable-next-line: typedef
@@ -48,18 +49,18 @@ export class AuthService {
 
   deleteCredentials(): void {
     this.response = undefined;
-    window.localStorage.removeItem('credentials');
+    // window.localStorage.removeItem('credentials');
   }
 
   get authorizationToken(): string {
     // console.log(this.response);
-    return this.response ? this.response.access_token : null;
+    return this.response ? this.response.token : null;
   }
 
   refresh(): Observable<LoginResponse> {
     return this.response ? this.http
       .post<LoginResponse>('clients/web/admin/refresh', {
-        refresh_token: this.response.refresh_token
+        refresh_token: this.response.token
       })
       .pipe(
         retry(1),
@@ -70,16 +71,11 @@ export class AuthService {
   }
 
   get response(): LoginResponse | null | undefined {
-    return (
-      this.responseData ||
-      (this.responseData = JSON.parse(
-        window.localStorage.getItem('credentials')
-      ))
-    );
+    return this.responseData;
   }
 
   set response(response: LoginResponse) {
     this.responseData = response;
-    window.localStorage.setItem('credentials', JSON.stringify(response));
+    // window.localStorage.setItem('credentials', JSON.stringify(response));
   }
 }

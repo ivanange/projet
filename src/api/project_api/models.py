@@ -51,7 +51,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, models.Model):
     created_at = models.DateTimeField("date created", blank=True, null=True)
     updated_at = models.DateTimeField("date uplated", blank=True, null=True)
     deleted_at = models.DateTimeField("date deleted", blank=True, null=True)
-    confidence = models.IntegerField(default=0)
+    confidence = models.IntegerField(default=50)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -101,8 +101,8 @@ class Category(models.Model):
     """docstring forCategory."""
 
     by_admin = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
-    name = models.CharField(max_length=20)
-    description = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -119,7 +119,7 @@ class Incident(models.Model):
     start_date = models.DateTimeField("start date", blank=True, null=True)
     end_date = models.DateTimeField("end date", blank=True, null=True)
     declared_at = models.DateTimeField("declared at", default=datetime.now)
-    category = models.ForeignKey(Category, models.SET_NULL, blank=True, null=True)
+    category = models.ForeignKey(Category, models.SET_NULL, blank=True, null=True, related_name='category', verbose_name="category")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
     confirms = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -128,9 +128,9 @@ class Incident(models.Model):
         through_fields=("incident", "person"),
     )
     textual_description = models.TextField(max_length=100, blank=True, null=True)
-    video = models.FileField(upload_to="videos/%Y/%m/%d", blank=True, null=True)
-    audio = models.FileField(upload_to="audio/%Y/%m/%d", blank=True, null=True)
-    image = models.FileField(upload_to="images/%Y/%m/%d", blank=True, null=True)
+    videos = models.FileField(upload_to="videos/%Y/%m/%d", blank=True, null=True)
+    audios = models.FileField(upload_to="audio/%Y/%m/%d", blank=True, null=True)
+    images = models.FileField(upload_to="images/%Y/%m/%d", blank=True, null=True)
     confidence = models.IntegerField(default=0)
 
     def __str__(self):
@@ -155,9 +155,13 @@ class Proposition(models.Model):
     decision = models.CharField(
         max_length=3, choices=Decision.choices, default=Decision.DEFAULT
     )
+    proposition = models.JSONField(max_length=1055, blank=True, null=True)
     created_at = models.DateTimeField("date created", blank=True, null=True)
     updated_at = models.DateTimeField("date uplated", blank=True, null=True)
     deleted_at = models.DateTimeField("date deleted", blank=True, null=True)
+
+    class Meta:
+        unique_together = ('incident', 'person',)
 
     def __str__(self):
         return self.incident.title

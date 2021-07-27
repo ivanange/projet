@@ -21,6 +21,7 @@ from rest_framework.permissions import (
 from rest_framework.settings import api_settings
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from rest_framework.pagination import PageNumberPagination
 import django_filters.rest_framework
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
@@ -30,6 +31,13 @@ from project_api import models
 from project_api import permissions
 from datetime import date, datetime
 from datetime import timedelta
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -112,12 +120,18 @@ class IncidentViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.IncidentSerializer
     queryset = models.Incident.objects.all()
+    # commenter la ligne suivante si jamais in veut enlever la pagination et vvç
+    pagination_class = StandardResultsSetPagination
     permission_classes = (
         permissions.UpdateOWnStatus,
         IsAuthenticatedOrReadOnly,
     )
-    filterset_fields = ("category",)
+    filterset_fields = ("category__name","title")
 
+
+
+
+# =================test================
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
 
@@ -133,6 +147,25 @@ class PropositionViewSet(viewsets.ModelViewSet):
         permissions.UpdateOWnConfirmStatus,
         IsAuthenticatedOrReadOnly,
     )
+
+    def create(self, request, *args, **kwargs):
+
+        print(request.data)
+        id_incident = request.data[ 'incident']
+        print(request.user.name)
+        decision = request.data['decision']
+        incident = models.Incident.objects.get(id=id_incident)
+        print(incident.title)
+        if decision == "CNF":
+            incident.confidence = incident.confidence + request.user.confidence
+            incident.save()
+        if decision == "INF":
+            incident.confidence = incident.confidence - request.user.confidence
+            if incident.confidence < 0:
+                incident.confidence = 0
+            incident.save()
+        return super().create(request, *args, **kwargs)
+
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
@@ -173,6 +206,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
     permission_classes = (DjangoModelPermissions,)
+    filterset_fields = ("name",)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""

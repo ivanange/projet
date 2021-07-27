@@ -6,11 +6,11 @@
         Join and say what's on your mind
       </p>
     </div>
-    <form class="space-y-5" action="/register" method="POST">
+    <form class="space-y-5" (ngSubmit)="signup($event)" action="#" method="POST">
       <div class="flex">
         <div class="w-1/2 pr-2">
           <label for="first_name" class="sr-only">First Name</label>
-          <input v-model="account.first_name" id="first_name" name="first_name" type="text" autocomplete="first_name"
+          <input [(ngModel)]="user.first_name" id="first_name" name="first_name" type="text" autocomplete="first_name"
             required class="
                 appearance-none
                 relative
@@ -31,7 +31,7 @@
         </div>
         <div class="w-1/2 pl-2">
           <label for="last_name" class="sr-only">Last Name</label>
-          <input v-model="account.last_name" id="last_name" name="last_name" type="text" autocomplete="last_name"
+          <input [(ngModel)]="user.last_name" id="last_name" name="last_name" type="text" autocomplete="last_name"
             required class="
                 appearance-none
                 relative
@@ -51,40 +51,18 @@
               " placeholder="Last Name" />
         </div>
       </div>
-      <!-- <div>
-        <label for="email" class="sr-only">Email address</label>
-        <input v-model="account.email" id="email" name="email" type="email" autocomplete="email" required class="
-              appearance-none
-              relative
-              block
-              w-full
-              px-3
-              py-2
-              border border-gray-300
-              placeholder-gray-500
-              text-gray-900
-              rounded-md
-              focus:outline-none
-              focus:ring-black
-              focus:border-black
-              focus:z-10
-              sm:text-sm
-            " placeholder="Email address" />
-        <small v-if="error.data.username" class="text-red-500">
-        </small>
-      </div> -->
       <div class="relative rounded-md shadow-sm">
         <div
           class="absolute inset-y-0 left-0 px-3 border-r flex items-center pointer-events-none bg-black text-white rounded-l-md">
           <span class="text-gray-50 sm:text-sm">+237</span>
         </div>
-        <input type="text" name="phone" id="phone" required
+        <input [(ngModel)]="user._phone" type="text" name="phone" id="phone" required
           class="tracking-wider focus:ring-black focus:border-black block w-full pl-20 pr-12 sm:text-sm border-gray-300 rounded-md"
           placeholder="698298873">
       </div>
       <div>
         <label for="password" class="sr-only">Password</label>
-        <input v-model="account.password" id="password" name="password" type="password" autocomplete="current-password"
+        <input [(ngModel)]="user.password" id="password" name="password" type="password" autocomplete="current-password"
           required class="
               appearance-none
               relative
@@ -106,7 +84,7 @@
       </div>
       <div>
         <label for="password_confirmation" class="sr-only">Password</label>
-        <input v-model="password_confirm" id="password_confirmation" name="password_confirmation" type="password"
+        <input [(ngModel)]="password_confirm" id="password_confirmation" name="password_confirmation" type="password"
           autocomplete="current-password" required class="
               appearance-none
               relative
@@ -124,18 +102,20 @@
               focus:z-10
               sm:text-sm
             " placeholder="Confirm Password" />
-        <small class="text-red-500" v-if="!errors.password_confirmation">Password and confimation don't
+        <small *ngIf="!errors.confirmation" class="text-red-500">Password and
+          confimation don't
           match</small>
       </div>
 
       <div class="flex items-center justify-between">
         <div class="flex items-center">
           <label for="agree" class="text-gray-500 text-xs">
-            <input v-model="agree" id="agree" type="checkbox" name="agree"
+            <input [(ngModel)]="agree" id="agree" type="checkbox" name="agree"
               class="rounded text-black focus:ring-black mr-1" required />
             I Agree to
             <a class="text-black focus:text-gray-900" href="">Terms of service</a>
-            <small class="text-red-500 block" v-if="!errors.agreement">You need to agree</small>
+            <small *ngIf="!errors.agreement" class="text-red-500 block">You need to
+              agree</small>
           </label>
         </div>
 
@@ -168,7 +148,7 @@
           Sign Up
         </button>
         <span class="block mt-4 text-gray-500 text-sm text-center">
-          Already have an account ? &nbsp;
+          Already have an user ? &nbsp;
           <a [routerLink]="'/signin'" class="font-medium text-black">
             Sign In
           </a>

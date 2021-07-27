@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class CreateComponent implements OnInit {
 
-  name = '';
+  name: string;
   constructor(private router: Router) { }
 
   ngOnInit() { }
