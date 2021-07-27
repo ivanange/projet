@@ -13,4 +13,4 @@ admin.site.register(models.Proposition)
 
 admin.site.register(models.notif)
 
-#admin.site.register(serializers.AnaliticsSerializer)
+#admin.site.register(serializers.FilterSerializer)
