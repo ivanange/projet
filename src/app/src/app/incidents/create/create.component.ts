@@ -1,5 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { Incident } from 'src/app/models/Incident';
 import { BackendService } from 'src/app/services/backend.service';
 import { ToastNotificationService } from 'src/app/services/toast-notification.service';
@@ -9,7 +11,7 @@ import { ToastNotificationService } from 'src/app/services/toast-notification.se
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('input') input: ElementRef;
   public query: string;
@@ -19,12 +21,29 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() { }
 
+  ngAfterViewInit() {
+    // server-side search
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        filter(Boolean),
+        debounceTime(300),
+        distinctUntilChanged(),
+        tap((text: string) => {
+          this.query = text;
+          console.log(this.input.nativeElement.value);
+        })
+      )
+      .subscribe();
+  }
+
   next() {
     this.router.navigate(['/creating'], { queryParams: { name: this.name } });
   }
 
   search() {
     const query = {} as any;
+    console.log(query);
+
     if (this.query) {
       // query.title = this.query;
       query.category = this.query;
