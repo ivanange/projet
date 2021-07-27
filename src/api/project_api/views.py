@@ -304,7 +304,7 @@ class  AnaliticsViews(APIView):
                 lieu = i
             res_q =list(models.Incident.objects.values("locations").filter(start_date__gte =datetime.strptime( data['interval']['date_debut'],'%d/%m/%y %H:%M:%S')).filter(start_date__lte =datetime.strptime( data['interval']['date_fin'],'%d/%m/%y %H:%M:%S')).filter(category=data["category"]) )   
             for i in  res_q :
-                if i[lieu]   == data["zone"][lieu] : 
+                if i["locations"][lieu]   == data["zone"][lieu] : 
                     number = number+1
             dic['number']= number
             return Response(dic)
