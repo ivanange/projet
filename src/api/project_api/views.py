@@ -129,7 +129,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
         IsAuthenticatedOrReadOnly,
     )
 
-    filterset_fields = ("category__name", "title")
+    filterset_fields = ("category__name", "title",)
 
     def create(self, request, *args, **kwargs):
         requestData = request.data.copy()
@@ -348,7 +348,7 @@ class UserProfileDetail(APIView):
             user__id = user["id"]
         )
         serializer = self.serializer_class_2(incident_user, many=True)
-        
+
         user["incident"] = serializer.data
         return Response(user)
 
@@ -753,7 +753,7 @@ class FilterAnalyse(viewsets.ViewSet):
         final_end = datetime.strptime(data["interval"]["date_fin"], "%d/%m/%y %H:%M:%S")
         dic[ "category"] =data["category"]
         if data["interval"] == "week" :
-            max = 7  
+            max = 7
             while start < final_end :
 
                 dic["date_debut"] = start
@@ -764,9 +764,6 @@ class FilterAnalyse(viewsets.ViewSet):
 
             query = serializers.TendanceSerializer(result ,many =True)
             return Response(query.data)
-            
-
-            
 
 
 
@@ -774,7 +771,10 @@ class FilterAnalyse(viewsets.ViewSet):
 
 
 
-        
+
+
+
+
 
 
 # ===================================================================
