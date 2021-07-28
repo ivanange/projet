@@ -48,17 +48,19 @@ export class StatsComponent implements OnInit, AfterViewInit {
   category = 1;
   categories: Category[] = [];
   regions = {
-    adamawa: 'heat-3',
-    est: 'heat-6',
-    centre: 'heat-2',
-    littoral: 'heat-4',
-    nord: 'heat-8',
-    'extreme-nord': 'heat-9',
-    ouest: 'heat-7',
-    'nord-ouest': 'heat-8',
-    'sud-ouest': 'heat-6',
-    sud: 'heat-3',
+    adamawa: 'heat--1',
+    est: 'heat--1',
+    centre: 'heat--1',
+    littoral: 'heat--1',
+    nord: 'heat--1',
+    'extreme-nord': 'heat--1',
+    ouest: 'heat--1',
+    'nord-ouest': 'heat--1',
+    'sud-ouest': 'heat--1',
+    sud: 'heat--1',
   };
+  sum = 0;
+  scale: number[] = [];
 
   constructor(private http: HttpClient, private backend: BackendService) {
     Chart.register(
@@ -105,15 +107,23 @@ export class StatsComponent implements OnInit, AfterViewInit {
     // this.lineChartMethod();
   }
 
+  get categoryNames() {
+    return this.categoriesStats.map(cat => cat.name.substring(0, cat.name.length < 10 ? cat.name.length : 10));
+  }
+
+  get categoryValues() {
+    return this.categoriesStats.map(cat => cat.number);
+  }
+
   barChartMethod() {
 
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
-        labels: this.categoriesStats.map(cat => cat.name.substring(0, cat.name.length < 10 ? cat.name.length : 10)),
+        labels: this.categoryNames,
         datasets: [{
           label: '% Occupation',
-          data: this.categoriesStats.map(cat => cat.number),
+          data: this.categoryValues,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -158,13 +168,14 @@ export class StatsComponent implements OnInit, AfterViewInit {
   }
 
   doughnutChartMethod() {
+    const sum = this.categoryValues.reduce((acc, el) => acc + el, 0);
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
       type: 'pie',
       data: {
-        labels: this.categoriesStats.map(cat => cat.name.substring(0, cat.name.length < 10 ? cat.name.length : 10)),
+        labels: this.categoryNames,
         datasets: [{
           label: '# of Votes',
-          data: this.categoriesStats.map(cat => cat.number),
+          data: this.categoryValues.map(val => (val / sum) * 100),
           backgroundColor: [
             'rgba(255, 99, 132, 0.8)',
             'rgba(54, 162, 235, 0.8)',
@@ -192,7 +203,8 @@ export class StatsComponent implements OnInit, AfterViewInit {
             'rgba(50, 29, 4, 1)',
             'rgba(5, 19, 255, 1)',
             'rgba(50, 10, 20, 1)',
-          ]
+          ],
+          hoverOffset: 4
         }]
       }
     });
@@ -200,10 +212,32 @@ export class StatsComponent implements OnInit, AfterViewInit {
 
 
   lineChartMethod() { }
+
   plotCategoryDetails() {
-    this.http.post<CategoryStat[]>('analyse/', {
-      category: this.category
-    }).subscribe();
+    // eslint-disable-next-line id-blacklist
+    this.http.post<{ [key: string]: { number: number } }>('analyse/', {
+      category: this.category,
+      group: 'region',
+    }).subscribe((res) => {
+      const scale = [];
+      this.sum = Object.values(res).reduce((acc, el) => acc + el.number, 0) || 1;
+      Object.keys(res).forEach((key) => {
+
+        const percentage = res[key].number / this.sum;
+        for (let i = 0; i < 10; i++) {
+          if (percentage > (i / 10)) {
+            this.regions[key] = 'heat-' + (i);
+          }
+
+          if (key === 'sud') {
+            // eslint-disable-next-line radix
+            scale.push(parseInt((this.sum * (i + 1) / 10) as unknown as string));
+          }
+        }
+      });
+      this.scale = scale;
+    }
+    );
   }
 
 }

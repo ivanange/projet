@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
   // public baseUrl = 'http://127.0.0.1:8000/api/';
-  public baseUrl = 'http://192.168.43.36:8000/api/';
+  public baseUrl = 'http://192.168.1.5:8000/api/';
   private refreshTokenInProgress = false;
   // Refresh Token Subject tracks the current token, or is null if no token is currently
   // available (e.g. refresh pending).

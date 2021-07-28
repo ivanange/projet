@@ -2,6 +2,18 @@ import random
 import json
 import datetime
 
+regions = [
+    "adamawa",
+    "est",
+    "centre",
+    "littoral",
+    "nord",
+    "extreme-nord",
+    "ouest",
+    "nord-ouest",
+    "sud-ouest",
+    "sud",
+]
 
 with open("ville.json", "r", encoding="UTF-8") as handle:
     parsed = json.load(handle)
@@ -41,14 +53,15 @@ for i in range(250):
     incident["title"] = accCat[j]
     tv = random.randint(0, lv - 1)
     location["city"] = ville[tv]
+    location["region"] = regions[random.randint(0, 9)]
     location["country"] = "Cameroun"
     incident["location"] = location
     random_number_of_days = random.randrange(days_between_dates)
     random_date = start_date + datetime.timedelta(days=random_number_of_days)
     incident["start_date"] = random_date.strftime("%d/%m/%Y")
-    incident["declared_at"] = (
-        random_date + datetime.timedelta(days=random.randrange(3))
-    ).strftime("%d/%m/%Y")
+    # incident["declared_at"] = (
+    #     random_date + datetime.timedelta(days=random.randrange(3))
+    # ).strftime("%d/%m/%Y")
     listIncident.append(incident)
 
 

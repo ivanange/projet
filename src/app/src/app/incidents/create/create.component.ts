@@ -28,8 +28,9 @@ export class CreateComponent implements OnInit, AfterViewInit {
         filter(Boolean),
         debounceTime(300),
         distinctUntilChanged(),
-        tap((text: string) => {
-          this.query = text;
+        tap((e: Event) => {
+          this.query = this.input.nativeElement.value;
+          this.search();
           console.log(this.input.nativeElement.value);
         })
       )

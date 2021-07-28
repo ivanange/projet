@@ -8,9 +8,10 @@
 
     <canvas #doughnutCanvas class="h-auto w-full relative text-left mt-10"></canvas>
   </div>
-  <div>
-    <h1 class="text-xl font-semibold leading-6 text-gray-900 mb-">Category Details</h1>
-    <div class="mb-5 space-x-6">
+
+  <div class="mt-20">
+    <h1 class="text-xl font-semibold leading-6 text-gray-900 mb-5">Category Details</h1>
+    <div class="mb-16 space-x-6">
       <ion-select [value]="category" (ionChange)="category = $event.target.value; plotCategoryDetails();"
         [interfaceOptions]="{ header: 'Categories', translucent: true }" id="categories" name="categories" class="rounded-md mt-1 focus:outline-none border border-gray-300
 focus:ring-black focus:border-black placeholder-gray-500" placeholder="Select Categories">
@@ -30,7 +31,15 @@ focus:ring-black focus:border-black placeholder-gray-500" placeholder="Select Ca
     </ion-select>
   </div> -->
     </div>
+    <h1 class="text-xl font-semibold leading-6 text-gray-900 mb-8">Heat map</h1>
+
     <div class="max-w-full">
+      <div class="w-full h-10 flex flex-1 mb-5 text-xl">
+        <span
+          class="h-full text-left border-l border-t border-b flex items-center justify-center flex-1 heat--1 text-black">0</span>
+        <span *ngFor="let value of scale; index as i" [ngClass]="['heat-'+(i+1), 'heat-text-'+(i+1)]"
+          class="h-full text-left  border-t border-b flex items-center justify-center flex-1">{{value}}</span>
+      </div>
       <svg class="max-w-full w-full h-auto" xmlns:mapsvg="http://mapsvg.com" xmlns:dc="http://purl.org/dc/elements/1.1/"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
         xmlns="http://www.w3.org/2000/svg" mapsvg:geoViewBox="8.498293 12.872582 16.192723 1.652624" width="792.53235"

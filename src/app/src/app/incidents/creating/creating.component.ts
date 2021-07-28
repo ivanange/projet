@@ -94,10 +94,12 @@ export class CreatingComponent implements OnInit {
     // attach files
     // toast success
 
-    const [address, city] = this.incident.locations.split(/(\s|,|-)+/);
+    const [address, city, region, country] = this.incident.locations.split(/(\s|,|-)+/);
     this.incident.locations = JSON.stringify({
       address,
       city,
+      region,
+      country,
     });
     this.backend.incidents.create(this.incident).subscribe(
       (incident) => {

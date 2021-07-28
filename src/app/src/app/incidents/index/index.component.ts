@@ -34,6 +34,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
         debounceTime(300),
         distinctUntilChanged(),
         tap((text) => {
+          this.query = this.input.nativeElement.value;
+          this.trigger();
           console.log(this.input.nativeElement.value);
         })
       )
