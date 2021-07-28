@@ -7,7 +7,7 @@ with open("incidents_data.json", "r", encoding="UTF-8") as handle:
     parsed = json.load(handle)
 incident_data = parsed
 
-api_key = "Token 93184645684125f676574fbacf1ac0a68b45e902"
+api_key = "Token bffa9989e141e41c481c6ed96d26beee58c2979a"
 
 headers = {
     "Authorization": api_key,
