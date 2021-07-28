@@ -121,6 +121,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
     parser_class = (FileUploadParser,)
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.IncidentSerializer
+    serializer_class2 = serializers.CategorySerializer
     queryset = models.Incident.objects.all()
     # commenter la ligne suivante si jamais in veut enlever la pagination et vvç
     pagination_class = StandardResultsSetPagination
@@ -147,7 +148,8 @@ class IncidentViewSet(viewsets.ModelViewSet):
                 data.append(request.build_absolute_uri(settings.MEDIA_URL + url))
             requestData[key] = json.dumps(data)
 
-        # requestData["user"] = request.user.id
+        requestData["user"] = request.user.id
+        requestData["confidence"] = request.user.confidence
         serializer = self.get_serializer(data=requestData)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -156,6 +158,21 @@ class IncidentViewSet(viewsets.ModelViewSet):
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
         # return super().create(request, *args, **kwargs)
+
+    def list(self, request):
+        queryset = models.Incident.objects.all()
+        # incident = models.Incident.objects.all())
+        serializer = self.serializer_class(queryset, many=True)
+        # print(serializer.data)
+        for i in serializer.data:
+            # print(i)
+            category = models.Category.objects.get(id=53)
+            i["category"] = {
+                "by_admin": category.by_admin.id,
+                "name": category.name,
+                "description": category.description,
+            }
+        return Response(serializer.data)
 
     # =================test================
     # def perform_create(self, serializer):

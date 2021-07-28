@@ -5,6 +5,7 @@ pyyaml
 sqlparse==0.2.4
 djongo
 Pillow
-django-filter
+django_filter
 django-cors-headers
+jsonfield
 names
