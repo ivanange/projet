@@ -146,6 +146,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
             requestData[key] = json.dumps(data)
 
         requestData["user"] = request.user.id
+        requestData["confidence"] = request.user.confidence
         serializer = self.get_serializer(data=requestData)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -161,7 +162,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(queryset, many = True)
         # print(serializer.data)
         for i in serializer.data:
-        	print(i)
+        	# print(i)
         	category = models.Category.objects.get(id = 53)
         	i["category"] = {"by_admin" : category.by_admin.id, "name": category.name, "description":category.description}
         return Response(serializer.data)        	
