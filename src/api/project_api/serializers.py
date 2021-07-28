@@ -97,6 +97,7 @@ class PropositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Proposition
         fields = "__all__"
+        # depth = 1
         extra_kwargs = {
             "person": {"read_only": True},
         }
@@ -149,4 +150,3 @@ class TendanceSerializer(serializers.Serializer):
     date_debut = serializers.DateTimeField(required=False)
     date_fin = serializers.DateTimeField(required=False)
     number = serializers.IntegerField()
-    

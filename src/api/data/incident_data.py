@@ -59,9 +59,9 @@ for i in range(250):
     random_number_of_days = random.randrange(days_between_dates)
     random_date = start_date + datetime.timedelta(days=random_number_of_days)
     incident["start_date"] = random_date.strftime("%d/%m/%Y")
-    # incident["declared_at"] = (
-    #     random_date + datetime.timedelta(days=random.randrange(3))
-    # ).strftime("%d/%m/%Y")
+    incident["declared_at"] = (
+        random_date + datetime.timedelta(days=random.randrange(3))
+    ).strftime("%d/%m/%Y")
     listIncident.append(incident)
 
 

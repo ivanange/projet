@@ -7,3 +7,4 @@ djongo
 Pillow
 django-filter
 django-cors-headers
+names

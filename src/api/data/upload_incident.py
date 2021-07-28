@@ -8,7 +8,7 @@ with open("incident.json", "r", encoding="UTF-8") as handle:
     parsed = json.load(handle)
 incident_data = parsed
 
-api_key = "Token b6487050f2f794e32cc30df7bfde0e28595f04ec"
+api_key = "Token bdb945c85864c614a8d6cefb4e61e77ac204c397"
 
 headers = {
     "Authorization": api_key,
@@ -28,7 +28,7 @@ for incident in incident_data:
         "title": incident["title"],
         "locations": json.dumps(incident["location"]),
         "start_date": datetime.datetime.strptime(incident["start_date"], "%d/%m/%Y"),
-        # "declared_at": datetime.datetime.strptime(incident["declared_at"], "%d/%m/%Y"),
+        "declared_at": datetime.datetime.strptime(incident["declared_at"], "%d/%m/%Y"),
         "category": id,
     }
     #

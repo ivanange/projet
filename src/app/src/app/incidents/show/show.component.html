@@ -8,7 +8,7 @@
     </button>
   </ion-fab>
   <div class="w-full h-full flex flex-col overflow-auto">
-    <div class="">
+    <div class="" [ngClass]="{ 'mb-16': !incident.photos.length && !incident.clips.length }">
       <ion-slides [options]="slideOptions" (slideChange)="pauseClips()">
         <ion-slide *ngFor="let photo of incident.photos">
           <img class="w-full h-full max-h-96 object-cover" [src]="photo" alt="Man looking at item at a store">
@@ -42,7 +42,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <span class="pl-1 text-gray-400 text-sm">{{ incident.place.address }}, {{ incident.place.city}}</span>
+          <span class="pl-1 text-gray-400 text-sm">
+            {{ incident.place.address }}
+            {{incident.place.address ? ',' : ''}}
+            {{ incident.place.city}}
+          </span>
         </p>
         <p class="flex text-gray-500 items-center mt-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

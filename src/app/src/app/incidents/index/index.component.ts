@@ -68,7 +68,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     else {
       this.backend.incidents.all(query).subscribe(
         (res) => {
-          this.incidents = this.incidents.concat(res.results);
+          this.incidents = res.results;
           this.next = res.next;
         },
         (err) => {

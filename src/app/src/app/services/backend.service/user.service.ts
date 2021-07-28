@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, retry, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { ToastNotificationService } from '../toast-notification.service';
+import { Incident } from 'src/app/models/Incident';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +40,11 @@ export class UserService {
     return this.currentUser ? of(this.currentUser) : this.http
       .get<UserDetail>('user/detail/').pipe(
         retry(3),
-        map((user) => Object.assign(new UserDetail(), user)),
+        map((user) => {
+          const res = Object.assign(new UserDetail(), user);
+          res.incident = res.incident.map(el => Object.assign(new Incident(), el));
+          return res;
+        }),
         tap(user => this.currentUser = user)
       );
   }

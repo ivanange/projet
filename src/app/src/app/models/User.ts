@@ -1,3 +1,5 @@
+import { Incident, Proposition } from './Incident';
+
 // import { DateTime } from 'luxon';
 export class Credentials {
   public password: string;
@@ -6,12 +8,12 @@ export class Credentials {
 
   get phone(): string {
     // eslint-disable-next-line no-underscore-dangle
-    return this._phone.replace(/(\+?237)?(\d+)/, '+237$2');
+    return this._phone.replace(/(\+?237\s?)?(\d+)/, '+237$2');
   }
 
   set phone(phone: string) {
     // eslint-disable-next-line no-underscore-dangle
-    this._phone = phone.replace(/(\+?237)?(\d+)/, '+237$2');
+    this._phone = phone.replace(/(\+?237\s?)?(\d+)/, '+237$2');
   }
 }
 export class UnregisteredUser extends Credentials {
@@ -24,7 +26,7 @@ export class UnregisteredUser extends Credentials {
   }
 
   set name(name: string) {
-    [this.first_name, this.last_name] = name.split(' ');
+    [this.first_name, this.last_name] = name.split(/\s+/);
   }
 
 }
@@ -66,6 +68,9 @@ export class UserDetail extends User {
   declarer: Details;
   infirmer: Details;
   confirmer: Details;
+  incident: Incident[];
+  notification: Incident[];
+  proposition: Proposition[];
 }
 
 

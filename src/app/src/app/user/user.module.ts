@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { TruncatePipe } from '../pipes/truncate.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IncidentsComponent } from './incidents/incidents.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -11,7 +13,7 @@ import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   declarations: [ProfileComponent, NotificationsComponent, IncidentsComponent, DashboardComponent],
-  imports: [UserRoutingModule, CommonModule, FormsModule],
+  imports: [UserRoutingModule, CommonModule, FormsModule, IonicModule,],
   exports: [RouterModule]
 })
 export class UserModule { }

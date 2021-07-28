@@ -60,6 +60,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
     sud: 'heat--1',
   };
   sum = 0;
+  max = 0;
   scale: number[] = [];
 
   constructor(private http: HttpClient, private backend: BackendService) {
@@ -220,10 +221,12 @@ export class StatsComponent implements OnInit, AfterViewInit {
       group: 'region',
     }).subscribe((res) => {
       const scale = [];
-      this.sum = Object.values(res).reduce((acc, el) => acc + el.number, 0) || 1;
+      Object.keys(this.regions).forEach(key => this.regions[key] = 'heat--1');
+      // this.sum = Object.values(res).reduce((acc, el) => acc + el.number, 0) || 1;
+      this.max = Object.values(res).reduce((acc, el) => acc > el.number ? acc : el.number, 0);
       Object.keys(res).forEach((key) => {
 
-        const percentage = res[key].number / this.sum;
+        const percentage = res[key].number / this.max;
         for (let i = 0; i < 10; i++) {
           if (percentage > (i / 10)) {
             this.regions[key] = 'heat-' + (i);
@@ -231,7 +234,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
 
           if (key === 'sud') {
             // eslint-disable-next-line radix
-            scale.push(parseInt((this.sum * (i + 1) / 10) as unknown as string));
+            scale.push(parseInt((this.max * (i + 1) / 10) as unknown as string));
           }
         }
       });

@@ -147,7 +147,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
                 data.append(request.build_absolute_uri(settings.MEDIA_URL + url))
             requestData[key] = json.dumps(data)
 
-        requestData["user"] = request.user.id
+        # requestData["user"] = request.user.id
         serializer = self.get_serializer(data=requestData)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -158,10 +158,10 @@ class IncidentViewSet(viewsets.ModelViewSet):
         # return super().create(request, *args, **kwargs)
 
     # =================test================
-    def perform_create(self, serializer):
-        """Sets the user profile to the logged in user"""
+    # def perform_create(self, serializer):
+    #     """Sets the user profile to the logged in user"""
 
-        serializer.save(user=self.request.user)
+    #     serializer.save(user=self.request.user)
 
 
 class PropositionViewSet(viewsets.ModelViewSet):

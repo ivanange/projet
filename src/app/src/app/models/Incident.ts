@@ -23,7 +23,7 @@ export class UnregisteredIncident {
   public confidence: number;
 
   get place(): Location {
-    return JSON.parse(this.locations) || {
+    return this.locations ? JSON.parse(this.locations) : {
       country: '',
       region: '',
       city: '',
@@ -36,15 +36,16 @@ export class UnregisteredIncident {
   }
 
   get photos(): string[] {
-    return JSON.parse(this.images) || [];
+    console.log(this.images, this);
+    return this.images ? JSON.parse(this.images) : [];
   }
 
   get music(): string[] {
-    return JSON.parse(this.audios) || [];
+    return this.audios ? JSON.parse(this.audios) : [];
   }
 
   get clips(): string[] {
-    return JSON.parse(this.videos) || [];
+    return this.videos ? JSON.parse(this.videos) : [];
   }
 }
 
@@ -54,10 +55,20 @@ export class Incident extends UnregisteredIncident {
 
 }
 
+export enum Decision {
+  CNF = 'CNF',
+  INF = 'INF',
+  DFT = 'DFT',
+}
+export interface Proposition {
+  id: number;
+  decision: Decision;
+  incident: number;
+}
 
-// export interface IncidentResponse extends Response {
-//   data: Incident;
-// }
+export interface Notification {
+  data: Incident;
+}
 
 export interface IncidentAllResponse extends Response {
   count: number;

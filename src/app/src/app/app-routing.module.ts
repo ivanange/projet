@@ -16,6 +16,7 @@ const routes: Routes = [
     StatsModule,
     UserModule,
   ],
+  declarations: [],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
