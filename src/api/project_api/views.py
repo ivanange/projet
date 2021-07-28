@@ -146,6 +146,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
             requestData[key] = json.dumps(data)
 
         requestData["user"] = request.user.id
+        requestData["confidence"] = request.user.confidence
         serializer = self.get_serializer(data=requestData)
         serializer.is_valid(raise_exception=True)
         serializer.save()
